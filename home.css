@@ -1,0 +1,44 @@
+.main-navbar {
+    background-color: rgb(14, 53, 136);
+}
+
+.main-container {
+    background-color: #ECF2FF;
+}
+
+.title {
+    font-size: 2vw;
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #ffffffd5;
+} 
+
+.div-form {
+    background-color: white;
+}
+
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+.card {
+    background-color: transparent;
+    border-width: 0px;
+}
+
+.nav-footer {
+    background-color: #00034F;
+}
+
+.nav-footer a {
+    color: white;
+}
+
+.nav-footer li {
+    margin-left: 10px;
+}
