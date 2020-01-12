@@ -1,10 +1,20 @@
+CREATE TABLE Wilaya(
+    Id INTEGER PRIMARY KEY,
+    Nom VARCHAR(30)
+);
+
 CREATE TABLE User(
     Id INTEGER PRIMARY KEY AutoIncrement,
     Nom VARCHAR(30),
     Prenom VARCHAR(30),
     Email VARCHAR(50),
     Password VARCHAR(10),
-    Adresse VARCHAR(100)
+    WilayaId INTEGER,
+    Commune VARCHAR(50),
+    Adresse VARCHAR(100),
+    Phone INTEGER,
+    Fax INTEGER,
+    FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id) 
 );
 
 CREATE TABLE Traducteur(
@@ -13,10 +23,15 @@ CREATE TABLE Traducteur(
     Prenom VARCHAR(30),
     Email VARCHAR(50),
     Password VARCHAR(10),
+    WilayaId INTEGER,
+    Commune VARCHAR(50),
     Adresse VARCHAR(100),
+    Phone INTEGER,
+    Fax INTEGER,
     Assermente BOOL,
     Cv BLOB,
-    Assermetation_doc BLOB
+    Assermetation_doc BLOB,
+    FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id) 
 );
 
 CREATE TABLE Langue(
