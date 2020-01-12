@@ -1,0 +1,95 @@
+CREATE TABLE User(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    Nom VARCHAR(30),
+    Prenom VARCHAR(30),
+    Email VARCHAR(50),
+    Adresse VARCHAR(100)
+);
+
+CREATE TABLE Traducteur(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    Nom VARCHAR(30),
+    Prenom VARCHAR(30),
+    Email VARCHAR(50),
+    Adresse VARCHAR(100),
+    Assermente BOOL,
+    Cv BLOB,
+    Assermetation_doc BLOB
+);
+
+CREATE TABLE Langue(
+    Nom VARCHAR(30) PRIMARY KEY
+);
+
+CREATE TABLE Signal(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    UserId INTEGER,
+    TraducteurId INTEGER,
+    Date DATE,
+    FOREIGN KEY (UserId) REFERENCES User(Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Traducteur (Id)
+);
+
+CREATE TABLE Document_Origin(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    Document BLOB
+);
+
+CREATE TABLE Document_Traduit(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    Document BLOB
+);
+
+CREATE TABLE Reference(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    Document BLOB,
+    TraducteurId INTEGER,
+    FOREIGN KEY (TraducteurId) REFERENCES Traducteur (Id)
+);
+
+CREATE TABLE Demande_Faite(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    UserId INTEGER,
+    DocumentId INTEGER,
+    LangueO VARCHAR(30),
+    LangueD VARCHAR(30),
+    Date DATE,
+    FOREIGN KEY (DocumentId) REFERENCES Document_Origin (Id),
+    FOREIGN KEY (LangueO) REFERENCES Langue (Nom),
+    FOREIGN KEY (LangueD) REFERENCES Langue (Nom)
+);
+
+CREATE TABLE Demande_Accepte(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    DemandeId INTEGER,
+    TraducteurId INTEGER,
+    Date DATE,
+    FOREIGN KEY (DemandeId) REFERENCES Demande_Faite (Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Traducteur (Id)
+);
+
+CREATE TABLE Traduction(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    DocumentId INTEGER,
+    FOREIGN KEY (DocumentId) REFERENCES Document_Traduit (Id)
+);
+
+CREATE TABLE Demande_Traite(
+    Id INTEGER PRIMARY KEY AutoIncrement,
+    DemandeId INTEGER,
+    TraductionId INTEGER,
+    Date DATE,
+    FOREIGN KEY (DemandeId) REFERENCES Demande_Accepte (Id),
+    FOREIGN KEY (TraductionId) REFERENCES Traduction (Id)
+);
+
+CREATE TABLE Note (
+    TraductionId INTEGER,
+    UserId INTEGER,
+    Valeur INTEGER,
+    PRIMARY KEY (TraductionId, UserId),
+    FOREIGN KEY (TraductionId) REFERENCES Traduction (Id),
+    FOREIGN KEY (UserId) REFERENCES User (Id)
+);
+
+
