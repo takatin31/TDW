@@ -3,6 +3,7 @@ CREATE TABLE User(
     Nom VARCHAR(30),
     Prenom VARCHAR(30),
     Email VARCHAR(50),
+    Password VARCHAR(10),
     Adresse VARCHAR(100)
 );
 
@@ -11,6 +12,7 @@ CREATE TABLE Traducteur(
     Nom VARCHAR(30),
     Prenom VARCHAR(30),
     Email VARCHAR(50),
+    Password VARCHAR(10),
     Adresse VARCHAR(100),
     Assermente BOOL,
     Cv BLOB,
