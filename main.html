@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,9 @@
     <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap-reboot.min.css"/>
     <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./assests/light_slider/css/lightslider.css"/>
+    <link rel="stylesheet" href="./assests/style/font-awesome.min.css"/>
     <link rel="stylesheet" href="home.css"/>
+
     <script type="text/javascript" src="./assests/scripts/jquery.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.min.js"></script>
@@ -73,7 +75,7 @@
         <div class="collapse navbar-collapse row" id="navbarNavDropdown">
             <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Accueil</a>
+                    <a class="nav-link" href="main.html">Accueil</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -95,7 +97,7 @@
                     <a class="nav-link" href="#">Recrutement</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">A propos</a>
+                    <a class="nav-link" href="about.html">A propos</a>
                 </li>
             </ul>
             <div class="navbar-nav col-lg-4 col-md-6 col-sm-8 justify-content-end">
@@ -158,35 +160,60 @@
             </ul>
         </div>
     
-        <div class="container-fluid row mt-5">
-            <div class="col-7 mt-3 ">
-                <div class="card">
-                    <img class="card-img-top col-5" src="./assests/images/2.jpg" alt="Card image cap"/>
+        <div class="container-fluid row mt-5 align-items-center">
+            <div class="col-7">
+                <div class="card card-container pt-3 pr-4 pl-2">
+                    <div class="card-img-top d-flex align-items-center">
+                        <div class="col-6">
+                            <img class="card-img-top" src="./assests/images/2.jpg" alt="Card image cap"/>
+                        </div>
+                        <p class="card-title text-center">Article 1: Venez voir nos travaux</p>
+                    </div>
+                    
                     <div class="card-body">
                       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                           Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
                           Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
                           Sed ultrices sagittis ex, a vehicula .</p>
                     </div>
+                    <div class="text-right mb-2">
+                        <a class="card-link" href="#">Lire la suite</a>
+                    </div>
                 </div>
                 <hr/>
-                <div class="card">
-                    <img class="card-img-top col-5 align-self-end" src="./assests/images/3.png" alt="Card image cap"/>
+                <div class="card card-container pt-3 pr-4 pl-2">
+                    <div class="card-img-top d-flex flex-row-reverse align-items-center">
+                        <div class="col-6">
+                            <img class="card-img-top" src="./assests/images/3.png" alt="Card image cap"/>
+                        </div>
+                        <p class="card-title text-center">Article2:<br/> Ne rattez pas l'occasion!!</p>
+                    </div>
                     <div class="card-body">
                       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                           Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
                           Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
                           Sed ultrices sagittis ex, a vehicula .</p>
                     </div>
+                    <div class="text-right mb-2">
+                        <a class="card-link" href="#">Lire la suite</a>
+                    </div>
                 </div>
                 <hr/>
-                <div class="card">
-                    <img class="card-img-top col-5" src="./assests/images/2.jpg" alt="Card image cap"/>
+                <div class="card card-container pt-3 pr-4 pl-2">
+                    <div class="card-img-top d-flex align-items-center">
+                        <div class="col-6">
+                            <img class="card-img-top" src="./assests/images/2.jpg" alt="Card image cap"/>
+                        </div>
+                        <p class="card-title text-center">Article 3: Venez voir nos traductions</p>
+                    </div>
                     <div class="card-body">
                       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                           Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
                           Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
                           Sed ultrices sagittis ex, a vehicula .</p>
+                    </div>
+                    <div class="text-right mb-2">
+                        <a class="card-link" href="#">Lire la suite</a>
                     </div>
                 </div>
             </div>
@@ -194,26 +221,26 @@
             <div class="col-5 div-form">
                 <h2 class="text-center mt-3">Demande de devis de traduction</h2>
                 <hr/>
-                <form action="/action_page.php">
+                <form action="main.php" method="POST">
                     <div class="form-group">
                       <label for="nom">Nom :</label>
-                      <input type="text" class="form-control" placeholder="Entrez Nom" id="nom" required>
+                      <input type="text" class="form-control" placeholder="Entrez Nom" id="nom" >
                     </div>
                     <div class="form-group">
                       <label for="prenom">Prenom:</label>
-                      <input type="text" class="form-control" placeholder="Entez prenom" id="prenom" required>
+                      <input type="text" class="form-control" placeholder="Entez prenom" id="prenom" >
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" class="form-control" placeholder="Entez Email" id="email" required>
+                        <input type="email" class="form-control" placeholder="Entez Email" id="email" >
                     </div>
                     <div class="form-group">
                         <label for="numero de telephone">Numero de telephone:</label>
-                        <input type="phone" class="form-control" placeholder="Numero de telephone" id="phone" required>
+                        <input type="phone" class="form-control" placeholder="Numero de telephone" id="phone" >
                     </div>
                     <div class="form-group">
                         <label for="adresse">Adresse:</label>
-                        <input type="text" class="form-control" placeholder="Entez l'adresse" id="adresse" required>
+                        <input type="text" class="form-control" placeholder="Entez l'adresse" id="adresse"  >
                     </div>
                     <div class="form-group">
                         <label for="origin-lang">Langue d'origine:</label>
@@ -256,7 +283,7 @@
                     </div>
                     <div class="form-group mt-3">
                         <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
-                        <input class="form-control d-none" data-recaptcha="true" required data-error="Please complete the Captcha">
+                        <input class="form-control d-none" data-recaptcha="true"  data-error="Please complete the Captcha">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="col text-center">
@@ -267,49 +294,67 @@
         </div>
         <hr/>
         <div class="container-fluid row mt-5">
-            <div class="col-4">
-                <div class="card">
+            <div class="col-4 ">
+                <div class="card card-container mb-2">
                     <img class="card-img-top" src="./assests/images/4.jpg" alt="Card image cap"/>
                     <div class="card-body">
                       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                           Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
                           Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
+                          Sed ultrices sagittis ex, a vehicula .
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
+                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
                           Sed ultrices sagittis ex, a vehicula .</p>
+                    </div>
+                    <div class="text-right mb-2 mr-2">
+                        <a class="card-link" href="#">Lire la suite</a>
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                <div class="card">
+                <div class="card card-container mb-2">
                     <img class="card-img-top" src="./assests/images/5.jpg" alt="Card image cap"/>
                     <div class="card-body">
                       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                           Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
                           Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
+                          Sed ultrices sagittis ex, a vehicula .
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
+                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
                           Sed ultrices sagittis ex, a vehicula .</p>
+                    </div>
+                    <div class="text-right mb-2 mr-2">
+                        <a class="card-link" href="#">Lire la suite</a>
                     </div>
                 </div>
             </div>
             <div class="col-4">
-                <div class="card">
+                <div class="card card-container mb-2">
                     <img class="card-img-top" src="./assests/images/6.jpg" alt="Card image cap"/>
                     <div class="card-body">
                       <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                           Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
                           Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
+                          Sed ultrices sagittis ex, a vehicula .
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
+                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
                           Sed ultrices sagittis ex, a vehicula .</p>
+                    </div>
+                    <div class="text-right mb-2 mr-2">
+                        <a class="card-link" href="#">Lire la suite</a>
                     </div>
                 </div>
             </div>
         </div> 
     </div>
 
-    
-
-
     <div class="navbar navbar-expand-lg nav-footer">
         <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4 pt-2">
             <li class="nav-item">
-                <a class="nav-link" href="#">Accueil</a>
+                <a class="nav-link" href="#main">Accueil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Type de traducteurs</a>
@@ -324,7 +369,7 @@
                 <a class="nav-link" href="#">Recrutement</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">A propos</a>
+                <a class="nav-link" href="#about">A propos</a>
             </li>
         </ul>
 

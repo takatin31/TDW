@@ -108,5 +108,3 @@ CREATE TABLE Note (
     FOREIGN KEY (TraductionId) REFERENCES Traduction (Id),
     FOREIGN KEY (UserId) REFERENCES User (Id)
 );
-
-

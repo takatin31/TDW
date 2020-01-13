@@ -1,0 +1,181 @@
+INSERT INTO Wilaya (id, nom) VALUES
+(1, 'Adrar'),
+(2, 'Chlef'),
+(3, 'Laghouat'),
+(4, 'Oum El Bouaghi'),
+(5, 'Batna'),
+(6, 'Béjaïa'),
+(7, 'Biskra'),
+(8, 'Béchar'),
+(9, 'Blida'),
+(10, 'Bouira'),
+(11, 'Tamanrasset'),
+(12, 'Tébessa'),
+(13, 'Tlemcen'),
+(14, 'Tiaret'),
+(15, 'Tizi Ouzou'),
+(16, 'Alger'),
+(17, 'Djelfa'),
+(18, 'Jijel'),
+(19, 'Sétif'),
+(20, 'Saïda'),
+(21, 'Skikda'),
+(22, 'Sidi Bel Abbès'),
+(23, 'Annaba'),
+(24, 'Guelma'),
+(25, 'Constantine'),
+(26, 'Médéa'),
+(27, 'Mostaganem'),
+(28, 'M''Sila'),
+(29, 'Mascara'),
+(30, 'Ouargla'),
+(31, 'Oran'),
+(32, 'El Bayadh'),
+(33, 'Illizi'),
+(34, 'Bordj Bou Arreridj'),
+(35, 'Boumerdès'),
+(36, 'El Tarf'),
+(37, 'Tindouf'),
+(38, 'Tissemsilt'),
+(39, 'El Oued'),
+(40, 'Khenchela'),
+(41, 'Souk Ahras'),
+(42, 'Tipaza'),
+(43, 'Mila'),
+(44, 'Aïn Defla'),
+(45, 'Naâma'),
+(46, 'Aïn Témouchent'),
+(47, 'Ghardaïa'),
+(48, 'Relizane');
+
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Belhadj',
+    'Said',
+    'Balhadj_sd@gmail.com',
+    'SaidBe',
+    31,
+    'Es-Senia',
+    '50 Rue des martyrs',
+    031562570,
+    031563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Helali',
+    'Karim',
+    'Helali_km@gmail.com',
+    'KarimHe',
+    35,
+    'Boumerdes-centre',
+    '3500 Rue de la liberté',
+    035562570,
+    035563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Bouroubi',
+    'Taous',
+    'Bouroubi_ta@gmail.com',
+    'TaousBo',
+    16,
+    'Oued Smar',
+    '68 rue de la gare',
+    023562570,
+    023563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Sebaa',
+    'Djamila',
+    'Sebaa_dj@gmail.com',
+    'DjamilaSe',
+    39,
+    'Djamaa',
+    '30 Rue des dunes',
+    026562570,
+    026563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Hazi',
+    'Farouk',
+    'Hazi_fa@gmail.com',
+    'FaroukHa',
+    15,
+    'Freha',
+    '10 Rue des oliviers',
+    025562570,
+    025563050
+);
+/*
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Benouadah',
+    'merzak',
+    'Benouadah_me@gmail.com',
+    'merzakBe',
+    15,
+    'Es-Senia',
+    '05 Rue des martyrs',
+    021562570,
+    021563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Brahimi',
+    'Leila',
+    'Brahimi_le@gmail.com',
+    'LeilaBr',
+    19,
+    'El-Eulma',
+    '50 Rue de la liberté',
+    021562570,
+    021563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Hazi',
+    'Farouk',
+    'Hazi_fa@gmail.com',
+    'FaroukHa',
+    15,
+    'Freha',
+    '10 Rue des oliviers',
+    025562570,
+    025563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Hazi',
+    'Farouk',
+    'Hazi_fa@gmail.com',
+    'FaroukHa',
+    15,
+    'Freha',
+    '10 Rue des oliviers',
+    025562570,
+    025563050
+);
+
+INSERT INTO Traducteur(Nom, Prenom, Email, Password, WilayaId, Commune, Adresse, Phone, Fax)
+VALUES(
+    'Hazi',
+    'Farouk',
+    'Hazi_fa@gmail.com',
+    'FaroukHa',
+    15,
+    'Freha',
+    '10 Rue des oliviers',
+    025562570,
+    025563050
+);
+*/

@@ -12,7 +12,12 @@
 
 .navbar .navbar-nav .nav-link {
     color: #ffffffd5;
+    margin-left: 5px;
 } 
+
+.navbar .navbar-nav .nav-item.active > a, .navbar .navbar-nav .nav-item:hover > a {
+    border-top: 1px solid #fff; 
+}
 
 .div-form {
     background-color: white;
@@ -42,4 +47,23 @@ hr {
 
 .nav-footer li {
     margin-left: 10px;
+} 
+
+.card-container {
+    border-width: 2px;
+    border-color: black;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 3vw;
+    font-family: 'Roboto', sans-serif
+}
+
+
+
+.card:hover {
+    -webkit-transform:translate3d(0, 2px, 0);
+    transform:translate3d(0, 2px, 0);
+    box-shadow:2px 8px 8px -5px rgba(0,0,0,0.3)
 }

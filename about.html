@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap-reboot.min.css"/>
+    <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./assests/light_slider/css/lightslider.css"/>
+    <link rel="stylesheet" href="./assests/style/font-awesome.min.css"/>
+    <link rel="stylesheet" href="./assests/style/LineIcons.css">
+    <link rel="stylesheet" href="./assests/style/about.css"/>
+
+    <script type="text/javascript" src="./assests/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="assests/scripts/script.js"></script>
+    <title>DocTranslator</title>
+
+
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg main-navbar">
+        <a class="navbar-brand mr-5" href="#">
+            <img src="./assests/images/logo2.svg" class="img-fluid"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <img src="assests/images/menu2.png"/>
+        </button>
+        <div class="collapse navbar-collapse row" id="navbarNavDropdown">
+            <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4">
+                <li class="nav-item active">
+                    <a class="nav-link" href="main.html">Accueil</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Type de traduction
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Traducteurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Recrutement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">A propos</a>
+                </li>
+            </ul>
+            <div class="navbar-nav col-lg-4 col-md-6 col-sm-8 justify-content-end">
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/facebook.png" class="img-fluid"/>
+                    </a>
+                </div>
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/instagram.png" class="img-fluid"/>
+                    </a>
+                </div>
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/twitter.png" class="img-fluid"/>
+                    </a>
+                </div>
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/linkedin.png" class="img-fluid"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid row">
+        <div class="col-7">
+
+        </div>
+        <div class="col-5 div-form">
+            <h2 class="text-center mt-3">Contactez nous</h2>
+            <hr/>
+            <form action="/action_page.php">
+                <div class="form-group">
+                  <label for="nom">Nom :</label>
+                  <input type="text" class="form-control" placeholder="Entrez Nom" id="nom" required>
+                </div>
+                <div class="form-group">
+                  <label for="prenom">Prenom:</label>
+                  <input type="text" class="form-control" placeholder="Entez prenom" id="prenom" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" class="form-control" placeholder="Entez Email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="numero de telephone">Numero de telephone:</label>
+                    <input type="phone" class="form-control" placeholder="Numero de telephone" id="phone" required>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</body>
+</html>
