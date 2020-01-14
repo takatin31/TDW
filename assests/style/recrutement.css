@@ -1,0 +1,64 @@
+.main-navbar {
+    background-color: rgb(14, 53, 136);
+}
+
+body {
+    background-color: #ECF2FF;
+}
+
+
+.title {
+    font-size: 2vw;
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #ffffffd5;
+    margin-left: 5px;
+} 
+
+            
+.navbar .navbar-nav .nav-item.active > a, .navbar .navbar-nav .nav-item:hover > a {
+    border-top: 1px solid #fff; 
+}
+    
+.map {
+    border: solid #000;
+    border-width: 1px;
+}
+
+.form {
+    border: solid #000;
+    border-width: 2px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.nav-footer {
+    background-color: #00034F;
+}
+
+.nav-footer a {
+    color: white;
+}
+
+.nav-footer li {
+    margin-left: 10px;
+} 
+
+.add_input {
+    background-color: rgb(6, 119, 128);
+    border-width: 0px;
+    border-radius: 5px;
+
+}
+
+.delete_input {
+    background-color: red;
+    border-width: 0px;
+    border-radius: 5px;
+}
+
+
+.fa {
+    color: white;
+}
