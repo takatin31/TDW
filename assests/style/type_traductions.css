@@ -2,12 +2,12 @@
     background-color: rgb(14, 53, 136);
 }
 
-.main-container {
-    background-color: #ECF2FF;
-}
-
 .title {
     font-size: 2vw;
+}
+
+body {
+    background-color: #ECF2FF;
 }
 
 .navbar .navbar-nav .nav-link {
@@ -15,30 +15,25 @@
     margin-left: 5px;
 } 
 
+            
 .navbar .navbar-nav .nav-item.active > a, .navbar .navbar-nav .nav-item:hover > a {
     border-top: 1px solid #fff; 
 }
+    
+.map {
+    border: solid #000;
+    border-width: 1px;
+}
 
-.div-form {
-    background-color: white;
+.form {
+    border: solid #000;
+    border-width: 2px;
     border-radius: 10px;
-}
-
-
-hr {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.card {
-    background-color: transparent;
-    border-width: 0px;
 }
 
 .nav-footer {
     background-color: #00034F;
+    
 }
 
 .nav-footer a {
@@ -49,6 +44,21 @@ hr {
     margin-left: 10px;
 } 
 
+.card {
+    background-color: transparent;
+    border-width: 0px;
+}
+
+
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    width: 80%;
+}
+
 .card-container {
     border-width: 2px;
     border-color: black;
@@ -56,8 +66,8 @@ hr {
 
 .card-title {
     font-weight: bold;
-    font-size: 3vw;
-    font-family: 'Roboto', sans-serif
+    font-size: 2vw;
+    font-family: 'Roboto', sans-serif;
 }
 
 

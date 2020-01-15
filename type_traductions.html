@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./assests/style/font-awesome.min.css"/>
     <link rel="stylesheet" href="./assests/style/LineIcons.css">
-    <link rel="stylesheet" href="./assests/style/recrutement.css"/>
+    <link rel="stylesheet" href="./assests/style/type_traductions.css"/>
 
     <script type="text/javascript" src="./assests/scripts/jquery.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assests/scripts/recrutement.js"></script>
+    <script type="text/javascript" src="assests/scripts/script.js"></script>
     <title>DocTranslator</title>
 
 
@@ -72,82 +72,67 @@
             </div>
         </div>
     </nav>
-
+    <div class="container-fluid">
+        <h1 class="text-center mt-3">Voici les types de traduction proposés dans notre site </h1>
+        <hr style="width: 50%;"/>
+    </div>
     
-
-    <div class="container-fluid mb-5 mt-5 col-5 form">
-            <h2 class="text-center mt-3">Demande de recrutement</h2>
-            <hr/>
-            <form  method="POST">
-                <div class="form-group">
-                  <label for="nom">Nom :</label>
-                  <input type="text" class="form-control" placeholder="Entrez Nom" id="nom" >
-                </div>
-                <div class="form-group">
-                  <label for="prenom">Prenom:</label>
-                  <input type="text" class="form-control" placeholder="Entez prenom" id="prenom" >
-                </div>
-                <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" placeholder="Entez Email" id="email" >
-                </div>
-                <div class="form-group">
-                    <label for="numero de telephone">Numero de telephone:</label>
-                    <input type="phone" class="form-control" placeholder="Numero de telephone" id="phone" >
-                </div>
-                <div class="form-group">
-                    <label for="adresse">Adresse:</label>
-                    <input type="text" class="form-control" placeholder="Entez l'adresse" id="adresse"  >
-                </div>
-                <div class="form-group" id="languages_input">
-                    <label for="origin-lang">Langues maitrisées:</label>
-                    <div class="row custom-input mt-2 justify-content-center">
-                        <div class="col-md-12 col-lg-8">
-                            <select class="custom-select mastered_lang"></select>
-                        </div>
-                        <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-around">
-                            <div class="btn btn-default add_input"><i class="fa fa-plus"></i></div>
-                            <div class="btn btn-default delete_input"><i class="fa fa-trash-o"></i></div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="form-group">
-                    <label for="desired-lang">Langue souhaitée:</label>
-                    <select class="custom-select" id="desired-lang">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="traduction-type">Type de traduction:</label>
-                    <select class="custom-select" id="traduction-type">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="comment">Comment:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="pro-traductor">
-                    <label class="custom-control-label" for="pro-traductor">Traducteur assermenté</label>
-                </div>
-                <div class="custom-file mt-3">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Importer le fichier</label>
-                </div>
-                <div class="col text-center">
-                    <button type="submit" class="btn btn-primary mb-2 mt-5">Submit</button>
-                </div>
-              </form>
+    
+    <div class="container-fluid row d-flex justify-content-around my-5 text-center">
         
+        <div class="col-3">
+            <div class="card card-container  pt-3 pr-2 pl-2" style="height: 100%; background-color: rgb(181, 204, 255);">
+                <div class=" d-flex align-items-center ">
+                    <h5 class="card-title" style="text-align: center;">Traduction générale</h5>
+                </div>
+                <hr class="align-self-center"/>
+                <div class="card-body">
+                
+                  <p class="card-text">une traduction pour laquelle le traducteur ne doit 
+                      pas disposer d’une expérience ou de connaissances pointues. 
+                      C’est le cas par exemple des articles d’actualité, des descriptions de voyages 
+                      et des communications professionnelles. Nous sélectionnons néanmoins toujours, 
+                      même pour des traductions générales, le traducteur le plus adapté, par exemple 
+                      un traducteur qui a déjà travaillé pour le même client, ou un traducteur 
+                      particulièrement intéressé par certains sujets.</p>
+                </div>
+                
+            </div>
+        </div>
 
+        <div class="col-3">
+            <div class="card card-container pt-3 pr-2 pl-2" style="height: 100%; background-color: rgb(133, 172, 255);">
+                <div class=" d-flex align-items-center">
+                    <p class="card-title">Traduction Scientifique</p>
+                </div>
+                <hr class="align-self-center"/>
+                <div class="card-body">
+                  <p class="card-text">La traduction scientifique s’applique à différents documents,
+                       tels que les publications, les revues, les magazines, les comptes rendus,
+                        les rapports d’études, les projets de recherche, les brevets et les normes.
+                         Dans certains cas, elle nécessite alors un réel travail en termes de contenus,
+                          de format et parfois même de législation..</p>
+                </div>
+                
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="card card-container pt-3 pr-2 pl-2" style="height: 100%; background-color: rgb(87, 140, 255);">
+                <div class=" d-flex align-items-center">
+                    <p class="card-title">Traduction site web</p>
+                </div>
+                <hr class="align-self-center"/>
+                <div class="card-body">
+                  <p class="card-text">Si vous jugez vous aussi que publier 
+                      un site Web bilingue est une décision rentable, 
+                      confiez-en la traduction à des professionnels 
+                      pour que votre contenu en ligne projette la même 
+                      image professionnelle dans les deux langues.</p>
+                </div>
+                
+            </div>
+        </div>
        
     </div>
     <div class="navbar navbar-expand-lg nav-footer">
