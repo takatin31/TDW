@@ -1,0 +1,57 @@
+.main-navbar {
+    background-color: rgb(14, 53, 136);
+}
+
+
+
+body {
+    background-color: #ECF2FF;
+    height: 100%;
+}
+
+
+.title {
+    font-size: 2vw;
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #ffffffd5;
+    margin-left: 5px;
+} 
+
+            
+.main-navbar .navbar-nav .nav-item.active > a, .main-navbar .navbar-nav .nav-item:hover > a {
+    border-top: 1px solid #fff; 
+}
+
+
+.nav-footer {
+    background-color: #00034F;
+}
+
+.nav-footer a {
+    color: white;
+}
+
+.nav-footer li {
+    margin-left: 10px;
+} 
+
+.user_bloc {
+    background-color: white;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.info-element {
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 5px;
+}
+
+.profile {
+    height: 20vw;
+}
+
+#messages {
+    height: 20vw;
+}
