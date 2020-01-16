@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap-reboot.min.css"/>
+    <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="./assests/style/font-awesome.min.css"/>
+    <link rel="stylesheet" href="./assests/style/LineIcons.css">
+    <link rel="stylesheet" href="./assests/style/traducteurs.css"/>
+    <link rel="stylesheet" href="./assests/style/search_bar.css"/>
+
+    <script type="text/javascript" src="./assests/scripts/jquery.min.js"></script>
+    <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./assests/scripts/choices.js"></script>
+    <script type="text/javascript" src="assests/scripts/script.js"></script>
+
+   
+
+    <title>DocTranslator</title>
+
+
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg main-navbar">
+        <a class="navbar-brand mr-5" href="#">
+            <img src="./assests/images/logo2.svg" class="img-fluid"/>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <img src="assests/images/menu2.png"/>
+        </button>
+        <div class="collapse navbar-collapse row" id="navbarNavDropdown">
+            <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4">
+                <li class="nav-item">
+                    <a class="nav-link" href="main.html">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="type_traductions.html">Types de traduction</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="traducteurs.html">Traducteurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="blog.html">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="recrutement.html">Recrutement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about.html">A propos</a>
+                </li>
+            </ul>
+            <div class="navbar-nav col-lg-4 col-md-6 col-sm-8 justify-content-end">
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/facebook.png" class="img-fluid"/>
+                    </a>
+                </div>
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/instagram.png" class="img-fluid"/>
+                    </a>
+                </div>
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/twitter.png" class="img-fluid"/>
+                    </a>
+                </div>
+                <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                    <a class="nav-link" href="#">
+                        <img src="./assests/images/linkedin.png" class="img-fluid"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    
+    
+    <div class="container-fluid">
+        <div class="s009">
+            <form>
+              <div class="inner-form">
+                <div class="basic-search">
+                  <div class="input-field">
+                    <input id="search" type="text" placeholder="Entrez le nom du traducteur" />
+                    <div class="icon-wrap">
+                      <svg class="svg-inline--fa fa-search fa-w-16" fill="#ccc" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="advance-search">
+                  <span class="desc">Recherche Avancée</span>
+                  <div class="row">
+                    <div class="input-field">
+                      <div class="input-select">
+                        <select data-trigger="" name="choices-single-defaul">
+                          <option placeholder="" value="">Type de traduction</option>
+                          <option>Générale</option>
+                          <option>Scientifique</option>
+                          <option>Site web</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="input-field">
+                      <div class="input-select">
+                        <select data-trigger="" name="choices-single-defaul">
+                          <option placeholder="" value="">Langue</option>
+                          <option>Anglais</option>
+                          <option>Arabe</option>
+                          <option>Francais</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="input-field">
+                      <div class="input-select">
+                        <select data-trigger="" name="choices-single-defaul">
+                          <option placeholder="" value="">Note</option>
+                          <option>0</option>
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row third">
+                    <div class="input-field">
+                      <div class="result-count">
+                        <span>4 </span>results</div>
+                      <div class="group-btn">
+                        <button class="btn-delete" id="delete">RESET</button>
+                        <button class="btn-search">SEARCH</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+        
+        <hr style="width: 75%;"/>
+        
+        
+        <div class="container-fluid search-results mb-5">
+          <div class="row result">
+            <div class="col-2">
+              <img src="./assests/images/2.jpg" class="img-fluid"/>
+            </div>
+
+            <div class="col-10 row justify-content-center">
+              <div class="col-5">
+                <div>
+                  <h4>Hammas Ali Cherif</h4>
+                  <br/>
+                </div>
+                <div>
+                  <div class="btn btn-default general-tag">Général</div>
+                  <div class="btn btn-default scientifique-tag">Scientifique</div>
+                  <div class="btn btn-default web-tag">Site Web</div>
+                </div>
+              </div>
+
+              <div class="col-7 d-flex flex-column align-items-end justify-content-between pr-5">
+                <div class="row">
+                  <h6 class="mr-2">Rating</h6>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <br/>
+                </div>
+                <br/>
+                <div class="btn btn-default visit-profil-btn">Visiter Profil</div>
+              </div>
+              
+            </div>
+          </div>
+          <hr style="width: 75%;"/>
+          <div class="row">
+            <div class="col-2">
+              <img src="./assests/images/2.jpg" class="img-fluid"/>
+            </div>
+
+            <div class="col-10 row justify-content-center">
+              <div class="col-5">
+                <div>
+                  <h4>Chebbah Mehdi</h4>
+                  <br/>
+                </div>
+                <div>
+                  <div class="btn btn-default general-tag">Général</div>
+                  <div class="btn btn-default web-tag">Site Web</div>
+                </div>
+              </div>
+
+              <div class="col-7 d-flex flex-column align-items-end justify-content-between pr-5">
+                <div class="row">
+                  <h6 class="mr-2">Rating</h6>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <br/>
+                </div>
+                <br/>
+                <div class="btn btn-default visit-profil-btn">Visiter Profil</div>
+              </div>
+            </div>
+          </div>
+          <hr style="width: 75%;"/>
+          <div class="row">
+            <div class="col-2">
+              <img src="./assests/images/2.jpg" class="img-fluid"/>
+            </div>
+
+            <div class="col-10 row justify-content-center">
+              <div class="col-5">
+                <div>
+                  <h4>Dada Djamel</h4>
+                  <br/>
+                </div>
+                <div>
+                  <div class="btn btn-default scientifique-tag">Scientifique</div>
+                </div>
+              </div>
+
+              <div class="col-7 d-flex flex-column align-items-end justify-content-between pr-5">
+                <div class="row">
+                  <h6 class="mr-2">Rating</h6>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <br/>
+                </div>
+                <br/>
+                <div class="btn btn-default visit-profil-btn">Visiter Profil</div>
+              </div>
+
+            </div>
+          </div>
+          <hr style="width: 75%;"/>
+          <div class="row">
+            <div class="col-2">
+              <img src="./assests/images/2.jpg" class="img-fluid"/>
+            </div>
+
+            <div class="col-10 row justify-content-center">
+              <div class="col-5">
+                <div>
+                  <h4>Attala Kheiredine</h4>
+                  <br/>
+                </div>
+                <div>
+                  <div class="btn btn-default general-tag">Général</div>
+                </div>
+              </div>
+
+              <div class="col-7 d-flex flex-column align-items-end justify-content-between pr-5">
+                <div class="row">
+                  <h6 class="mr-2">Rating</h6>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star active-star"></i>
+                  <i class="fa fa-star"></i>
+                  <br/>
+                </div>
+                <br/>
+                <div class="btn btn-default visit-profil-btn">Visiter Profil</div>
+              </div>
+            </div>
+          </div>
+    </div>
+  </div>
+    <div class="navbar navbar-expand-lg nav-footer">
+        <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4 pt-2">
+            <li class="nav-item">
+                <a class="nav-link" href="main.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="type_traductions.html">Type de traducteurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="traducteurs.html">Traducteurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="blog.html">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="recrutement.html">Recrutement</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">A propos</a>
+            </li>
+        </ul>
+
+        <div class="navbar-nav col-lg-4 col-md-6 col-sm-8 justify-content-end">
+            <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <img src="./assests/images/facebook2.png" class="img-fluid"/>
+                </a>
+            </div>
+            <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <img src="./assests/images/instagram2.png" class="img-fluid"/>
+                </a>
+            </div>
+            <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <img src="./assests/images/twitter2.png" class="img-fluid"/>
+                </a>
+            </div>
+            <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
+                <a class="nav-link" href="#">
+                    <img src="./assests/images/linkedin2.png" class="img-fluid"/>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        const customSelects = document.querySelectorAll("select");
+        const deleteBtn = document.getElementById('delete')
+        const choices = new Choices('select',
+        {
+          searchEnabled: false,
+          itemSelectText: '',
+          removeItemButton: true,
+        });
+    </script>
+</body>
+</html>
