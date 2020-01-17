@@ -1,110 +1,184 @@
+//ajouter les langues dans le traductor + type de traudction
 CREATE TABLE Wilaya(
     Id INTEGER PRIMARY KEY,
     Nom VARCHAR(30)
 );
 
-CREATE TABLE User(
-    Id INTEGER PRIMARY KEY AutoIncrement,
+CREATE TABLE Commune(
+    Id INTEGER PRIMARY KEY,
     Nom VARCHAR(30),
-    Prenom VARCHAR(30),
-    Email VARCHAR(50),
-    Password VARCHAR(10),
     WilayaId INTEGER,
-    Commune VARCHAR(50),
-    Adresse VARCHAR(100),
-    Phone INTEGER,
-    Fax INTEGER,
-    FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id) 
+    FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id)
 );
 
-CREATE TABLE Traducteur(
-    Id INTEGER PRIMARY KEY AutoIncrement,
+
+CREATE TABLE TraducteurData(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    TraducteurId INTEGER,
+    Assermente BOOLEAN,
+    Cv VARCHAR(30),
+    Assermetation_doc VARCHAR(30),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
+);
+
+CREATE TABLE Utilisateur(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     Nom VARCHAR(30),
     Prenom VARCHAR(30),
     Email VARCHAR(50),
-    Password VARCHAR(10),
+    Password VARCHAR(30),
     WilayaId INTEGER,
-    Commune VARCHAR(50),
+    Commune INTEGER,
     Adresse VARCHAR(100),
     Phone INTEGER,
-    Fax INTEGER,
-    Assermente BOOL,
-    Cv BLOB,
-    Assermetation_doc BLOB,
-    FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id) 
+    FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id)
 );
 
 CREATE TABLE Langue(
-    Nom VARCHAR(30) PRIMARY KEY
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Nom VARCHAR(30)
 );
 
-CREATE TABLE Signal(
-    Id INTEGER PRIMARY KEY AutoIncrement,
-    UserId INTEGER,
+CREATE TABLE MaitriseLangue(
+    TraducteurId INTEGER,
+    LangueId INTEGER,
+    PRIMARY KEY(TraducteurId, LangueId),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
+    FOREIGN KEY (LangueId) REFERENCES Langue (Id)
+);
+
+CREATE TABLE Faxes(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    fax INTEGER,
+    UtilisateurId INTEGER,
+    FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id)
+);
+
+
+
+CREATE TABLE Signalement(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    UtilisateurId INTEGER,
     TraducteurId INTEGER,
     Date DATE,
-    FOREIGN KEY (UserId) REFERENCES User(Id),
-    FOREIGN KEY (TraducteurId) REFERENCES Traducteur (Id)
-);
-
-CREATE TABLE Document_Origin(
-    Id INTEGER PRIMARY KEY AutoIncrement,
-    Document BLOB
-);
-
-CREATE TABLE Document_Traduit(
-    Id INTEGER PRIMARY KEY AutoIncrement,
-    Document BLOB
+    Cause VARCHAR(1000),
+    FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
 );
 
 CREATE TABLE Reference(
-    Id INTEGER PRIMARY KEY AutoIncrement,
-    Document BLOB,
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Document VARCHAR(30),
     TraducteurId INTEGER,
-    FOREIGN KEY (TraducteurId) REFERENCES Traducteur (Id)
+    FOREIGN KEY (TraducteurId) REFERENCES TraducteurData (Id)
 );
 
-CREATE TABLE Demande_Faite(
-    Id INTEGER PRIMARY KEY AutoIncrement,
-    UserId INTEGER,
-    DocumentId INTEGER,
-    LangueO VARCHAR(30),
-    LangueD VARCHAR(30),
+CREATE TABLE Demande_traduction(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    UtilisateurId INTEGER,
+    Document VARCHAR(30),
+    TraducteurId INTEGER,
+    LangueO INTEGER,
+    LangueD INTEGER,
     Date DATE,
-    FOREIGN KEY (DocumentId) REFERENCES Document_Origin (Id),
-    FOREIGN KEY (LangueO) REFERENCES Langue (Nom),
-    FOREIGN KEY (LangueD) REFERENCES Langue (Nom)
+    FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
+    FOREIGN KEY (LangueO) REFERENCES Langue (Id),
+    FOREIGN KEY (LangueD) REFERENCES Langue (Id)
 );
 
-CREATE TABLE Demande_Accepte(
-    Id INTEGER PRIMARY KEY AutoIncrement,
+CREATE TABLE DemandeT_Accepte(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
     TraducteurId INTEGER,
-    Date DATE,
-    FOREIGN KEY (DemandeId) REFERENCES Demande_Faite (Id),
-    FOREIGN KEY (TraducteurId) REFERENCES Traducteur (Id)
+    Prix INTEGER,
+    FOREIGN KEY (DemandeId) REFERENCES Demande_traduction (Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
 );
 
-CREATE TABLE Traduction(
-    Id INTEGER PRIMARY KEY AutoIncrement,
-    DocumentId INTEGER,
-    FOREIGN KEY (DocumentId) REFERENCES Document_Traduit (Id)
-);
-
-CREATE TABLE Demande_Traite(
-    Id INTEGER PRIMARY KEY AutoIncrement,
+CREATE TABLE DemandeT_paiement(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
+    Document VARCHAR(30),
+    Etat INTEGER,
+    FOREIGN KEY (DemandeId) REFERENCES DemandeT_Accepte (Id)
+);
+
+CREATE TABLE Traduction_debutee(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    DemandeId INTEGER,
+    Date DATE,
+    FOREIGN KEY (DemandeId) REFERENCES DemandeT_Accepte (Id)
+);
+
+CREATE TABLE Traduction_finie(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     TraductionId INTEGER,
     Date DATE,
-    FOREIGN KEY (DemandeId) REFERENCES Demande_Accepte (Id),
-    FOREIGN KEY (TraductionId) REFERENCES Traduction (Id)
+    Etat INTEGER,
+    FOREIGN KEY (TraductionId) REFERENCES Traduction_debutee (Id)
 );
+
+
+CREATE TABLE Demande_devis(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    UtilisateurId INTEGER,
+    Document VARCHAR(30),
+    TraducteurId INTEGER,
+    LangueO INTEGER,
+    LangueD INTEGER,
+    Date DATE,
+    FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
+    FOREIGN KEY (LangueO) REFERENCES Langue (Id),
+    FOREIGN KEY (LangueD) REFERENCES Langue (Id)
+);
+
+CREATE TABLE DemandeD_Accepte(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    DemandeId INTEGER,
+    TraducteurId INTEGER,
+    Prix INTEGER,
+    FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
+);
+
+CREATE TABLE DemandeD_paiement(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    DemandeId INTEGER,
+    Document VARCHAR(30),
+    Etat INTEGER,
+    FOREIGN KEY (DemandeId) REFERENCES DemandeD_Accepte (Id)
+);
+
+CREATE TABLE Devi_debutee(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    DemandeId INTEGER,
+    Date DATE,
+    FOREIGN KEY (DemandeId) REFERENCES DemandeD_Accepte (Id)
+);
+
+CREATE TABLE Devi_finie(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    TraductionId INTEGER,
+    Date DATE,
+    Etat INTEGER,
+    FOREIGN KEY (TraductionId) REFERENCES Devi_debutee (Id)
+);
+
 
 CREATE TABLE Note (
-    TraductionId INTEGER,
-    UserId INTEGER,
+    TraducteurId INTEGER,
+    UtilisateurId INTEGER,
     Valeur INTEGER,
-    PRIMARY KEY (TraductionId, UserId),
-    FOREIGN KEY (TraductionId) REFERENCES Traduction (Id),
-    FOREIGN KEY (UserId) REFERENCES User (Id)
+    PRIMARY KEY (TraducteurId, UtilisateurId),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
+    FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur (Id)
 );
+
+CREATE TABLE Articles (
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Titre VARCHAR(100),
+    Image VARCHAR(30),
+    body VARCHAR(1000)
+)

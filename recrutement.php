@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap-grid.min.css"/>
     <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap-reboot.min.css"/>
@@ -75,72 +78,136 @@
 
     
 
-    <div class="container-fluid mb-5 mt-5 col-5 form">
+    <div class="container-fluid mb-5 mt-5 col-md-8 col-lg-5 col-sm-10 form">
             <h2 class="text-center mt-3">Demande de recrutement</h2>
             <hr/>
-            <form  method="POST">
+            <form  method="POST" action="recrutementHandler.php">
                 <div class="form-group">
                   <label for="nom">Nom :</label>
-                  <input type="text" class="form-control" placeholder="Entrez Nom" id="nom" >
+                  <input type="text" class="form-control" placeholder="Entrez Nom" name="nom" required>
                 </div>
                 <div class="form-group">
                   <label for="prenom">Prenom:</label>
-                  <input type="text" class="form-control" placeholder="Entez prenom" id="prenom" >
+                  <input type="text" class="form-control" placeholder="Entez prenom" name="prenom" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" placeholder="Entez Email" id="email" >
+                    <input type="email" class="form-control" placeholder="Entez Email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="Mot de passe">Mot de passe:</label>
+                    <input type="password" class="form-control" placeholder="Mot de passe" name="password" required>
                 </div>
                 <div class="form-group">
                     <label for="numero de telephone">Numero de telephone:</label>
-                    <input type="phone" class="form-control" placeholder="Numero de telephone" id="phone" >
+                    <input type="phone" class="form-control" placeholder="Numero de telephone" name="phone" required>
+                </div>
+                <div class="form-group" id="fax-input">
+                    <label for="fax">Fax:</label>
+                    <div class="row custom-input mt-2 justify-content-center">
+                        <div class="col-md-12 col-lg-8">
+                            <input type="phone" class="form-control fax" placeholder="Numero de Fax" required>
+                        </div>
+                        <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-around">
+                            <div class="btn btn-default add_input_fax"><i class="fa fa-plus"></i></div>
+                            <div class="btn btn-default delete_input_fax"><i class="fa fa-trash-o"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="wilaya">Wilaya:</label>
+                    <select class="custom-select" name="wilaya" id="wilaya">
+                        <?php
+                        require_once('controller.php');
+                        $cf = new recrutement_controller();
+                        $qtf = $cf->get_wilayas();
+                        foreach($qtf as $rs){
+                            echo '<option>'.$rs['Nom'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="commune">Commune:</label>
+                    <select class="custom-select" name="commune" id="commune">
+                        <?php
+                        require_once('controller.php');
+                        $cf = new recrutement_controller();
+                        $qtf = $cf->get_commune('Adrar');
+                        foreach($qtf as $rs){
+                            echo '<option>'.$rs['Nom'].'</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="adresse">Adresse:</label>
-                    <input type="text" class="form-control" placeholder="Entez l'adresse" id="adresse"  >
+                    <input type="text" class="form-control" placeholder="Entez l'adresse" name="adresse" required>
                 </div>
                 <div class="form-group" id="languages_input">
                     <label for="origin-lang">Langues maitrisées:</label>
                     <div class="row custom-input mt-2 justify-content-center">
                         <div class="col-md-12 col-lg-8">
-                            <select class="custom-select mastered_lang"></select>
+                            <select class="custom-select mastered_lang">
+                                <?php
+                                require_once('controller.php');
+                                $cf = new recrutement_controller();
+                                $qtf = $cf->get_langues();
+                                foreach($qtf as $lg){
+                                    echo '<option>'.$lg['Nom'].'</option>';
+                                }
+                                ?>
+                            </select>
                         </div>
                         <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-around">
                             <div class="btn btn-default add_input"><i class="fa fa-plus"></i></div>
                             <div class="btn btn-default delete_input"><i class="fa fa-trash-o"></i></div>
                         </div>
                     </div>
-                    
                 </div>
-                <div class="form-group">
-                    <label for="desired-lang">Langue souhaitée:</label>
-                    <select class="custom-select" id="desired-lang">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="traduction-type">Type de traduction:</label>
-                    <select class="custom-select" id="traduction-type">
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="comment">Comment:</label>
-                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                <div class="form-group" id="types_input">
+                    <label for="types_traduction">Types de traduction maitrisés:</label>
+                    <div class="row custom-input mt-2 justify-content-center">
+                        <div class="col-md-12 col-lg-8">
+                            <select class="custom-select mastered_types">
+                                <option>Generale</option>
+                                <option>Scientique</option>
+                                <option>Site Web</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-around">
+                            <div class="btn btn-default add_input_type"><i class="fa fa-plus"></i></div>
+                            <div class="btn btn-default delete_input_type"><i class="fa fa-trash-o"></i></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="pro-traductor">
+                    <input type="checkbox" class="custom-control-input" name="pro-traductor" id="pro-traductor">
                     <label class="custom-control-label" for="pro-traductor">Traducteur assermenté</label>
                 </div>
+                <div class="custom-file mt-3" style="display: none;">
+                    <input type="file" class="custom-file-input" name="assermentationP">
+                    <label class="custom-file-label" for="customFile">Preuve d'assermentation</label>
+                </div>
                 <div class="custom-file mt-3">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Importer le fichier</label>
+                    <input type="file" class="custom-file-input" name="cv" required>
+                    <label class="custom-file-label" for="customFile">CV</label>
+                </div>
+                <div class="mt-3 row justify-content-around">
+                    <div class="col-md-3 col-sm-10 mt-2">
+                        <input type="file" class="custom-file-input" name="reference1">
+                        <label class="custom-file-label" for="customFile">Ref1</label>
+                    </div>
+                    
+                    <div class="col-md-3 col-sm-10 mt-2">
+                        <input type="file" class="custom-file-input" name="reference2">
+                        <label class="custom-file-label" for="customFile">Ref2</label>
+                    </div>
+
+                    <div class="col-md-3 col-sm-10 mt-2">
+                        <input type="file" class="custom-file-input" name="reference3">
+                        <label class="custom-file-label" for="customFile">Ref3</label>
+                    </div>
                 </div>
                 <div class="col text-center">
                     <button type="submit" class="btn btn-primary mb-2 mt-5">Submit</button>

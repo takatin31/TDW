@@ -1,35 +1,95 @@
-var langues = ["Albanais","Allemand","Amazigh","Anglais","Arabe","Arménien","Aymara","Bengali","Catalan","Chinois","Coréen","Croate","Danois","Espagnol","Français","Guarani","Grec","Hongrois","Italien","Kikongo","Kiswahili","Lingala","Malais","Mongol","Néerlandais","Occitan","Ourdou","Persan","Portugais","Quechua","Roumain","Russe","Samoan","Serbe","Sesotho","Slovaque","Slovène","Suédois","Tamoul","Turc"];
-
-$(document).ready(function(){
-
-    let list = $('.mastered_lang')
-    for (let i = 0; i < langues.length; i++) {
-        list.append('<option>'+langues[i]+'</option>')
-    }
-})
-
 
 $(document).on("click", ".add_input" , function() {
-    let parent = $('<div class="row custom-input mt-2 justify-content-center">'+
-                '<div class="col-8">'+
-                    '<select class="custom-select mastered_lang"></select>'+
-                '</div>'+
-                '<div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-around">'+
-                    '<div class="btn btn-default add_input"><i class="fa fa-plus"></i></div>'+
-                    '<div class="btn btn-default delete_input"><i class="fa fa-trash-o"></i></div>'+
-                '</div>'+
-            '</div>'
-        ).appendTo("#languages_input");
 
-    let list = parent.find( "select" )
-    for (let i = 0; i < langues.length; i++) {
-        list.append('<option>'+langues[i]+'</option>')
-    }
+    let element = $('#languages_input > div').eq(0).clone();
+        
+    $('#languages_input').append(element);
+    
 });
 
 $(document).on("click", ".delete_input" , function() {
-    let nbr = $(".custom-input").length;
+    let nbr = $(".mastered_lang").length;
 
     if (nbr > 1)
         $(this).parent().parent().remove();
 });
+
+$(document).on("click", ".add_input_fax" , function() {
+
+    let element = $('#fax-input > div').eq(0).clone();
+    
+    $('#fax-input').append(element);
+    
+});
+
+$(document).on("click", ".delete_input_fax" , function() {
+    let nbr = $(".fax").length;
+
+    if (nbr > 1)
+        $(this).parent().parent().remove();
+});
+
+$(document).on("click", ".add_input_type" , function() {
+
+    let nbr = $('#types_input > div').length;
+
+    let v = $('.mastered_types option:selected').text();
+
+   
+    
+
+    if (nbr < 3){
+        let tab = ['Generale', 'Scientique', 'Site Web'];
+
+        let element = $('#types_input > div').eq(0).clone();
+
+        element.find('.custom-select').empty();
+
+        for (let i = 0 ; i < 3; i++){
+            if (!v.includes(tab[i])){
+                element.find('.custom-select').append('<option>'+tab[i]+'</option>');
+            }
+        }
+    
+        $('#types_input').append(element);
+    }
+
+
+    
+});
+
+$(document).on("click", ".delete_input_type" , function() {
+    let nbr = $(".mastered_types").length;
+
+    if (nbr > 1)
+        $(this).parent().parent().remove();
+});
+
+$(document).on("change", "#wilaya" , function() {
+    
+    $('#commune').empty();
+
+    $.ajax({
+        type: "POST",
+        data: {
+          wilaya:this.value
+        },
+        url: "communeHandler.php",
+
+        dataType: "html",
+        success : function(result){
+            
+            $("#commune").append(result);
+        }
+      }); 
+});
+
+$(document).on("click", "#pro-traductor" , function() {
+    let checked = ($(this).is(":checked"));
+    if (checked)
+        $('#assermentationP').parent().css('display', 'block');
+    else
+        $('#assermentationP').parent().css('display','none');
+});
+
+
