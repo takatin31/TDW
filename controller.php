@@ -54,6 +54,25 @@
             $mp = new projet_modal();
             $r = $mp->addTypes($idUser, $types);
         }
+
+        public function getTraductor_Asserm_Type_Lang($asser, $langues, $type){
+            $mp = new projet_modal();
+            $r = $mp->getTraductor_Ass_Type_Lng($asser, $langues, $type);
+            return $r;
+        }
+
+        public function getNote($idUser){
+            $mp = new projet_modal();
+            $r = $mp->getNote($idUser);
+            return $r;
+        }
+    }
+
+    class demande_traduction_controller{
+        public function addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $traductorId, $langueO, $langueD, $type, $comment, $assermente, $file){
+            $mp = new projet_modal();
+            $r = $mp->insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $traductorId, $langueO, $langueD, $type, $comment, $assermente, $file);
+        }
     }
 
     class langues_controller {

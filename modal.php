@@ -86,6 +86,117 @@ class projet_modal{
         return $id;
     }
 
+    public function getTraductor_Ass_Type_Lng($asserm, $langues, $type){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        
+        if (strcmp($asserm, 'true') == 0){
+            $asser_doc = 'NOT NULL';
+        }else{
+            $asser_doc = 'NULL';
+        }
+ 
+        $rq = "SELECT t3.*, t4.note, t5.nbr
+                FROM
+                (
+                select U.id userid, GROUP_CONCAT(L.Nom SEPARATOR ' ') langues
+                from utilisateur U
+                JOIN maitriselangue ML
+                ON U.Id = ML.TraducteurId
+                JOIN langue L
+                ON L.Id = ML.LangueId
+                group by U.id
+                HAVING GROUP_CONCAT(L.Nom SEPARATOR ' ') like '%".$langues[0]."%'
+                and GROUP_CONCAT(L.Nom SEPARATOR ' ') like '%".$langues[0]."%'
+                ) as t1
+                JOIN
+                (
+                select U.id userid, MT.Type
+                from utilisateur U
+                JOIN maitrisetype MT
+                ON U.Id = MT.TraducteurId
+                    where mt.Type in ('Generale')
+                ) as t2
+                on t1.userid = t2.userid
+                JOIN
+                (
+                    select U.Id userid, U.Image Image, U.Nom Nom, U.Prenom Prenom
+                from utilisateur U
+                JOIN traducteurdata TD
+                ON U.Id = TD.TraducteurId
+                WHERE TD.Assermetation_doc is NULL
+                    )as t3
+                    on t3.userid = t2.userid
+                JOIN (
+                    select U.id userid, 
+                    CASE
+                    when AVG(N.valeur) is NULL then 0
+                    when AVG(N.valeur) is NOT NULL then AVG(N.valeur)
+                    END as note
+                    from utilisateur U
+                    LEfT Join note N
+                    On U.Id = N.TraducteurId
+                    group by u.Id
+                    ) as t4
+                    on t3.userid = t4.userid
+                JOIN (
+                    select u.id userid, COUNT(tf.Id) nbr
+                    from utilisateur u
+                    LEFT join demandet_accepte da
+                    on u.Id = da.TraducteurId
+                    left join traduction_debutee td
+                    on td.DemandeId = da.Id
+                    left join traduction_finie tf
+                    on tf.TraductionId = td.Id
+                    group by u.id
+                    )as t5
+                    on t4.userid = t5.userid";
+
+                    
+        $result = $conn->query($rq);     
+        $this->deconnexion($conn);
+        return $result;
+    }
+
+    public function insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $traductorId, $langueO, $langueD, $type, $comment, $assermente, $file){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $docName = $this->addDemandeDocument($file);
+
+        $r = $this->getLangueId($langueO);
+        $langueOrigine = array_values($r->fetch_assoc())[0];
+
+        $r = $this->getLangueId($langueD);
+        $langueDest = array_values($r->fetch_assoc())[0];
+
+        $r = $this->getWilayaID($wilaya);
+        $wilayaId = array_values($r->fetch_assoc())[0];
+        $r = $this->getCommuneID($wilayaId, $commune);
+        $communeId = array_values($r->fetch_assoc())[0];
+ 
+        $rq = "INSERT INTO Demande_traduction (UtilisateurId, Nom, Prenom, Email, TraducteurId, WilayaId, CommuneId, Adresse, Phone, LangueO, LangueD, Type, Comment, Assermente, Document)
+                values(
+                    ".$Userid.",
+                    '".$nom."',
+                    '".$prenom."',
+                    '".$email."',
+                    ".$traductorId.",
+                    ".$wilayaId.",
+                    ".$communeId.",
+                    '".$adresse."',
+                    ".$phone.",
+                    '".$langueOrigine."',
+                    '".$langueDest."',
+                    '".$type."',
+                    '".$comment."',
+                    ".$assermente.",
+                    '".$docName."'
+                    );";
+                    echo $rq;
+        $r = $conn->query($rq);
+       
+        $this->deconnexion($conn);
+    }
+
+
     public function addFaxes($faxes, $idUser){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $arrlength = count($faxes);
@@ -246,6 +357,26 @@ class projet_modal{
         }
 
         return ' ';
+    }
+
+    public function addDemandeDocument($doc){
+        $targetDir = "uploads/DemandeDocs/";
+        $fileName = basename($doc["name"]);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+        $allowTypes = array('jpg','png','jpeg','gif','pdf');
+        if(in_array($fileType, $allowTypes)){
+            // Upload file to server
+            if(move_uploaded_file($doc["tmp_name"], $targetFilePath)){
+                return $fileName;
+            }else{
+                $statusMsg = "Sorry, there was an error uploading your file.";
+            }
+        }else{
+            $statusMsg = 'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
+        }
+        return $statusMsg;
     }
 }
 

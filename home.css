@@ -85,3 +85,19 @@ hr {
     transform:translate3d(0, 2px, 0);
     box-shadow:2px 8px 8px -5px rgba(0,0,0,0.3)
 }
+
+.modal-dialog-demande,
+.modal-content-demande {
+    /* 80% of window height */
+    height: 90%;
+}
+
+.demande-info {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: calc(100% - 120px);
+    overflow-y: scroll;
+}
+
+.table td {
+    vertical-align: middle;
+}

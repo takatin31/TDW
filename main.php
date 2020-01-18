@@ -8,14 +8,21 @@
     <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./assests/light_slider/css/lightslider.css"/>
     <link rel="stylesheet" href="./assests/style/font-awesome.min.css"/>
+    <link rel="stylesheet" href="./assests/style/semantic.min.css"/>
+    <link rel="stylesheet" href="./assests/style/dataTables.semanticui.min.css"/>
+    <link rel="stylesheet" href="./assests/style/adminDashboard.css"/>
     <link rel="stylesheet" href="home.css"/>
 
     <script type="text/javascript" src="./assests/scripts/jquery.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assests/light_slider/js/lightslider.js"></script>
+    <script type="text/javascript" src="./assests/scripts/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./assests/scripts/dataTables.semanticui.min.js"></script>
+    <script type="text/javascript" src="./assests/scripts/semantic.min.js"></script>
     <script type="text/javascript" src="assests/scripts/main.js"></script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+    
     <title>DocTranslator</title>
 
     
@@ -215,73 +222,108 @@
             <div class="col-5 div-form">
                 <h2 class="text-center mt-3">Demande de devis de traduction</h2>
                 <hr/>
-                <form action="main.php" method="POST">
+                <form method="POST" id="demandeForm">
                     <div class="form-group">
                       <label for="nom">Nom :</label>
-                      <input type="text" class="form-control" placeholder="Entrez Nom" id="nom" >
+                      <input type="text" class="form-control" placeholder="Entrez Nom" name="nom" id="nomD">
                     </div>
                     <div class="form-group">
                       <label for="prenom">Prenom:</label>
-                      <input type="text" class="form-control" placeholder="Entez prenom" id="prenom" >
+                      <input type="text" class="form-control" placeholder="Entez prenom" name="prenom" id="prenomD">
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
-                        <input type="email" class="form-control" placeholder="Entez Email" id="email" >
+                        <input type="email" class="form-control" placeholder="Entez Email" name="email" id="emailD">
                     </div>
                     <div class="form-group">
                         <label for="numero de telephone">Numero de telephone:</label>
-                        <input type="phone" class="form-control" placeholder="Numero de telephone" id="phone" >
+                        <input type="phone" class="form-control" placeholder="Numero de telephone" name="phone" id="phoneD">
                     </div>
                     <div class="form-group">
+                    <label for="wilaya">Wilaya:</label>
+                    <select class="custom-select" name="wilaya" id="wilaya">
+                        <?php
+                        require_once('controller.php');
+                        $cf = new adresse_controller();
+                        $qtf = $cf->get_wilayas();
+                        foreach($qtf as $rs){
+                            echo '<option>'.$rs['Nom'].'</option>';
+                        }
+                        ?>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="commune">Commune:</label>
+                        <select class="custom-select" name="commune" id="commune">
+                            <?php
+                            require_once('controller.php');
+                            $cf = new adresse_controller();
+                            $qtf = $cf->get_commune('Adrar');
+                            foreach($qtf as $rs){
+                                echo '<option>'.$rs['Nom'].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>          
+                    <div class="form-group">
                         <label for="adresse">Adresse:</label>
-                        <input type="text" class="form-control" placeholder="Entez l'adresse" id="adresse"  >
+                        <input type="text" class="form-control" placeholder="Entez l'adresse" name="adresse" id="adresseD" >
                     </div>
                     <div class="form-group">
                         <label for="origin-lang">Langue d'origine:</label>
-                        <select class="custom-select" id="origin-lang">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
+                        <select class="custom-select" name="origin-lang" id="originL">
+                            <?php
+                                require_once('controller.php');
+                                $cf = new langues_controller();
+                                $qtf = $cf->get_langues();
+                                foreach($qtf as $lg){
+                                    echo '<option>'.$lg['Nom'].'</option>';
+                                }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="desired-lang">Langue souhaitée:</label>
-                        <select class="custom-select" id="desired-lang">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
+                        <select class="custom-select" name="desired-lang" id="DestinationL">
+                            <?php
+                                require_once('controller.php');
+                                $cf = new langues_controller();
+                                $qtf = $cf->get_langues();
+                                foreach($qtf as $lg){
+                                    echo '<option>'.$lg['Nom'].'</option>';
+                                }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="traduction-type">Type de traduction:</label>
-                        <select class="custom-select" id="traduction-type">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
+                        <select class="custom-select" name="traduction-type" id="typeD">
+                          <option>Generale</option>
+                          <option>Scientique</option>
+                          <option>Site Web</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="comment">Comment:</label>
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                        <textarea class="form-control" rows="5" name="comment" id="commentD"></textarea>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="pro-traductor">
-                        <label class="custom-control-label" for="pro-traductor">Traducteur assermenté</label>
+                        <input type="checkbox" class="custom-control-input" name="pro-traductor" id="pro-traductorD">
+                        <label class="custom-control-label" for="pro-traductorD">Traducteur assermenté</label>
                     </div>
-                    <div class="custom-file mt-3">
-                        <input type="file" class="custom-file-input" id="customFile">
+                    <div class="custom-file mt-3" >
+                        <form enctype="multipart/form-data" id="formdata">
+                        <input type="file" class="custom-file-input" name="customFile" id="fileD">
+                        </form>
                         <label class="custom-file-label" for="customFile">Importer le fichier</label>
                     </div>
-                    <div class="form-group mt-3">
+                    <div class="form-group mt-3" enctype="multipart/form-data">
                         <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-callback="verifyRecaptchaCallback" data-expired-callback="expiredRecaptchaCallback"></div>
                         <input class="form-control d-none" data-recaptcha="true"  data-error="Please complete the Captcha">
                         <div class="help-block with-errors"></div>
                     </div>
                     <div class="col text-center">
-                        <button type="submit" class="btn btn-primary mb-2">Submit</button>
+                        <button type="button" class="btn btn-primary mb-2" id="submit" data-toggle="modal" data-target="#modal_complete_info">Submit</button>
                     </div>
                   </form>
             </div>
@@ -441,7 +483,7 @@
                       </div>
                       <div class="form-group">
                           <label for="wilaya">Wilaya:</label>
-                          <select class="custom-select" name="wilaya" id="wilaya">
+                          <select class="custom-select" name="wilaya" id="wilaya2">
                               <?php
                               require_once('controller.php');
                               $cf = new adresse_controller();
@@ -454,7 +496,7 @@
                       </div>
                       <div class="form-group">
                           <label for="commune">Commune:</label>
-                          <select class="custom-select" name="commune" id="commune">
+                          <select class="custom-select" name="commune" id="commune2">
                               <?php
                               require_once('controller.php');
                               $cf = new adresse_controller();
@@ -473,6 +515,59 @@
                         <button type="submit" class="btn btn-primary mb-2 mt-5">Submit</button>
                     </div>
                 </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_complete_info" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-demande modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content modal-content-demande">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Completer les informations</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body demande-info">
+                <div class="form-group">
+                    <label for="traduction-type">Type de demande:</label>
+                    <select class="custom-select" name="demande-type">
+                        <option>Traduction</option>
+                        <option>Devis</option>
+                    </select>
+                </div>
+                <div class="col-md-12" class="height:80%">
+                <label for="traduction-type">Choix du traducteur:</label>         
+                <table id="example" class="ui celled table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Photo</th>
+                            <th>Nom</th>
+                            <th>Nombre de traudctions</th>
+                            <th>Note</th>
+                            <th>Choisi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="vertical-align: middle;">
+                                <img src="./assests/images/personal.jpg" width="60px"/>
+                            </td>
+                            <td style="vertical-align: middle;">System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>
+                                <input type="checkbox">
+                            </td>
+                        </tr>
+                        
+                    </tbody>             
+                </table>
+                </div>
+                <button class="btn btn-primary float-right mr-5 mt-3" id="validerDemande">Valider</button>
             </div>
           </div>
         </div>

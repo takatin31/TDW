@@ -24,6 +24,7 @@ CREATE TABLE Utilisateur(
     Commune INTEGER,
     Adresse VARCHAR(100),
     Phone INTEGER,
+    Image VARCHAR(30),
     FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id)
 );
 
@@ -86,6 +87,8 @@ CREATE TABLE Demande_traduction(
     Nom VARCHAR(30),
     Prenom VARCHAR(30),
     Email VARCHAR(50),
+    WilayaId INTEGER,
+    CommuneId INTEGER,
     Adresse VARCHAR(100),
     Phone INTEGER,
     TraducteurId INTEGER,
@@ -99,7 +102,9 @@ CREATE TABLE Demande_traduction(
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
     FOREIGN KEY (LangueO) REFERENCES Langue (Id),
-    FOREIGN KEY (LangueD) REFERENCES Langue (Id)
+    FOREIGN KEY (LangueD) REFERENCES Langue (Id),
+    FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id),
+    FOREIGN KEY (CommuneId) REFERENCES Commune (Id)
 );
 
 CREATE TABLE DemandeT_Accepte(
