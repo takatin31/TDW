@@ -12,14 +12,7 @@ CREATE TABLE Commune(
 );
 
 
-CREATE TABLE TraducteurData(
-    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    TraducteurId INTEGER,
-    Assermente BOOLEAN,
-    Cv VARCHAR(30),
-    Assermetation_doc VARCHAR(30),
-    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
-);
+
 
 CREATE TABLE Utilisateur(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -32,6 +25,14 @@ CREATE TABLE Utilisateur(
     Adresse VARCHAR(100),
     Phone INTEGER,
     FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id)
+);
+
+CREATE TABLE TraducteurData(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    TraducteurId INTEGER,
+    Cv VARCHAR(30),
+    Assermetation_doc VARCHAR(30),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
 );
 
 CREATE TABLE Langue(
@@ -55,6 +56,12 @@ CREATE TABLE Faxes(
 );
 
 
+CREATE TABLE Reference(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    Document VARCHAR(30),
+    TraducteurId INTEGER,
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
+);
 
 CREATE TABLE Signalement(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -64,13 +71,6 @@ CREATE TABLE Signalement(
     Cause VARCHAR(1000),
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
-);
-
-CREATE TABLE Reference(
-    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    Document VARCHAR(30),
-    TraducteurId INTEGER,
-    FOREIGN KEY (TraducteurId) REFERENCES TraducteurData (Id)
 );
 
 CREATE TABLE Demande_traduction(

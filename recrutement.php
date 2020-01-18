@@ -81,7 +81,7 @@
     <div class="container-fluid mb-5 mt-5 col-md-8 col-lg-5 col-sm-10 form">
             <h2 class="text-center mt-3">Demande de recrutement</h2>
             <hr/>
-            <form  method="POST" action="recrutementHandler.php">
+            <form  method="POST" action="recrutementHandler.php" enctype = "multipart/form-data">
                 <div class="form-group">
                   <label for="nom">Nom :</label>
                   <input type="text" class="form-control" placeholder="Entrez Nom" name="nom" required>
@@ -106,7 +106,7 @@
                     <label for="fax">Fax:</label>
                     <div class="row custom-input mt-2 justify-content-center">
                         <div class="col-md-12 col-lg-8">
-                            <input type="phone" class="form-control fax" placeholder="Numero de Fax" required>
+                            <input type="phone" class="form-control fax" placeholder="Numero de Fax" name="fax[]" required>
                         </div>
                         <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-around">
                             <div class="btn btn-default add_input_fax"><i class="fa fa-plus"></i></div>
@@ -119,7 +119,7 @@
                     <select class="custom-select" name="wilaya" id="wilaya">
                         <?php
                         require_once('controller.php');
-                        $cf = new recrutement_controller();
+                        $cf = new adresse_controller();
                         $qtf = $cf->get_wilayas();
                         foreach($qtf as $rs){
                             echo '<option>'.$rs['Nom'].'</option>';
@@ -132,7 +132,7 @@
                     <select class="custom-select" name="commune" id="commune">
                         <?php
                         require_once('controller.php');
-                        $cf = new recrutement_controller();
+                        $cf = new adresse_controller();
                         $qtf = $cf->get_commune('Adrar');
                         foreach($qtf as $rs){
                             echo '<option>'.$rs['Nom'].'</option>';
@@ -148,10 +148,10 @@
                     <label for="origin-lang">Langues maitrisées:</label>
                     <div class="row custom-input mt-2 justify-content-center">
                         <div class="col-md-12 col-lg-8">
-                            <select class="custom-select mastered_lang">
+                            <select class="custom-select mastered_lang" name="langues[]">
                                 <?php
                                 require_once('controller.php');
-                                $cf = new recrutement_controller();
+                                $cf = new langues_controller();
                                 $qtf = $cf->get_langues();
                                 foreach($qtf as $lg){
                                     echo '<option>'.$lg['Nom'].'</option>';
