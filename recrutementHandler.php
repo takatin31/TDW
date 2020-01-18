@@ -15,12 +15,11 @@ $reference2= $_FILES["reference2"];
 $reference3= $_FILES["reference3"];
 $faxes = $_POST["fax"];
 $langues = $_POST["langues"]; 
-
+$types = $_POST["types"];
 $references[0] = $reference1;
 $references[1] = $reference2;
 $references[2] = $reference3;
 
-echo count($references);
 
 $userController = new users_controller();
 $idUser = $userController->add_user($nom ,$prenom,$email,$password,$phone,$wilaya,$commune,$adresse);
@@ -31,4 +30,10 @@ $traductorController->add_langues($langues, $idUser);
 
 $traductorController->add_Data($idUser, $cv, $assermentationP);
 $traductorController->add_References($idUser, $references);
+$traductorController->add_Types($idUser, $types);
+
+ob_start();
+    header('Location: main.php');
+    ob_end_flush();
+    die();
 ?>

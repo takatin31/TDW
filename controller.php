@@ -19,6 +19,12 @@
             $mp = new projet_modal();
             $r = $mp->addFaxes($faxes, $userID);
         }
+
+        public function find_user($email, $password){
+            $mp = new projet_modal();
+            $r = $mp->findUser($email, $password);
+            return $r;
+        }
     }
 
     class traductor_controller {
@@ -43,6 +49,11 @@
             $mp = new projet_modal();
             $r = $mp->addReferences($idUser, $references);
         }
+
+        public function add_Types($idUser, $types){
+            $mp = new projet_modal();
+            $r = $mp->addTypes($idUser, $types);
+        }
     }
 
     class langues_controller {
@@ -55,10 +66,8 @@
         public function get_langueId($langue){
             $mp = new projet_modal();
             $r = $mp->getLangueId($langue);
-            foreach($r as $lg){
-                $idLangue = $lg['Id'];
-            }
-            return $idLangue;
+            $idLangue = $r->fetch_assoc(); // fetch it first
+            return $idLangue['Id'];
         }
     }
 
@@ -80,19 +89,15 @@
         public function getWilayaID($wilaya){
             $mp = new projet_modal();
             $r = $mp->getWilayaID($wilaya);
-            foreach($r as $lg){
-                $idWilaya = $lg['Id'];
-            }
-            return $idWilaya;
+            $idWilaya = $r->fetch_assoc(); // fetch it first
+            return $idWilaya['Id'];
         }
 
         public function getCommuneID($wilayaId, $commune){
             $mp = new projet_modal();
             $r = $mp->getCommuneID($wilayaId, $commune);
-            foreach($r as $lg){
-                $idWilaya = $lg['Id'];
-            }
-            return $idWilaya;
+            $idCommune = $r->fetch_assoc(); // fetch it first
+            return $idCommune['Id'];
         }
     }
 

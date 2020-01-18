@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse row" id="navbarNavDropdown">
             <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4">
                 <li class="nav-item">
-                    <a class="nav-link" href="main.html">Accueil</a>
+                    <a class="nav-link" href="main.php">Accueil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="type_traductions.html">Types de traduction</a>
@@ -45,7 +45,7 @@
                     <a class="nav-link" href="blog.html">Blog</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="recrutement.html">Recrutement</a>
+                    <a class="nav-link" href="recrutement.php">Recrutement</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">A propos</a>
@@ -169,7 +169,7 @@
                     <label for="types_traduction">Types de traduction maitrisés:</label>
                     <div class="row custom-input mt-2 justify-content-center">
                         <div class="col-md-12 col-lg-8">
-                            <select class="custom-select mastered_types">
+                            <select class="custom-select mastered_types" name="types[]">
                                 <option>Generale</option>
                                 <option>Scientique</option>
                                 <option>Site Web</option>
@@ -186,7 +186,7 @@
                     <label class="custom-control-label" for="pro-traductor">Traducteur assermenté</label>
                 </div>
                 <div class="custom-file mt-3" style="display: none;">
-                    <input type="file" class="custom-file-input" name="assermentationP">
+                    <input type="file" class="custom-file-input" name="assermentationP" id="assermentationP">
                     <label class="custom-file-label" for="customFile">Preuve d'assermentation</label>
                 </div>
                 <div class="custom-file mt-3">
@@ -194,17 +194,17 @@
                     <label class="custom-file-label" for="customFile">CV</label>
                 </div>
                 <div class="mt-3 row justify-content-around">
-                    <div class="col-md-3 col-sm-10 mt-2">
+                    <div class="custom-file col-md-3 col-sm-10 mt-2">
                         <input type="file" class="custom-file-input" name="reference1">
                         <label class="custom-file-label" for="customFile">Ref1</label>
                     </div>
                     
-                    <div class="col-md-3 col-sm-10 mt-2">
+                    <div class="custom-file col-md-3 col-sm-10 mt-2">
                         <input type="file" class="custom-file-input" name="reference2">
                         <label class="custom-file-label" for="customFile">Ref2</label>
                     </div>
 
-                    <div class="col-md-3 col-sm-10 mt-2">
+                    <div class="custom-file col-md-3 col-sm-10 mt-2">
                         <input type="file" class="custom-file-input" name="reference3">
                         <label class="custom-file-label" for="customFile">Ref3</label>
                     </div>
@@ -220,7 +220,7 @@
     <div class="navbar navbar-expand-lg nav-footer">
         <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4 pt-2">
             <li class="nav-item">
-                <a class="nav-link" href="main.html">Accueil</a>
+                <a class="nav-link" href="main.php">Accueil</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="type_traductions.html">Type de traducteurs</a>
@@ -232,7 +232,7 @@
                 <a class="nav-link" href="blog.html">Blog</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="recrutement.html">Recrutement</a>
+                <a class="nav-link" href="recrutement.php">Recrutement</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="about.html">A propos</a>

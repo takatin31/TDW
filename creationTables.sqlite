@@ -48,6 +48,13 @@ CREATE TABLE MaitriseLangue(
     FOREIGN KEY (LangueId) REFERENCES Langue (Id)
 );
 
+CREATE TABLE MaitriseType(
+    TraducteurId INTEGER,
+    Type VARCHAR(30),
+    PRIMARY KEY(TraducteurId, Type),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
+);
+
 CREATE TABLE Faxes(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     fax INTEGER,
@@ -76,10 +83,18 @@ CREATE TABLE Signalement(
 CREATE TABLE Demande_traduction(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     UtilisateurId INTEGER,
-    Document VARCHAR(30),
+    Nom VARCHAR(30),
+    Prenom VARCHAR(30),
+    Email VARCHAR(50),
+    Adresse VARCHAR(100),
+    Phone INTEGER,
     TraducteurId INTEGER,
     LangueO INTEGER,
     LangueD INTEGER,
+    Type VARCHAR(30),
+    Comment VARCHAR(500),
+    Assermente BOOLEAN,
+    Document VARCHAR(30),
     Date DATE,
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
@@ -123,10 +138,18 @@ CREATE TABLE Traduction_finie(
 CREATE TABLE Demande_devis(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     UtilisateurId INTEGER,
-    Document VARCHAR(30),
+    Nom VARCHAR(30),
+    Prenom VARCHAR(30),
+    Email VARCHAR(50),
+    Adresse VARCHAR(100),
+    Phone INTEGER,
     TraducteurId INTEGER,
     LangueO INTEGER,
     LangueD INTEGER,
+    Type VARCHAR(30),
+    Comment VARCHAR(500),
+    Assermente BOOLEAN,
+    Document VARCHAR(30),
     Date DATE,
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),

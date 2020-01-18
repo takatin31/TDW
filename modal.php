@@ -159,8 +159,35 @@ class projet_modal{
                         );";
     
                 $r = $conn->query($rq);
-                echo $rq;
             }
+            
+        }
+        $this->deconnexion($conn);
+    }
+
+    public function findUser($email, $pass){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT Id FROM Utilisateur WHERE Email = '".$email."' AND Password = '".$pass."'";
+        $r = $conn->query($rq);
+        $result = $r->fetch_assoc(); // fetch it first
+        $this->deconnexion($conn);
+        return $result['Id'];
+    }
+
+    public function addTypes($idUser, $types){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $arrlength = count($types);
+        
+        for($x = 0; $x < $arrlength; $x++) {
+           
+            
+            $rq = "INSERT INTO MaitriseType (type, TraducteurId)
+                values(
+                    '".$types[$x]."',
+                    ".$idUser."
+                    );";
+
+            $r = $conn->query($rq);
             
         }
         $this->deconnexion($conn);

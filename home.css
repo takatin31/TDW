@@ -24,6 +24,24 @@
     border-radius: 10px;
 }
 
+.add_input_fax {
+    background-color: rgb(6, 119, 128);
+    border-width: 0px;
+    border-radius: 5px;
+
+}
+
+.fa {
+    color: white;
+}
+
+
+.delete_input_fax {
+    background-color: red;
+    border-width: 0px;
+    border-radius: 5px;
+}
+
 
 hr {
     margin-top: 1rem;
