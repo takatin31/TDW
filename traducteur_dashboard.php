@@ -187,91 +187,24 @@
                     </div>
                     <div class="tab-pane overflow-auto" id="messages">
                         <table class="table">
-                            <tbody>                                    
-                                <tr class="good_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-secondary">Valider</button>
-                                       </div> 
-                                       Votre <a href="#">demande de traduction</a> a ete acceptée par  <a href="#">traducteur</a>
-                                    </td>
-                                </tr>
-                                <tr class="bad_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-secondary">Payer a nouveau</button>
-                                       </div> 
-                                       Votre paiement a ete refusé par l'administrateur
-                                    </td>
-                                </tr>
-                                <tr class="good_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-secondary">Valider</button>
-                                       </div> 
-                                       Votre paiement a ete accepté par l'administrateur
-                                    </td>
-                                </tr>
-                                <tr class="good_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-secondary">Valider</button>
-                                       </div> 
-                                       Votre <a href="#">traduction</a> a debutée
-                                    </td>
-                                </tr>
-                                <tr class="good_request">
-                                    <td>
-                                        <div>
-                                            <div class="float-right">
-                                                <button class="btn btn-warning">Valider la traduction</button>
-                                            </div> 
-                                            Votre <a href="#">traduction</a> a finie
-                                        </div>
-                                        <button class="btn btn-info mt-2">Telecharger le document traduit</button>
-                                    </td>
-                                </tr>
-                                <tr class="good_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-success">Accepter</button>
-                                           <button class="btn btn-danger">Refuser</button>
-                                       </div> 
-                                       Vous avez une nouvelle <a href="#">demande de traduction</a>
-                                    </td>
-                                </tr>
-                                <tr class="good_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-secondary">Debuter la traduction</button>
-                                       </div> 
-                                       Votre paiement a ete effectué
-                                    </td>
-                                </tr>
-                                <tr class="good_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-secondary">Valider</button>
-                                       </div> 
-                                       Votre <a href="#">traduction</a> a été accepté par le client
-                                    </td>
-                                </tr>
-                                <tr class="bad_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-secondary">Envoyer a nouveau</button>
-                                       </div> 
-                                       Votre <a href="#">traduction</a> a été rejeté par le client
-                                    </td>
-                                </tr>
-                                <tr class="good_request">
-                                    <td>
-                                       <div class="float-right">
-                                           <button class="btn btn-warning">Valider</button>
-                                       </div> 
-                                       Vous avez recu le paiement
-                                    </td>
-                                </tr>
+                            <tbody>        
+                                <?php
+                                    require_once('controller.php');
+                                    $userId = $_COOKIE['userid'];
+                                    $notificationController = new NotificationController();
+                                    $notificationController->getNotifications($userId);
+                                    
+                                ?>
+                                
+                               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                             </tbody> 
                         </table>
                     </div>

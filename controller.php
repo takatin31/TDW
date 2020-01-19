@@ -68,10 +68,328 @@
         }
     }
 
-    class demande_traduction_controller{
-        public function addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $traductorId, $langueO, $langueD, $type, $comment, $assermente, $file){
+    class NotificationController{
+        public function getNotifications($userID){
+            $this->getDemandeTNotifications($userID);
+            $this->getDemandeDNotifications($userID);
+            $this->getDemandeTANotifications($userID);
+            $this->getDemandeDANotifications($userID);
+            $this->getDemandeTPNotifications($userID);
+            $this->getDemandeDPNotifications($userID);
+            $this->getDemandeTDNotifications($userID);
+            $this->getDemandeDDNotifications($userID);
+            $this->getDemandeTFNotifications($userID);
+            $this->getDemandeDFNotifications($userID);
+            
+        }
+
+        // notification demande de traduction
+        public function getDemandeTNotifications($userID){
             $mp = new projet_modal();
-            $r = $mp->insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $traductorId, $langueO, $langueD, $type, $comment, $assermente, $file);
+            //lorsque le traducteur recoit une nouvelle demande de traduction:traducteur
+            $r = $mp->getDemandeTNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request demandeTraduction" id="demandeTraduction'.$lg["DemandeId"].'">
+                            <td>
+                                <div class="float-right">
+                                    <button class="btn btn-success">Accepter</button>
+                                    <button class="btn btn-danger">Refuser</button>
+                                </div> 
+                                Vous avez une nouvelle <a href="#">demande de traduction</a>
+                            </td>
+                        </tr>';
+            }
+        }
+
+        // notification demande de devis
+        public function getDemandeDNotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le traducteur recoit une demande de devis:traducteur
+            $r = $mp->getDemandeDNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request demandeDevis" id="demandeDevis'.$lg["DemandeId"].'">
+                            <td>
+                                <div class="float-right">
+                                    <button class="btn btn-success">Accepter</button>
+                                    <button class="btn btn-danger">Refuser</button>
+                                </div> 
+                                Vous avez une nouvelle <a href="#">demande de devis</a>
+                            </td>
+                        </tr>';
+            }
+        }
+
+        // notification demande de traduction acceptée
+        public function getDemandeTANotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le traducteur accepte le demande:client
+            $r = $mp->getDemandeTANotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request acceptedTraduction" id="acceptedDemandeTraduction'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Valider</button>
+                            </div> 
+                            Votre <a href="#">demande de traduction</a> a ete acceptée par  <a href="#">traducteur</a>
+                            </td>
+                        </tr>';
+            }
+        }
+
+        // notification demande de devis acceptée
+        public function getDemandeDANotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le traducteur accepte le demande:client
+            $r = $mp->getDemandeDANotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request acceptedDevis" id="acceptedDemandeDevis'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Valider</button>
+                            </div> 
+                            Votre <a href="#">demande de devis</a> a ete acceptée par  <a href="#">traducteur</a>
+                            </td>
+                        </tr>';
+            }
+        }
+
+        // notification demande de traduction paiement
+        public function getDemandeTPNotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le paiement a ete accepté:client
+            $r = $mp->getDemandeTPANotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request acceptedPaiementTr" id="acceptedPaiementTr'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Valider</button>
+                            </div> 
+                            Votre paiement de <a href="#">demande de traduction</a> a ete accepté par l\'administrateur
+                            </td>
+                        </tr>';
+            }
+            //lorsque le paiement n'a pas ete accepté:client
+            $r = $mp->getDemandeTPDNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="bad_request deniedPaiementTr" id="deniedPaiementTr'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Payer a nouveau</button>
+                            </div> 
+                            Votre paiement de <a href="#">demande de traduction</a> a ete refusé par l\'administrateur
+                            </td>
+                        </tr>';
+            }
+            //lorsque le paiement a ete recu:traducteur
+            $r = $mp->getDemandeTPRNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request receivedMTr" id="recievedPaiementTr'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Debuter la traduction</button>
+                            </div> 
+                            Votre paiement a ete effectué de la <a href="#">demande de traduction</a>
+                            </td>
+                        </tr>';
+            }
+        }
+
+        // notification demande de devis paiement
+        public function getDemandeDPNotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le paiement a ete accepté:client
+            $r = $mp->getDemandeDPANotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request acceptedPaiementDev" id="acceptedPaiementDev'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Valider</button>
+                            </div> 
+                            Votre paiement de <a href="#">demande de devis</a> a ete accepté par l\'administrateur
+                            </td>
+                        </tr>';
+            }
+            //lorsque le paiement n'a pas ete accepté:client
+            $r = $mp->getDemandeDPDNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="bad_request deniedPaiementDev" id="deniedPaiementDv'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Payer a nouveau</button>
+                            </div> 
+                            Votre paiement de <a href="#">demande de devis</a> a ete refusé par l\'administrateur
+                            </td>
+                        </tr>';
+            }
+
+            //lorsque le paiement a ete recu:traducteur
+            $r = $mp->getDemandeDPRNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request receivedMTDv" id="recievedPaiementDv'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Debuter la traduction</button>
+                            </div> 
+                            Votre paiement a ete effectué de <a href="#">demande de devis</a>
+                            </td>
+                        </tr>';
+            }
+        }
+
+        // notification de traduction debutée
+        public function getDemandeTDNotifications($userID){
+            $mp = new projet_modal();
+            //lorsque la traduction a debutée:client
+            $r = $mp->getDemandeTDNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request beganTraduction" id="demandeTraduction'.$lg["DemandeId"].'">
+                        <td>
+                        <div class="float-right">
+                            <button class="btn btn-secondary">Valider</button>
+                        </div> 
+                        La traduction de la <a href="#">demande de traduction</a> a debutée
+                        </td>
+                    </tr>';
+            }
+        }
+
+        // notification de devis débutée
+        public function getDemandeDDNotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le devis a debutée:client
+            $r = $mp->getDemandeDDNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request beganDevis" id="demandeDevis'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Valider</button>
+                            </div> 
+                            Le traitement  de vote <a href="#">demande de devis</a> a debutée
+                            </td>
+                        </tr>';
+            }
+        }
+
+        // notification de traduction finie
+        public function getDemandeTFNotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le traducteur fini la traduction:client
+            $r = $mp->getDemandeTFNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request finishedTraduction" id="finishedTraduction'.$lg["DemandeId"].'">
+                            <td>
+                                <div>
+                                    <div class="float-right">
+                                        <button class="btn btn-success">Valider</button>
+                                        <button class="btn btn-danger">Refuser</button>
+                                    </div> 
+                                    Votre traduction de <a href="#">demande de traduction</a> a finie
+                                </div>
+                                <button class="btn btn-info mt-2">Telecharger le document traduit</button>
+                            </td>
+                        </tr>';
+            }
+
+            //lorsque le client valide la traduction:traducteur
+            $r = $mp->getDemandeTFANotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request accedptedTraduction" id="accedptedTraduction'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-warning">Valider</button>
+                            </div> 
+                            Votre traduction de <a href="#">demande de traduction</a> a été accepté par le client
+                            </td>
+                        </tr>';
+                //pour notifier le traducteur que le montant a été payé
+                echo '<tr class="good_request paimentRecievedTraduction" id="paimentRecievedTraduction'.$lg["DemandeId"].'">
+                        <td>
+                           <div class="float-right">
+                               <button class="btn btn-warning">Valider</button>
+                           </div> 
+                           Vous avez recu le paiement pour cette <a href="#">demande de traduction</a>
+                        </td>
+                    </tr>';
+            }
+
+            //lorsque le client refuse la traduction:traducteur
+            $r = $mp->getDemandeTFDNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="bad_request deniedTraduction" id="deniedTraduction'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-secondary">Envoyer a nouveau</button>
+                            </div> 
+                            Votre traduction de <a href="#">demande de traduction</a> a été rejeté par le client
+                            </td>
+                        </tr>';
+
+                
+            }
+
+        }
+
+        // notification de devis finie
+        public function getDemandeDFNotifications($userID){
+            $mp = new projet_modal();
+            //lorsque le traducteur fini le devis:client
+            $r = $mp->getDemandeDFNotifications($userID);
+
+            foreach($r as $lg){
+                echo '<tr class="good_request finishedDevis" id="finishedDevis'.$lg["DemandeId"].'">
+                            <td>
+                                <div>
+                                    <div class="float-right">
+                                        <button class="btn btn-secondary">Valider</button>
+                                    </div>
+                                    Votre Devis a finie suite a <a href="#">cette demande</a> 
+                                </div>
+                                <button class="btn btn-info mt-2">Telecharger le document de reponse</button>
+                            </td>
+                        </tr>';
+            }
+
+            //lors de la reception du paiement:traducteur
+            $r = $mp->getDemandeDFNotifications($userID);
+            foreach($r as $lg){
+                echo '<tr class="good_request paimentRecievedDevis" id="paimentRecievedDevis'.$lg["DemandeId"].'">
+                            <td>
+                            <div class="float-right">
+                                <button class="btn btn-warning">Valider</button>
+                            </div> 
+                            Vous avez recu le paiement pour cette <a href="#">demande de devis</a>
+                            </td>
+                        </tr>';
+            }
+        }
+    }
+
+    class demande_traduction_controller{
+        public function addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file){
+            $mp = new projet_modal();
+            $r = $mp->insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file);
+            return $r;
+        }
+
+        public function addRecevoirDemandeT($demandeId, $TraductorId){
+            $mp = new projet_modal();
+            $r = $mp->addRecevoirDemandeT($demandeId, $TraductorId);
+            return $r;
         }
     }
 

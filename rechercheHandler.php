@@ -12,6 +12,7 @@
 
      $tc = new traductor_controller();
      $result = $tc->getTraductor_Asserm_Type_Lang($pro_traductorD, $langues, $typeD);
+ 
      foreach($result as $rs){
          
         echo '<tr class="traductor">

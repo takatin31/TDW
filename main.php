@@ -73,6 +73,9 @@
     
 </head>
 <body>
+    <?php
+        echo $_COOKIE['userid'];
+    ?>
     <nav class="navbar navbar-expand-lg main-navbar">
         <a class="navbar-brand mr-5" href="#">
             <img src="./assests/images/logo2.svg" class="img-fluid"/>

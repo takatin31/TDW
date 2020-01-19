@@ -81,6 +81,7 @@ CREATE TABLE Signalement(
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
 );
 
+
 CREATE TABLE Demande_traduction(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     UtilisateurId INTEGER,
@@ -91,7 +92,6 @@ CREATE TABLE Demande_traduction(
     CommuneId INTEGER,
     Adresse VARCHAR(100),
     Phone INTEGER,
-    TraducteurId INTEGER,
     LangueO INTEGER,
     LangueD INTEGER,
     Type VARCHAR(30),
@@ -100,11 +100,20 @@ CREATE TABLE Demande_traduction(
     Document VARCHAR(30),
     Date DATE,
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
-    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
     FOREIGN KEY (LangueO) REFERENCES Langue (Id),
     FOREIGN KEY (LangueD) REFERENCES Langue (Id),
     FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id),
     FOREIGN KEY (CommuneId) REFERENCES Commune (Id)
+);
+
+
+CREATE TABLE RecevoireDemandeT(
+    DemandeId INTEGER,
+    TraducteurId INTEGER,
+    Vu BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (DemandeId, TraducteurId),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
+    FOREIGN KEY (DemandeId) REFERENCES Demande_traduction (Id)
 );
 
 CREATE TABLE DemandeT_Accepte(
@@ -112,6 +121,7 @@ CREATE TABLE DemandeT_Accepte(
     DemandeId INTEGER,
     TraducteurId INTEGER,
     Prix INTEGER,
+    Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES Demande_traduction (Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
 );
@@ -121,6 +131,8 @@ CREATE TABLE DemandeT_paiement(
     DemandeId INTEGER,
     Document VARCHAR(30),
     Etat INTEGER,
+    VuClient BOOLEAN NOT NULL DEFAULT FALSE,
+    Vutraductor BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeT_Accepte (Id)
 );
 
@@ -128,6 +140,7 @@ CREATE TABLE Traduction_debutee(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
     Date DATE,
+    Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeT_Accepte (Id)
 );
 
@@ -136,6 +149,8 @@ CREATE TABLE Traduction_finie(
     TraductionId INTEGER,
     Date DATE,
     Etat INTEGER,
+    VuClient BOOLEAN NOT NULL DEFAULT FALSE,
+    VuTraductor BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (TraductionId) REFERENCES Traduction_debutee (Id)
 );
 
@@ -148,7 +163,6 @@ CREATE TABLE Demande_devis(
     Email VARCHAR(50),
     Adresse VARCHAR(100),
     Phone INTEGER,
-    TraducteurId INTEGER,
     LangueO INTEGER,
     LangueD INTEGER,
     Type VARCHAR(30),
@@ -157,9 +171,17 @@ CREATE TABLE Demande_devis(
     Document VARCHAR(30),
     Date DATE,
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
-    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
     FOREIGN KEY (LangueO) REFERENCES Langue (Id),
     FOREIGN KEY (LangueD) REFERENCES Langue (Id)
+);
+
+CREATE TABLE RecevoireDemandeD(
+    DemandeId INTEGER,
+    TraducteurId INTEGER,
+    Vu BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (DemandeId, TraducteurId),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
+    FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id)
 );
 
 CREATE TABLE DemandeD_Accepte(
@@ -167,6 +189,7 @@ CREATE TABLE DemandeD_Accepte(
     DemandeId INTEGER,
     TraducteurId INTEGER,
     Prix INTEGER,
+    Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
 );
@@ -176,6 +199,8 @@ CREATE TABLE DemandeD_paiement(
     DemandeId INTEGER,
     Document VARCHAR(30),
     Etat INTEGER,
+    VuClient BOOLEAN NOT NULL DEFAULT FALSE,
+    Vutraductor BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeD_Accepte (Id)
 );
 
@@ -183,6 +208,7 @@ CREATE TABLE Devi_debutee(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
     Date DATE,
+    Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeD_Accepte (Id)
 );
 
@@ -191,6 +217,8 @@ CREATE TABLE Devi_finie(
     TraductionId INTEGER,
     Date DATE,
     Etat INTEGER,
+    VuClient BOOLEAN NOT NULL DEFAULT FALSE,
+    VuTraductor BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (TraductionId) REFERENCES Devi_debutee (Id)
 );
 

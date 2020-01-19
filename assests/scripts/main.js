@@ -151,11 +151,8 @@ $(document).on("click", "#validerDemande" , function() {
         processData: false,
         contentType : false,
         success: function (data) {
-
-          
             console.log("SUCCESS : ", data);
-            
-
+            $('#modal_complete_info .close').click();
         }
     });
     

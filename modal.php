@@ -94,7 +94,7 @@ class projet_modal{
         }else{
             $asser_doc = 'NULL';
         }
- 
+
         $rq = "SELECT t3.*, t4.note, t5.nbr
                 FROM
                 (
@@ -123,7 +123,7 @@ class projet_modal{
                 from utilisateur U
                 JOIN traducteurdata TD
                 ON U.Id = TD.TraducteurId
-                WHERE TD.Assermetation_doc is NULL
+                WHERE TD.Assermetation_doc is ".$asser_doc."
                     )as t3
                     on t3.userid = t2.userid
                 JOIN (
@@ -151,13 +151,13 @@ class projet_modal{
                     )as t5
                     on t4.userid = t5.userid";
 
-                    
+                
         $result = $conn->query($rq);     
         $this->deconnexion($conn);
         return $result;
     }
 
-    public function insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $traductorId, $langueO, $langueD, $type, $comment, $assermente, $file){
+    public function insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $docName = $this->addDemandeDocument($file);
 
@@ -172,13 +172,12 @@ class projet_modal{
         $r = $this->getCommuneID($wilayaId, $commune);
         $communeId = array_values($r->fetch_assoc())[0];
  
-        $rq = "INSERT INTO Demande_traduction (UtilisateurId, Nom, Prenom, Email, TraducteurId, WilayaId, CommuneId, Adresse, Phone, LangueO, LangueD, Type, Comment, Assermente, Document)
+        $rq = "INSERT INTO Demande_traduction (UtilisateurId, Nom, Prenom, Email, WilayaId, CommuneId, Adresse, Phone, LangueO, LangueD, Type, Comment, Assermente, Document)
                 values(
                     ".$Userid.",
                     '".$nom."',
                     '".$prenom."',
                     '".$email."',
-                    ".$traductorId.",
                     ".$wilayaId.",
                     ".$communeId.",
                     '".$adresse."',
@@ -190,7 +189,161 @@ class projet_modal{
                     ".$assermente.",
                     '".$docName."'
                     );";
-                    echo $rq;
+                
+        $r = $conn->query($rq);
+       
+        $id = $conn->insert_id;
+        $this->deconnexion($conn);
+        return $id;
+    }
+
+    // notification demande de traduction
+    public function getDemandeTNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification demande de devis
+    public function getDemandeDNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification demande de traduction acceptée
+    public function getDemandeTANotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification demande de devis acceptée
+    public function getDemandeDANotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification demande de traduction paiement accepte
+    public function getDemandeTPANotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification demande de devis paiement accepte
+    public function getDemandeDPANotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification demande de traduction paiement refusé
+    public function getDemandeTPDNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification demande de devis paiement refusé
+    public function getDemandeDPDNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification de traduction debutée
+    public function getDemandeTDNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification de devis débutée
+    public function getDemandeDDNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification de traduction finie
+    public function getDemandeTFNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getDemandeTFANotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getDemandeTFDNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    // notification de devis finie
+    public function getDemandeDFNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getDemandeTPRNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getDemandeDPRNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DemandeId FROM RecevoireDemandeT WHERE TraducteurId = ".$userID." AND Vu = 0;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function addRecevoirDemandeT($demandeId, $traductorId){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "INSERT INTO RecevoireDemandeT (DemandeId, TraducteurId)
+                values(
+                    ".$demandeId.",
+                    ".$traductorId."
+                    );";
         $r = $conn->query($rq);
        
         $this->deconnexion($conn);

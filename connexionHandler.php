@@ -14,7 +14,7 @@ if (strcmp($idUser, '') == 0){
 }else{
     session_start();
     $_SESSION['username'] = $idUser;
-  	$_SESSION['success'] = "You are now logged in";
+  	setcookie("userid", $idUser, time() + (24 * 60 * 60 * 7), "/");
   	header('location: main.php');
 }
 

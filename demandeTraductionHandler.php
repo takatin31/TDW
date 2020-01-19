@@ -1,7 +1,7 @@
 <?php
 require_once('controller.php');
 session_start();
-$Userid = $_SESSION['username'];
+$Userid = $_COOKIE['userid'];
 $nom = $_POST["nom"];
 $prenom= $_POST["prenom"];
 $email= $_POST["email"];
@@ -23,10 +23,10 @@ $file= $_FILES["customFile"];
 $tc = new demande_traduction_controller();
 
 $arrlength = count($traduteurs);
-echo $arrlength;
+$demandeId = $tc->addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file);
+echo $demandeId;
 for($x = 0; $x < $arrlength; $x++) {
-    $tc->addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $traduteurs[$x], $langueO, $langueD, $type, $comment, $assermente, $file);
-
+    $tc->addRecevoirDemandeT($demandeId, $traduteurs[$x]);
 }
     
 
