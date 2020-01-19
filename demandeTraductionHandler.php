@@ -23,13 +23,10 @@ $file= $_FILES["customFile"];
 $tc = new demande_traduction_controller();
 
 $arrlength = count($traduteurs);
-$demandeId = $tc->addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file);
-echo $demandeId;
+$demandeId = $tc->addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file, $typeDemande);
+
 for($x = 0; $x < $arrlength; $x++) {
-    $tc->addRecevoirDemandeT($demandeId, $traduteurs[$x]);
+    $tc->addRecevoirDemandeT($demandeId, $traduteurs[$x], $typeDemande);
 }
     
-
-
-
 ?>

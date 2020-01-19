@@ -80,6 +80,8 @@
             $this->getDemandeDDNotifications($userID);
             $this->getDemandeTFNotifications($userID);
             $this->getDemandeDFNotifications($userID);
+
+            
             
         }
 
@@ -88,6 +90,8 @@
             $mp = new projet_modal();
             //lorsque le traducteur recoit une nouvelle demande de traduction:traducteur
             $r = $mp->getDemandeTNotifications($userID);
+
+           
 
             foreach($r as $lg){
                 echo '<tr class="good_request demandeTraduction" id="demandeTraduction'.$lg["DemandeId"].'">
@@ -251,7 +255,7 @@
             $mp = new projet_modal();
             //lorsque la traduction a debutée:client
             $r = $mp->getDemandeTDNotifications($userID);
-
+           
             foreach($r as $lg){
                 echo '<tr class="good_request beganTraduction" id="demandeTraduction'.$lg["DemandeId"].'">
                         <td>
@@ -380,18 +384,19 @@
     }
 
     class demande_traduction_controller{
-        public function addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file){
+        public function addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file, $typeDemande){
             $mp = new projet_modal();
-            $r = $mp->insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file);
+            $r = $mp->insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file, $typeDemande);
             return $r;
         }
 
-        public function addRecevoirDemandeT($demandeId, $TraductorId){
+        public function addRecevoirDemandeT($demandeId, $TraductorId, $typeDemande){
             $mp = new projet_modal();
-            $r = $mp->addRecevoirDemandeT($demandeId, $TraductorId);
+            $r = $mp->addRecevoirDemandeT($demandeId, $TraductorId, $typeDemande);
             return $r;
         }
     }
+
 
     class langues_controller {
         public function get_langues(){

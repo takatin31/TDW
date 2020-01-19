@@ -40,7 +40,11 @@ body {
 .user_bloc {
     background-color: white;
     border-radius: 10px;
-    height: 100%;
+    
+}
+
+#messages {
+    height: 500px;
 }
 
 .info-element {
@@ -48,10 +52,29 @@ body {
     border-radius: 5px;
 }
 
-.profile {
-    height: 20vw;
+
+
+.good_request {
+    background-color: rgb(95, 253, 166);
 }
 
-#messages {
-    height: 20vw;
+.good_request:hover {
+    background-color: rgb(72, 255, 96);
+}
+
+.bad_request {
+    background-color: rgb(255, 133, 133);
+}
+
+.bad_request:hover {
+    background-color: rgb(255, 88, 88);
+}
+
+table tbody tr td div + a {
+    color: rgb(48, 0, 161);
+    font-weight: bold;
+}
+
+tr {
+    margin-top: 2px;
 }

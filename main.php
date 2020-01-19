@@ -75,6 +75,7 @@
 <body>
     <?php
         echo $_COOKIE['userid'];
+
     ?>
     <nav class="navbar navbar-expand-lg main-navbar">
         <a class="navbar-brand mr-5" href="#">
