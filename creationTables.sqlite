@@ -130,7 +130,7 @@ CREATE TABLE DemandeT_paiement(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
     Document VARCHAR(30),
-    Etat BOOLEAN NOT NULL DEFAULT FALSE,
+    Etat INTEGER NOT NULL DEFAULT 0,
     VuClient BOOLEAN NOT NULL DEFAULT FALSE,
     Vutraductor BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeT_Accepte (Id)
@@ -141,7 +141,7 @@ CREATE TABLE Traduction_debutee(
     DemandeId INTEGER,
     Date DATE,
     Vu BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (DemandeId) REFERENCES DemandeT_Accepte (Id)
+    FOREIGN KEY (DemandeId) REFERENCES DemandeT_paiement (Id)
 );
 
 CREATE TABLE Traduction_finie(
@@ -149,7 +149,7 @@ CREATE TABLE Traduction_finie(
     TraductionId INTEGER,
     Date DATE,
     Document VARCHAR(30),
-    Etat BOOLEAN NOT NULL DEFAULT FALSE,
+    Etat INTEGER NOT NULL DEFAULT 0,
     VuClient BOOLEAN NOT NULL DEFAULT FALSE,
     VuTraductor BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (TraductionId) REFERENCES Traduction_debutee (Id)
@@ -189,21 +189,21 @@ CREATE TABLE RecevoireDemandeD(
     FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id)
 );
 
-CREATE TABLE DemandeD_Accepte(
-    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
-    DemandeId INTEGER,
-    TraducteurId INTEGER,
-    Prix INTEGER,
-    Vu BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id),
-    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
-);
+    CREATE TABLE DemandeD_Accepte(
+        Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+        DemandeId INTEGER,
+        TraducteurId INTEGER,
+        Prix INTEGER,
+        Vu BOOLEAN NOT NULL DEFAULT FALSE,
+        FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id),
+        FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
+    );
 
 CREATE TABLE DemandeD_paiement(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
     Document VARCHAR(30),
-    Etat BOOLEAN NOT NULL DEFAULT FALSE,
+    Etat INTEGER NOT NULL DEFAULT 0,
     VuClient BOOLEAN NOT NULL DEFAULT FALSE,
     Vutraductor BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeD_Accepte (Id)
@@ -214,7 +214,7 @@ CREATE TABLE Devi_debutee(
     DemandeId INTEGER,
     Date DATE,
     Vu BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (DemandeId) REFERENCES DemandeD_Accepte (Id)
+    FOREIGN KEY (DemandeId) REFERENCES DemandeD_paiement (Id)
 );
 
 CREATE TABLE Devi_finie(

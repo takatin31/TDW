@@ -20,6 +20,7 @@
     <script type="text/javascript" src="./assests/scripts/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="./assests/scripts/dataTables.semanticui.min.js"></script>
     <script type="text/javascript" src="./assests/scripts/semantic.min.js"></script>
+    <script type="text/javascript" src="./assests/scripts/notification_dashboard.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#example').DataTable();
@@ -99,6 +100,9 @@
                     </li>
                     <li class="nav-item">
                         <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+                    </li>
+                    <li class="nav-item float-right">
+                        <a href="" data-target="#demandeInfo" data-toggle="tab" class="nav-link">Traductions</a>
                     </li>
                 </ul>
                 <div class="tab-content py-4">
@@ -184,13 +188,7 @@
                     <div class="tab-pane overflow-auto" id="messages">
                         <table class="table">
                             <tbody>                                    
-                                <?php
-                                    require_once('controller.php');
-                                    $userId = $_COOKIE['userid'];
-                                    $notificationController = new NotificationController();
-                                    $notificationController->getNotifications($userId);
-                                    
-                                ?>
+                                
                             </tbody> 
                         </table>
                     </div>
@@ -282,6 +280,27 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+
+                    <div class="tab-pane ml-5" id="demandeInfo">
+                        <div class="row">
+                            <div>
+                                <label>Nom du client</label>
+                            </div>
+                            <div>
+                                <label>Nom du client</label>
+                            </div>
+                        </div>
+                        nom client
+                        prenom
+                        email
+                        phone
+                        langueO
+                        langueD
+                        comment
+                        type
+                        document
+                        date
                     </div>
                 </div>
             </div>

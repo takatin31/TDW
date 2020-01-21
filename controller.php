@@ -383,6 +383,60 @@
         }
     }
 
+    class NotificationInterractionController{
+        public function acceptDemande($idDemande, $traductorId, $table){
+            $mp = new projet_modal();
+            if (strcmp($table, "traduction") == 0){
+                $r = $mp->acceptDemandeTraduction($idDemande, $traductorId);
+            }else{
+                $r = $mp->acceptDemandeDevis($idDemande, $traductorId);
+            }
+            return $r;
+            
+        }
+
+        public function seeDemande($idDemande, $table){
+            $mp = new projet_modal();
+            if (strcmp($table, "traduction") == 0){
+                $r = $mp->seeDemandeTraduction($idDemande);
+            }else{
+                $r = $mp->seeDemandeDevis($idDemande);
+            }
+            return $r; 
+        }
+
+        public function seePaiementClient($idDemande, $table){
+            $mp = new projet_modal();
+            if (strcmp($table, "traduction") == 0){
+                $r = $mp->seePaiementClientTraduction($idDemande);
+            }else{
+                $r = $mp->seePaiementClientDevis($idDemande);
+            }
+            return $r; 
+        }
+
+        public function startWork($idDemande, $table){
+            $mp = new projet_modal();
+            if (strcmp($table, "traduction") == 0){
+                $r = $mp->startWorkTraduction($idDemande);
+            }else{
+                $r = $mp->startWorkDevis($idDemande);
+            }
+            return $r; 
+        }
+
+        public function seeStart($idDemande, $table){
+            $mp = new projet_modal();
+            if (strcmp($table, "traduction") == 0){
+                $r = $mp->seeStartTraduction($idDemande);
+            }else{
+                $r = $mp->seeStartDevis($idDemande);
+            }
+            return $r; 
+        }
+        
+    }
+
     class demande_traduction_controller{
         public function addDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file, $typeDemande){
             $mp = new projet_modal();

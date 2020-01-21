@@ -5,7 +5,7 @@ class projet_modal{
     
     private $servername = "127.0.0.1";
     private $username = "root";
-    private $password = "secret";
+    private $password = "";
     private $dbname = "tdw";
 
     private function connexion($servername, $username, $password, $dbname){
@@ -106,7 +106,7 @@ class projet_modal{
                 ON L.Id = ML.LangueId
                 group by U.id
                 HAVING GROUP_CONCAT(L.Nom SEPARATOR ' ') like '%".$langues[0]."%'
-                and GROUP_CONCAT(L.Nom SEPARATOR ' ') like '%".$langues[0]."%'
+                and GROUP_CONCAT(L.Nom SEPARATOR ' ') like '%".$langues[1]."%'
                 ) as t1
                 JOIN
                 (
@@ -194,10 +194,100 @@ class projet_modal{
        
         $id = $conn->insert_id;
         $this->deconnexion($conn);
-        return $r;
+        return $id;
     }
 
-    
+    public function acceptDemandeTraduction($idDemande, $traductorId){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "INSERT INTO DemandeT_Accepte (DemandeId, TraducteurId) VALUES (".$idDemande.", ".$traductorId.");";
+        $r = $conn->query($rq);
+        $rq = "UPDATE RecevoireDemandeT SET Vu = true WHERE DemandeId= ".$idDemande." AND TraducteurId = ".$traductorId.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function acceptDemandeDevis($idDemande, $traductorId){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "INSERT INTO DemandeD_Accepte (DemandeId, TraducteurId) VALUES (".$idDemande.", ".$traductorId.");";
+        $r = $conn->query($rq);
+        $rq = "UPDATE RecevoireDemandeD SET Vu = true WHERE DemandeId= ".$idDemande." AND TraducteurId = ".$traductorId.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function seeDemandeTraduction($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq1 = "INSERT INTO DemandeT_paiement (DemandeId, Etat) VALUES (".$idDemande.", 1);";
+        $r = $conn->query($rq1);
+        $rq = "UPDATE DemandeT_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq1;
+    }
+
+    public function seeDemandeDevis($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "INSERT INTO DemandeD_paiement (DemandeId, Etat) VALUES (".$idDemande.", 1);";
+        $r = $conn->query($rq);
+        $rq = "UPDATE DemandeD_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function seePaiementClientTraduction($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE DemandeT_paiement SET VuClient = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function seePaiementClientDevis($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE DemandeD_paiement SET VuClient = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function startWorkTraduction($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq1 = "INSERT INTO Traduction_debutee (DemandeId) VALUES (".$idDemande.");";
+        $r = $conn->query($rq1);
+        $rq = "UPDATE DemandeT_paiement SET Vutraductor = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq1;
+    }
+
+    public function startWorkDevis($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "INSERT INTO Devi_debutee (DemandeId) VALUES (".$idDemande.");";
+        $r = $conn->query($rq);
+        $rq = "UPDATE DemandeD_paiement SET Vutraductor = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function seeStartTraduction($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Traduction_debutee SET Vu = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function seeStartDevis($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Devi_debutee SET Vu = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
 
     // notification demande de traduction
     public function getDemandeTNotifications($userID){
@@ -220,7 +310,7 @@ class projet_modal{
     // notification demande de traduction acceptée
     public function getDemandeTANotifications($userID){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT DemandeId, TraducteurId 
+        $rq = "SELECT DA.Id DemandeId, TraducteurId 
                 FROM DemandeT_Accepte DA 
                 JOIN Demande_traduction DT
                 ON DA.DemandeId = DT.Id
@@ -289,7 +379,7 @@ class projet_modal{
                 JOIN Demande_traduction DT
                 ON DA.DemandeId = DT.Id
                 WHERE VuClient = 0
-                AND Etat = 0
+                AND Etat = -1
                 AND UtilisateurId = ".$userID.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -306,7 +396,7 @@ class projet_modal{
                 JOIN Demande_devis DD
                 ON DA.DemandeId = DD.Id
                 WHERE VuClient = 0
-                AND Etat = 0
+                AND Etat = -1
                 AND UtilisateurId = ".$userID.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -350,8 +440,10 @@ class projet_modal{
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT TD.Id DemandeId
                 FROM Traduction_debutee TD
+                JOIN DemandeT_paiement DP
+                ON DP.Id = TD.DemandeId
                 JOIN DemandeT_Accepte DA
-                ON TD.DemandeId = DA.Id
+                ON DP.DemandeId = DA.Id
                 JOIN Demande_traduction DT
                 ON DA.DemandeId = DT.Id
                 WHERE TD.Vu = 0
@@ -366,8 +458,10 @@ class projet_modal{
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT DB.Id DemandeId
                 FROM Devi_debutee DB
+                JOIN DemandeT_paiement DP
+                ON DP.Id = DB.DemandeId
                 JOIN DemandeD_Accepte DA
-                ON DB.DemandeId = DA.Id
+                ON DP.DemandeId = DA.Id
                 JOIN Demande_devis DD
                 ON DA.DemandeId = DD.Id
                 WHERE DB.Vu = 0

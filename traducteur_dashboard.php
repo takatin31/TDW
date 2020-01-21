@@ -20,6 +20,7 @@
     <script type="text/javascript" src="./assests/scripts/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="./assests/scripts/dataTables.semanticui.min.js"></script>
     <script type="text/javascript" src="./assests/scripts/semantic.min.js"></script>
+    <script type="text/javascript" src="./assests/scripts/notification_dashboard.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#example').DataTable();
