@@ -101,3 +101,13 @@ hr {
 .table td {
     vertical-align: middle;
 }
+
+.left-body p {
+    overflow: hidden;
+    max-height: 12ch;
+  }
+
+.bottom-body p{
+    overflow: hidden;
+    max-height: 30ch;
+}

@@ -160,3 +160,13 @@ $(document).on("click", "#validerDemande" , function() {
     
     
 });
+
+$(document).on("click", "#deconnexion", function(){
+    $.ajax({
+        type: "POST",
+        url: "DeconnexionHandler.php",
+        success: function (data) {
+            location.reload();
+        }
+    });
+})

@@ -306,6 +306,30 @@ class projet_modal{
         return $rq;
     }
 
+    public function seeAcceptedTraduction($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Traduction_finie SET VuTraductor = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function seeAcceptedDevis($idDemande){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Devis_finie SET VuTraductor = true WHERE Id= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
+    public function getArticles($start, $nbr){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT * FROM Articles LIMIT ".$start.", ".$nbr.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
     public function getDemandeInfoFromRecieved($idDemande, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT Nom, Prenom, Email, Phone, LangueO, LangueD,Type, Comment
@@ -645,7 +669,7 @@ class projet_modal{
                 JOIN Demande_traduction DT
                 ON DA.DemandeId = DT.Id
                 WHERE TF.VuTraductor = 0
-                AND TF.Etat = 0
+                AND TF.Etat = -1
                 AND TraducteurId = ".$userID.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -670,6 +694,41 @@ class projet_modal{
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
+    }
+
+    public function getTraductorIdfromDemandeId($demandeId, $type){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DA.TraducteurId Id
+                FROM ".$type."_finie DF
+                JOIN ".$type."_debutee DB
+                ON DF.".$type."Id = DB.Id
+                JOIN Demande".$type[0]."_paiement DP
+                ON DP.Id = DB.DemandeId
+                JOIN Demande".$type[0]."_Accepte DA
+                ON DP.DemandeId = DA.Id
+                WHERE DF.Id = ".$demandeId.";";
+        $r = $conn->query($rq);
+        $result = $r->fetch_assoc(); 
+        $this->deconnexion($conn);
+        return $result['Id'];
+    }
+
+    public function noter($demandeId, $userId, $note, $type){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $traductorId = $this->getTraductorIdfromDemandeId($demandeId, $type);
+        $rq = "INSERT INTO Note (TraducteurId, UtilisateurId, valeur)
+                VALUES
+                (".$traductorId.",
+                ".$userId.",
+                ".$note.");";
+        $r = $conn->query($rq);
+        if (strcmp($type, "traduction") == 0)
+            $rq = "UPDATE ".$type."_finie SET VuClient = 1, VuTraductor = 1, Etat = 1 WHERE Id= ".$demandeId.";";
+        else
+            $rq = "UPDATE ".$type."_finie SET VuClient = 1, Etat = 1 WHERE Id= ".$demandeId.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
     }
 
     public function addFinalFile($idDemande, $type, $file){

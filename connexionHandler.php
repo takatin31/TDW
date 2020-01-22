@@ -14,7 +14,14 @@ if (strcmp($idUser, '') == 0){
 }else{
     session_start();
     $_SESSION['username'] = $idUser;
-  	setcookie("userid", $idUser, time() + (24 * 60 * 60 * 7), "/");
+    setcookie("userid", $idUser, time() + (24 * 60 * 60 * 7), "/");
+    $tc = new traductor_controller();
+    $r = $tc->isTraductor($idUser);
+    if ($r == 0){
+        setcookie("type", "client", time() + (24 * 60 * 60 * 7), "/");
+    }else{
+        setcookie("type", "traducteur", time() + (24 * 60 * 60 * 7), "/");
+    }
   	header('location: main.php');
 }
 

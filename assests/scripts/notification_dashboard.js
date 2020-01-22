@@ -345,6 +345,89 @@ $(document).on("click", ".beganDevis .btn-secondary" , function() {
 
 });
 
+$(document).on("click", ".accedptedTraduction .btn-warning" , function() {
+    let parent = $(this).parent().parent().parent().attr('id');
+
+    let demandeId = parent.replace("acceptedFinishedTraduction", "");
+
+    let target = "traduction";
+    let action = "finishedVu";
+    
+    
+    $.ajax({
+        type: "POST",
+        url: "Notification_NoFile_Handler.php",
+        data: {
+            id: demandeId,
+            action: action,
+            target: target,
+            prix: 0,
+            fileExist: false
+        },
+        success: function (data) {
+            update();
+            
+        }
+    });
+
+});
+
+$(document).on("click", ".paimentRecievedTraduction .btn-warning" , function() {
+    let parent = $(this).parent().parent().parent().attr('id');
+
+    let demandeId = parent.replace("paimentRecievedTraduction", "");
+
+    let target = "traduction";
+    let action = "finishedVu";
+    
+    
+    $.ajax({
+        type: "POST",
+        url: "Notification_NoFile_Handler.php",
+        data: {
+            id: demandeId,
+            action: action,
+            target: target,
+            prix: 0,
+            fileExist: false
+        },
+        success: function (data) {
+            update();
+            
+        }
+    });
+
+});
+
+
+$(document).on("click", ".paimentRecievedDevis .btn-warning" , function() {
+    let parent = $(this).parent().parent().parent().attr('id');
+
+    let demandeId = parent.replace("paimentRecievedDevis", "");
+
+    let target = "devis";
+    let action = "finishedVu";
+    
+    
+    $.ajax({
+        type: "POST",
+        url: "Notification_NoFile_Handler.php",
+        data: {
+            id: demandeId,
+            action: action,
+            target: target,
+            prix: 0,
+            fileExist: false
+        },
+        success: function (data) {
+            update();
+            
+        }
+    });
+
+});
+
+
 $(document).on("click", ".link_demande" , function() {
     let parent = $(this).parent().parent().attr('id');
     let type = "Traduction";
@@ -396,6 +479,7 @@ $(document).on("click", ".link_demande" , function() {
             update();
             $('#demandeInfo').empty();
             $('#demandeInfo').append(data);
+            $("#demandeInfoBtn").trigger("click");
             
         }
     });
@@ -466,3 +550,48 @@ $(document).on("click", "#validerFinaleDv" , function() {
     });
 
 });
+
+$(document).on("click", ".finishedTraduction .btn-warning", function(){
+    let parent = $(this).parent().parent().parent().parent().attr('id');
+    let type = "Traduction";
+
+    if (parent.includes("Devis")){
+        type = "Devis";
+    }
+
+    let demandeId;
+
+    if (type == "Traduction"){
+        demandeId = parent.replace("finishedTraduction", "");
+    }else{
+        demandeId = parent.replace("finishedDevis", "");
+    }
+
+   
+
+    $("#modal_note #idInputHidden").attr("value", demandeId);
+    $("#modal_note #typeInputHidden").attr("value", type);
+})
+
+$(document).on("click", "#validerNote", function(){
+    let demandeId = $("#modal_note #idInputHidden").attr("value");
+    let type = $("#modal_note #typeInputHidden").attr("value");
+
+    let note = $("#formeNote .note-select").val();
+    console.log(demandeId+"    "+type+"    "+note);
+    
+    $.ajax({
+        type: "POST",
+        url: "noteHandler.php",
+        data: {
+            demandeid: demandeId,
+            type: type,
+            note: note,
+        },
+        success: function (data) {
+            console.log(data);
+            update();
+            $('#modal_note .close').click();
+        }
+    });
+})

@@ -102,7 +102,7 @@
                         <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
                     </li>
                     <li class="nav-item float-right">
-                        <a href="" data-target="#demandeInfo" data-toggle="tab" class="nav-link">Traductions</a>
+                        <a href="" data-target="#demandeInfo" data-toggle="tab" class="nav-link" id="demandeInfoBtn">Traductions</a>
                     </li>
                 </ul>
                 <div class="tab-content py-4">
@@ -366,6 +366,42 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal_note" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Connexion</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="formeNote">
+                    <div class="custom-file mt-3" >
+                        <label for="notes">Donner une note au traducteur:</label>
+                        <div class="col-md-12 col-lg-8">
+                            <select class="custom-select note-select" name="note">
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="idInputHidden" value="0"></input>
+                        <input type="hidden" id="typeInputHidden" value="Traduction"></input>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary mb-2 mt-5" id="validerNote">Valider Note</button>
+                        <button type="button" class="btn btn-warning mb-2 mt-5" id="resfuserNote">Ne pas noter</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
 
 
     <div class="navbar navbar-expand-lg nav-footer">

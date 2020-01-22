@@ -41,5 +41,10 @@ if (strcmp($action, "startVu") == 0){
     echo $r;
 }
 
+if (strcmp($action, "finishedVu") == 0){
+    $r = $notification_Controller->seeAccepted($idDemande, $target);
+    echo $r;
+}
+
 
 ?>

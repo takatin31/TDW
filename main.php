@@ -73,10 +73,7 @@
     
 </head>
 <body>
-    <?php
-        echo $_COOKIE['userid'];
-
-    ?>
+    
     <nav class="navbar navbar-expand-lg main-navbar">
         <a class="navbar-brand mr-5" href="#">
             <img src="./assests/images/logo2.svg" class="img-fluid"/>
@@ -85,7 +82,7 @@
           <img src="assests/images/menu2.png"/>
         </button>
         <div class="collapse navbar-collapse row" id="navbarNavDropdown">
-            <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4">
+            <ul class="navbar-nav col-lg-8 col-md-4 col-sm-4">
                 <li class="nav-item active">
                     <a class="nav-link" href="main.php">Accueil</a>
                 </li>
@@ -104,8 +101,29 @@
                 <li class="nav-item">
                     <a class="nav-link" href="about.html">A propos</a>
                 </li>
+                <?php
+                    if (isset($_COOKIE["userid"])){
+                        echo '<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdow" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Menu profile
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">';
+                                
+                                
+                        $type = $_COOKIE['type'];
+                        if (strcmp($type, "client") == 0){
+                            echo '<a class="dropdown-item" href="client_dashboard.php">Profile</a>';
+                        }else{
+                            echo '<a class="dropdown-item" href="traducteur_dashboard.php">Profile</a>';
+                        }
+                                
+                        echo '<a class="dropdown-item" href="#" id="deconnexion">Deconnexion</a>
+                            </div>
+                        </li>';
+                    }
+                ?>
             </ul>
-            <div class="navbar-nav col-lg-4 col-md-6 col-sm-8 justify-content-end">
+            <div class="navbar-nav col-lg-4 col-md-8 col-sm-8 justify-content-end">
                 <div class="nav-item col-lg-2 col-md-3 col-sm-3 d-none d-lg-block">
                     <a class="nav-link" href="#">
                         <img src="./assests/images/facebook.png" class="img-fluid"/>
@@ -135,7 +153,11 @@
         <p class="text-center text-black title"><b>Traduisez</b> tous vos documents</p>
         <a href="#" data-toggle="modal" data-target="#modal_connexion">Connexion</a>
         <a href="#" data-toggle="modal" data-target="#modal_inscription">Inscription</a>
-    
+        <?php
+            if(isset($_COOKIE['userid'])) {
+                echo '<a href="#" id="deconnexion">Deconnexion</a>';
+            }
+        ?>
         <div class="container-fluid carousel">
             <ul id="lightSlider">
                 <li>
@@ -164,66 +186,38 @@
                 </li>
             </ul>
         </div>
-    
         <div class="container-fluid row mt-5 align-items-center">
-            <div class="col-7">
-                <div class="card card-container pt-3 pr-4 pl-2">
-                    <div class="d-flex align-items-center">
-                        <div class="col-6">
-                            <img class="card-img-top" src="./assests/images/2.jpg" alt="Card image cap"/>
+            <div class="col-md-7 col-sm-12">
+        <?php
+            require_once("controller.php");
+            $articleController = new ArticleController();
+            $r = $articleController->getArticles(0, 3);
+
+            foreach($r as $lg){
+                echo '<div class="card card-container pt-3 pr-4 pl-2">
+                            <div class="d-flex align-items-center">
+                                <div class="col-6">
+                                    <img class="card-img-top" src="./assests/images/2.jpg" alt="Card image cap"/>
+                                </div>
+                                <p class="card-title text-center">'.$lg["Titre"].'</p>
+                            </div>
+                            
+                            <div class="card-body left-body">
+                            <p class="card-text ">'.$lg["body"].'</p>
+                            </div>
+                            <div class="text-right mb-2">
+                                <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
+                            </div>
                         </div>
-                        <p class="card-title text-center">Article 1: Venez voir nos travaux</p>
-                    </div>
-                    
-                    <div class="card-body">
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .</p>
-                    </div>
-                    <div class="text-right mb-2">
-                        <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
-                    </div>
-                </div>
-                <hr/>
-                <div class="card card-container pt-3 pr-4 pl-2">
-                    <div class="d-flex flex-row-reverse align-items-center">
-                        <div class="col-6">
-                            <img class="card-img-top" src="./assests/images/3.png" alt="Card image cap"/>
-                        </div>
-                        <p class="card-title text-center">Article2:<br/> Ne rattez pas l'occasion!!</p>
-                    </div>
-                    <div class="card-body">
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .</p>
-                    </div>
-                    <div class="text-right mb-2">
-                        <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
-                    </div>
-                </div>
-                <hr/>
-                <div class="card card-container pt-3 pr-4 pl-2">
-                    <div class=" d-flex align-items-center">
-                        <div class="col-6">
-                            <img class="card-img-top" src="./assests/images/2.jpg" alt="Card image cap"/>
-                        </div>
-                        <p class="card-title text-center">Article 3: Venez voir nos traductions</p>
-                    </div>
-                    <div class="card-body">
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .</p>
-                    </div>
-                    <div class="text-right mb-2">
-                        <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
-                    </div>
-                </div>
+                        <hr/>';
+            }
+
+        ?>
+     
+                
             </div>
 
-            <div class="col-5 div-form">
+            <div class="col-md-5 col-sm-12 div-form">
                 <h2 class="text-center mt-3">Demande de devis de traduction</h2>
                 <hr/>
                 <form method="POST" id="demandeForm">
@@ -334,60 +328,29 @@
         </div>
         <hr/>
         <div class="container-fluid row mt-5">
-            <div class="col-4 ">
-                <div class="card card-container mb-2">
-                    <img class="card-img-top" src="./assests/images/4.jpg" alt="Card image cap"/>
-                    <div class="card-body">
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .</p>
-                    </div>
-                    <div class="text-right mb-2 mr-2">
-                        <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card card-container mb-2">
-                    <img class="card-img-top" src="./assests/images/5.jpg" alt="Card image cap"/>
-                    <div class="card-body">
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .</p>
-                    </div>
-                    <div class="text-right mb-2 mr-2">
-                        <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card card-container mb-2">
-                    <img class="card-img-top" src="./assests/images/6.jpg" alt="Card image cap"/>
-                    <div class="card-body">
-                      <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                          Maecenas in neque at urna ullamcorper dictum ut ut ex. Curabitur et aliquet nulla, nec porta libero. 
-                          Nullam eget imperdiet lorem, quis condimentum tellus. Sed gravida risus orci. 
-                          Sed ultrices sagittis ex, a vehicula .</p>
-                    </div>
-                    <div class="text-right mb-2 mr-2">
-                        <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
-                    </div>
-                </div>
-            </div>
+        <?php
+            require_once("controller.php");
+            $articleController = new ArticleController();
+            $r = $articleController->getArticles(3, 3);
+
+            foreach($r as $lg){
+                echo ' <div class="col-4 ">
+                            <div class="card card-container mb-2">
+                                <img class="card-img-top" src="./assests/images/4.jpg" alt="Card image cap"/>
+                                <div class="card-body bottom-body">
+                                <p class="card-text">'.$lg["body"].'</p>
+                                </div>
+                                <div class="text-right mb-2 mr-2">
+                                    <a class="card-link" href="#" data-toggle="modal" data-target="#modal_tab">Lire la suite</a>
+                                </div>
+                            </div>
+                        </div>';
+            }
+
+        ?>
+       
+           
+            
         </div> 
     </div>
 

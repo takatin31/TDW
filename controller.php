@@ -25,6 +25,8 @@
             $r = $mp->findUser($email, $password);
             return $r;
         }
+
+        
     }
 
     class traductor_controller {
@@ -339,8 +341,7 @@
                             <td>
                                 <div>
                                     <div class="float-right">
-                                        <button class="btn btn-success">Valider</button>
-                                        <button class="btn btn-danger">Refuser</button>
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#modal_note">Valider</button>
                                     </div> 
                                     Votre traduction de <a href="#" class="link_demande">demande de traduction</a> a finie
                                 </div>
@@ -476,6 +477,16 @@
             }
             return $r; 
         }
+
+        public function seeAccepted($idDemande, $table){
+            $mp = new projet_modal();
+            if (strcmp($table, "traduction") == 0){
+                $r = $mp->seeAcceptedTraduction($idDemande);
+            }else{
+                $r = $mp->seeAcceptedDevis($idDemande);
+            }
+            return $r; 
+        }
         
     }
 
@@ -593,6 +604,22 @@
         public function TraductorValideFinal($idDemande, $type){
             $mp = new projet_modal();
             $r = $mp->TraductorValideFinal($idDemande, $type);
+            return $r;
+        }
+    }
+
+    class NoteController{
+        public function noter($demandeId, $userId, $note, $type){
+            $mp = new projet_modal();
+            $r = $mp->noter($demandeId,$userId, $note, $type);
+            return $r;
+        }
+    }
+
+    class ArticleController{
+        public function getArticles($start, $nbr){
+            $mp = new projet_modal();
+            $r=  $mp->getArticles($start, $nbr);
             return $r;
         }
     }

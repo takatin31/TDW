@@ -102,7 +102,7 @@
                         <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
                     </li>
                     <li class="nav-item float-right">
-                        <a href="" data-target="#demandeInfo" data-toggle="tab" class="nav-link">Traductions</a>
+                        <a href="" data-target="#demandeInfo" data-toggle="tab" class="nav-link" id="demandeInfoBtn">Traductions</a>
                     </li>
                 </ul>
                 
