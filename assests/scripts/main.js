@@ -131,7 +131,7 @@ $(document).on("click", "#validerDemande" , function() {
 
     let type = $('.demande-info .custom-select').val();
     
-    console.log(type);
+    
     
 
     let assermente = $('#pro-traductorD').prop('checked');

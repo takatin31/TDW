@@ -53,6 +53,10 @@ body {
 }
 
 
+.onWorking {
+    background-color: rgb(160, 160, 160);
+}
+
 
 .good_request {
     background-color: rgb(95, 253, 166);
@@ -70,8 +74,13 @@ body {
     background-color: rgb(255, 88, 88);
 }
 
-table tbody tr td div + a {
+.mainTable tbody tr td div + a {
     color: rgb(48, 0, 161);
+    font-weight: bold;
+}
+
+.pre-table tbody tr td a {
+    color: rgb(39, 6, 117);
     font-weight: bold;
 }
 

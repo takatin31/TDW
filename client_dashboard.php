@@ -186,7 +186,7 @@
                         <!--/row-->
                     </div>
                     <div class="tab-pane overflow-auto" id="messages">
-                        <table class="table">
+                        <table class="table mainTable">
                             <tbody>                                    
                                 
                             </tbody> 
@@ -285,22 +285,20 @@
                     <div class="tab-pane ml-5" id="demandeInfo">
                         <div class="row">
                             <div>
-                                <label>Nom du client</label>
+                                <label class="titre">Nom du client</label>
                             </div>
                             <div>
-                                <label>Nom du client</label>
+                                <label class="valeur"></label>
                             </div>
                         </div>
-                        nom client
-                        prenom
-                        email
-                        phone
-                        langueO
-                        langueD
-                        comment
-                        type
-                        document
-                        date
+                        <div class="row">
+                            <div>
+                                <label class="titre">Nom du client</label>
+                            </div>
+                            <div>
+                                <label class="valeur"></label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -314,6 +312,62 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="modal_complete_paiementTr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Connexion</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="formePriceTr">
+                    <div class="custom-file mt-3" >
+                        <input type="file" class="custom-file-input" name="customFile" id="filePriceTr">
+                        <label class="custom-file-label" for="customFile">Importer le fichier qui prouve le paiement</label>
+                        <input type="hidden" value="0"></input>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary mb-2 mt-5" id="validerPayerTr">Valider Paiement</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_complete_paiementDv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Connexion</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="formePriceDv">
+                    <div class="custom-file mt-3" >
+                        <input type="file" class="custom-file-input" name="customFile" id="filePriceDv">
+                        <label class="custom-file-label" for="customFile">Importer le fichier qui prouve le paiement</label>
+                        <input type="hidden" value="0"></input>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary mb-2 mt-5" id="validerPayerDv">Valider Paiement</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
     <div class="navbar navbar-expand-lg nav-footer">
         <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4 pt-2">
             <li class="nav-item">

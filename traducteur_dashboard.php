@@ -102,7 +102,7 @@
                         <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
                     </li>
                     <li class="nav-item float-right">
-                        <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Traductions</a>
+                        <a href="" data-target="#demandeInfo" data-toggle="tab" class="nav-link">Traductions</a>
                     </li>
                 </ul>
                 
@@ -187,24 +187,21 @@
                         <!--/row-->
                     </div>
                     <div class="tab-pane overflow-auto" id="messages">
-                        <table class="table">
-                            <tbody>        
+                        <h3>Demande en cours de traitement</h3>
+                        <table class="table pre-table">
+                            <tbody>
                                 <?php
                                     require_once('controller.php');
                                     $userId = $_COOKIE['userid'];
                                     $notificationController = new NotificationController();
-                                    $notificationController->getNotifications($userId);
-                                    
+                                    $notificationController->getDemandeTDTraductoNotifications($userId);
+                                    $notificationController->getDemandeDDTraductorNotifications($userId);
                                 ?>
-                                
-                               
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+                            </tbody>
+                        </table>
+                        <h3>Notification</h3>
+                        <table class="table mainTable">
+                            <tbody>        
                                 
                             </tbody> 
                         </table>
@@ -298,6 +295,10 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="tab-pane ml-5" id="demandeInfo">
+                        
+                    </div>
                 </div>
             </div>
             <div class="col-lg-4 order-lg-1 text-center">
@@ -310,6 +311,114 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="modal_complete_demandeTr" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Connexion</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="prix">Prix:</label>
+                        <input type="number" class="form-control" placeholder="Entez votre prix" name="prix" id="priceTr">
+                        <input type="hidden" value="0"></input>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary mb-2 mt-5" id="validerPrixTr">Valider</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_complete_demandeDv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Connexion</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="prix">Prix:</label>
+                        <input type="number" class="form-control" placeholder="Entez votre prix" name="prix" id="priceDv">
+                        <input type="hidden" value="0"></input>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary mb-2 mt-5" id="validerPrixDv">Valider</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modalfinalFileTraduction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Envoyer la traduction finale</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="formeFinalTr">
+                    <div class="custom-file mt-3" >
+                        <input type="file" class="custom-file-input" name="customFile" id="filefinalTr">
+                        <label class="custom-file-label" for="customFile">Importer le fichier finale</label>
+                        <input type="hidden" value="0"></input>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary mb-2 mt-5" id="validerFinalTr">Envoyer au client</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalfinalFileDevis" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modal_title">Envoyer le resultat du devis</h5>
+              <button type="button" id="modal_close" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+                <form enctype="multipart/form-data" id="formeFinalDv">
+                    <div class="custom-file mt-3" >
+                        <input type="file" class="custom-file-input" name="customFile" id="filefinalDv">
+                        <label class="custom-file-label" for="customFile">Importer le fichier finale</label>
+                        <input type="hidden" value="0"></input>
+                    </div>
+                    <div class="col text-center">
+                        <button type="button" class="btn btn-primary mb-2 mt-5" id="validerFinaleDv">Envoyer au client</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
     <div class="navbar navbar-expand-lg nav-footer">
         <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4 pt-2">
             <li class="nav-item">

@@ -209,7 +209,7 @@ CREATE TABLE DemandeD_paiement(
     FOREIGN KEY (DemandeId) REFERENCES DemandeD_Accepte (Id)
 );
 
-CREATE TABLE Devi_debutee(
+CREATE TABLE Devis_debutee(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
     Date DATE,
@@ -217,13 +217,13 @@ CREATE TABLE Devi_debutee(
     FOREIGN KEY (DemandeId) REFERENCES DemandeD_paiement (Id)
 );
 
-CREATE TABLE Devi_finie(
+CREATE TABLE Devis_finie(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DeviId INTEGER,
     Date DATE,
     Document VARCHAR(30),
     VuClient BOOLEAN NOT NULL DEFAULT FALSE,
-    FOREIGN KEY (DeviId) REFERENCES Devi_debutee (Id)
+    FOREIGN KEY (DeviId) REFERENCES Devis_debutee (Id)
 );
 
 
