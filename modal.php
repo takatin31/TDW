@@ -73,6 +73,31 @@ class projet_modal{
         return $r;
     }
 
+    public function getName($userId){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "Select Nom, Prenom from Utilisateur WHERE Id =".$userId;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getPhoto($userId){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "Select Image from Utilisateur WHERE Id =".$userId;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function addPhoto($userId, $image){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $imageName = $this->addImagePic($image);
+        $rq = "UPDATE Utilisateur SET Image = '".$imageName."' WHERE Id =".$userId;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $imageName;
+    }
+
     public function getLangueId($langue){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "Select Id from Langue WHERE nom = '".$langue."'";
@@ -801,7 +826,7 @@ class projet_modal{
     // notification de traduction finie
     public function getDemandeTFNotifications($userID){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT TF.Id DemandeId
+        $rq = "SELECT TF.Id DemandeId, TF.Document
                 FROM Traduction_finie TF
                 JOIN Traduction_debutee TD
                 ON TF.TraductionId = TD.Id
@@ -861,7 +886,7 @@ class projet_modal{
     // notification de devis finie
     public function getDemandeDFNotifications($userID){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT DF.Id DemandeId
+        $rq = "SELECT DF.Id DemandeId, DF.Document
                 FROM Devis_finie DF
                 JOIN Devis_debutee DB
                 ON DF.DeviId = DB.Id
@@ -913,9 +938,21 @@ class projet_modal{
         return $rq;
     }
 
+    public function doNotNoter($demandeId, $userId, $type){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $traductorId = $this->getTraductorIdfromDemandeId($demandeId, $type);
+        if (strcmp($type, "traduction") == 0)
+            $rq = "UPDATE ".$type."_finie SET VuClient = 1, VuTraductor = 1, Etat = 1 WHERE Id= ".$demandeId.";";
+        else
+            $rq = "UPDATE ".$type."_finie SET VuClient = 1, Etat = 1 WHERE Id= ".$demandeId.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
+    }
+
     public function addFinalFile($idDemande, $type, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $docName = $this->addPaymentDocument($file);
+        $docName = $this->addFinalDocument($file);
         $rq = "INSERT INTO ".$type."_finie (TraductionId, Document)
                 VALUES
                 (".$idDemande.",
@@ -1173,6 +1210,26 @@ class projet_modal{
         if(in_array($fileType, $allowTypes)){
             // Upload file to server
             if(move_uploaded_file($doc["tmp_name"], $targetFilePath)){
+                return $fileName;
+            }else{
+                $statusMsg = "Sorry, there was an error uploading your file.";
+            }
+        }else{
+            $statusMsg = 'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
+        }
+        return $statusMsg;
+    }
+
+    public function addImagePic($image){
+        $targetDir = "uploads/profile_pics/";
+        $fileName = basename($image["name"]);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+        $allowTypes = array('jpg','png','jpeg','gif');
+        if(in_array($fileType, $allowTypes)){
+            // Upload file to server
+            if(move_uploaded_file($image["tmp_name"], $targetFilePath)){
                 return $fileName;
             }else{
                 $statusMsg = "Sorry, there was an error uploading your file.";

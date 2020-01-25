@@ -90,7 +90,12 @@
     <div class="container user_bloc mt-5 mb-5 py-5">
         <div class="row my-2">
             <div class="col-lg-8 order-lg-2">
-                <h1 class="mb-3">User Profile</h1>
+            <?php
+                require_once("controller.php");
+                $uc = new users_controller();
+                $nom_prenom = $uc->getName($_COOKIE["userid"]);
+                echo '<h5 class="mb-3">'.$nom_prenom["Nom"].' '.$nom_prenom["Prenom"].'</h5>';
+            ?>
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Historique</a>
@@ -260,10 +265,15 @@
                 </div>
             </div>
             <div class="col-lg-4 order-lg-1 text-center">
-                <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <?php
+                require_once("controller.php");
+                $uc = new users_controller();
+                $image = $uc->getPhoto($_COOKIE["userid"]);
+                echo '<img src="./uploads/profile_pics/'.$image.'" id="profilePic" class="mx-auto img-fluid img-circle d-block" alt="avatar">'
+            ?>
                 <h6 class="mt-2">Upload a different photo</h6>
                 <label class="custom-file">
-                    <input type="file" id="file" class="custom-file-input">
+                    <input type="file" id="profileImage" name="profilePicInput" class="custom-file-input">
                     <span class="custom-file-control">Choose file</span>
                 </label>
             </div>

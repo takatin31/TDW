@@ -608,7 +608,7 @@ $(document).on("click", "#validerNote", function(){
     let type = $("#modal_note #typeInputHidden").attr("value");
 
     let note = $("#formeNote .note-select").val();
-    console.log(demandeId+"    "+type+"    "+note);
+    
     
     $.ajax({
         type: "POST",
@@ -624,4 +624,49 @@ $(document).on("click", "#validerNote", function(){
             $('#modal_note .close').click();
         }
     });
-})
+});
+
+
+
+$(document).on("click", "#resfuserNote", function(){
+    let demandeId = $("#modal_note #idInputHidden").attr("value");
+    let type = $("#modal_note #typeInputHidden").attr("value");
+
+    
+    
+    
+    $.ajax({
+        type: "POST",
+        url: "noteHandler.php",
+        data: {
+            demandeid: demandeId,
+            type: type,
+        },
+        success: function (data) {
+            console.log(data);
+            update();
+            $('#modal_note .close').click();
+        }
+    });
+});
+
+$(document).on("change", "#profileImage", function(){
+    let el = $('#profileImage').prop('files')[0];
+   
+    
+    var formData = new FormData();
+
+    formData.append('profileImage', el);  
+    
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "ImageProfileHandler.php",
+        processData: false,
+        contentType : false,
+        data: formData,
+        success: function (data) {
+            $("#profilePic").attr("src", "./uploads/profile_pics/"+data);
+        }
+    });
+});

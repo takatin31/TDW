@@ -34,7 +34,7 @@ foreach ($r as $lg){
     foreach($lg as $key => $value){
         echo '<div class="row">
                     <div>
-                        <label class="titre">'.$key.' : </label>
+                        <label class="titre"> <b>'.$key.' </b>: </label>
                     </div>
                     <div>
                         <label class="valeur"> '.$value.'</label>

@@ -26,6 +26,27 @@
             return $r;
         }
 
+        public function getName($userId){
+            $mp = new projet_modal();
+            $r = $mp->getName($userId);
+            $result = $r->fetch_assoc(); // fetch it first
+            return $result;
+            
+        }
+
+        public function getPhoto($userId){
+            $mp = new projet_modal();
+            $r = $mp->getPhoto($userId);
+            $result = $r->fetch_assoc(); // fetch it first
+            return $result['Image'];
+            
+        }
+
+        public function addImage($userId, $image){
+            $mp = new projet_modal();
+            $r = $mp->addPhoto($userId, $image);
+            return $r;
+        }
         
     }
 
@@ -165,7 +186,7 @@
                             <div class="float-right">
                                 <button class="btn btn-secondary" data-toggle="modal" data-target="#modal_complete_paiementTr">Payer</button>
                             </div> 
-                            Votre <a href="#" class="link_demande">demande de traduction</a> a ete acceptée par  <a href="#" class="link_traductor">traducteur</a>
+                            Votre <a href="#" class="link_demande">demande de traduction</a> a ete acceptée par  <a href="public_traducteur.php?id='.$lg['TraducteurId'].'" class="link_traductor">traducteur</a>
                             <br/>
                             Voici le Prix demandé :<b> '.$lg["Prix"].' </b>DZ
                             </td>
@@ -185,7 +206,7 @@
                             <div class="float-right">
                                 <button class="btn btn-secondary" data-toggle="modal" data-target="#modal_complete_paiementDv">Payer</button>
                             </div> 
-                            Votre <a href="#" class="link_demande">demande de devis</a> a ete acceptée par  <a href="#" class="link_traductor">traducteur</a>
+                            Votre <a href="#" class="link_demande">demande de devis</a> a ete acceptée par  <a href="public_traducteur.php?id='.$lg['TraducteurId'].'" class="link_traductor">traducteur</a>
                             <br/>
                             Voici le Prix demandé :<b> '.$lg["Prix"].' </b>DZ
                             </td>
@@ -364,7 +385,7 @@
                                     </div> 
                                     Votre traduction de <a href="#" class="link_demande">demande de traduction</a> a finie
                                 </div>
-                                <button class="btn btn-info mt-2">Telecharger le document traduit</button>
+                                <a class="btn btn-info mt-2" href="./uploads/Output/'.$lg['Document'].'">Telecharger le document traduit</a>
                             </td>
                         </tr>';
             }
@@ -631,6 +652,12 @@
         public function noter($demandeId, $userId, $note, $type){
             $mp = new projet_modal();
             $r = $mp->noter($demandeId,$userId, $note, $type);
+            return $r;
+        }
+
+        public function doNotNoter($demandeId, $userId, $type){
+            $mp = new projet_modal();
+            $r = $mp->doNotNoter($demandeId,$userId, $type);
             return $r;
         }
     }
