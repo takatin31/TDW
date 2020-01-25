@@ -42,7 +42,7 @@
                     <a class="nav-link" href="traducteurs.html">Traducteurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="blog.html">Blog</a>
+                    <a class="nav-link" href="blog.php">Blog</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="recrutement.php">Recrutement</a>
@@ -171,8 +171,8 @@
                         <div class="col-md-12 col-lg-8">
                             <select class="custom-select mastered_types" name="types[]">
                                 <option>Generale</option>
-                                <option>Scientique</option>
-                                <option>Site Web</option>
+                                <option>Scientifique</option>
+                                <option>Site-Web</option>
                             </select>
                         </div>
                         <div class="col-md-12 col-lg-3 d-flex align-items-center justify-content-around">
@@ -229,7 +229,7 @@
                 <a class="nav-link" href="traducteurs.html">Traducteurs</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog</a>
+                <a class="nav-link" href="blog.php">Blog</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="recrutement.php">Recrutement</a>

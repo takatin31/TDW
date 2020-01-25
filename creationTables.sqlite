@@ -24,7 +24,7 @@ CREATE TABLE Utilisateur(
     Commune INTEGER,
     Adresse VARCHAR(100),
     Phone INTEGER,
-    Image VARCHAR(30),
+    Image VARCHAR(30) NOT NULL DEFAULT "default",,
     FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id)
 );
 
@@ -121,6 +121,7 @@ CREATE TABLE DemandeT_Accepte(
     DemandeId INTEGER,
     TraducteurId INTEGER,
     Prix INTEGER,
+    Date DATE,
     Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES Demande_traduction (Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
@@ -189,15 +190,16 @@ CREATE TABLE RecevoireDemandeD(
     FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id)
 );
 
-    CREATE TABLE DemandeD_Accepte(
-        Id INTEGER PRIMARY KEY AUTO_INCREMENT,
-        DemandeId INTEGER,
-        TraducteurId INTEGER,
-        Prix INTEGER,
-        Vu BOOLEAN NOT NULL DEFAULT FALSE,
-        FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id),
-        FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
-    );
+CREATE TABLE DemandeD_Accepte(
+    Id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    DemandeId INTEGER,
+    TraducteurId INTEGER,
+    Prix INTEGER,
+    Date DATE,
+    Vu BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id),
+    FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
+);
 
 CREATE TABLE DemandeD_paiement(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,

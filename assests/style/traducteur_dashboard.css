@@ -74,6 +74,10 @@ body {
     background-color: rgb(255, 88, 88);
 }
 
+#demandeInfo, #profile {
+    min-height: 35vw;
+}
+
 .mainTable tbody tr td div + a {
     color: rgb(48, 0, 161);
     font-weight: bold;

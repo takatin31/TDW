@@ -10,25 +10,58 @@
      
 
      $tc = new traductor_controller();
-     $result = $tc->getTraductor_Asserm_Type_Lang($pro_traductorD, $langues, $typeD);
+     $result = $tc->getTraductor_Nom_Asserm_Type_Lang($nom,$pro_traductorD, $langue, $type_traduction);
  
      foreach($result as $rs){
-         
-        echo '<tr class="traductor">
-                <td><a href=#>'.$rs["userid"].'</a></td>
-                <td style="vertical-align: middle;">
-                    <img src="./assests/images/personal.jpg" width="60px"/>
-                </td>
-                <td style="vertical-align: middle;">'.$rs["Nom"].' '.$rs["Prenom"].'</td>
-                <td>'.$rs["nbr"].'</td>
-                <td>'.$rs["note"].'</td>
-                <td>
-                    <input type="checkbox">
-                </td>
-            </tr>';
 
+
+    echo '<div class="row result">
+            <div class="col-2">
+              <img src="./uploads/profile_pics/'.$rs["Image"].'" class="img-fluid"/>
+            </div>
+
+            <div class="col-10 row justify-content-center">
+              <div class="col-5">
+                <div>
+                  <h4>'.$rs["Nom"].' '.$rs["Prenom"].'</h4>
+                  <br/>
+                </div>
+                <div>';
+                
+    $r = $tc->getTypes($rs['userid']);
+
+    foreach($r as $type){
+        echo '<div class="btn btn-default '.$type["Type"].'-tag">'.$type["Type"].'</div>';
+    }
+    
+    echo '</div>
+            </div>
+
+            <div class="col-7 d-flex flex-column align-items-end justify-content-between pr-5">
+            <div class="row">
+                <h6 class="mr-2">Rating</h6>';
+                
+    for ($i =0; $i < $rs["note"]; $i++){
+        echo '<i class="fa fa-star active-star"></i>';
+    }
+
+    for ($i = $rs["note"]; $i < 5; $i++){
+        echo ' <i class="fa fa-star"></i>';
+    }
+                  
+    echo '<br/>
+                </div>
+                <br/>
+                <div class="btn btn-default visit-profil-btn">Visiter Profil</div>
+            </div>
+            
+            </div>
+            </div>
+            <hr style="width: 75%;"/>';           
             
     }
+
+  
 
     
 ?>

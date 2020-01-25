@@ -63,6 +63,12 @@
             return $r;
         }
 
+        public function getTraductor_Nom_Asserm_Type_Lang($nom, $asser, $langues, $type){
+            $mp = new projet_modal();
+            $r = $mp->getTraductor_Nom_Asserm_Type_Lang($nom, $asser, $langues, $type);
+            return $r;
+        }
+
         public function getNote($idUser){
             $mp = new projet_modal();
             $r = $mp->getNote($idUser);
@@ -74,6 +80,19 @@
             $r = $mp->isTraductor($idUser);
             $result = $r->fetch_assoc(); // fetch it first
             return $result['result'];
+        }
+
+        public function getTypes($idUser){
+            $mp = new projet_modal();
+            $r = $mp->getTypes($idUser);
+            return $r;
+        }
+
+        public function getTraductorData($idUser){
+            $mp = new projet_modal();
+            $r = $mp->getTraductorData($idUser);
+            $result = $r->fetch_assoc();
+            return $result;
         }
     }
 
@@ -620,6 +639,35 @@
         public function getArticles($start, $nbr){
             $mp = new projet_modal();
             $r=  $mp->getArticles($start, $nbr);
+            return $r;
+        }
+
+        public function getNbrArticles(){
+            $mp = new projet_modal();
+            $r=  $mp->getNbrArticles();
+            $result = $r->fetch_assoc();
+            return $result["nbr"];
+        }
+    }
+
+    class HistoryController{
+        public function getHistoryClient($userID){
+            $mp = new projet_modal();
+            $r=  $mp->getHistoryClient($userID);
+            return $r;
+        }
+
+        public function getHistoryTraductor($userID){
+            $mp = new projet_modal();
+            $r=  $mp->getHistoryTraductor($userID);
+            return $r;
+        }
+    }
+
+    class SignalController{
+        public function signaler($userId, $traductorId, $cause){
+            $mp = new projet_modal();
+            $r=  $mp->signaler($userId, $traductorId, $cause);
             return $r;
         }
     }

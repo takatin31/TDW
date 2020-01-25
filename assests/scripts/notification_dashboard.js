@@ -487,6 +487,36 @@ $(document).on("click", ".link_demande" , function() {
 });
 
 
+$(document).on("click", ".link_demande_2" , function() {
+    let demandeId = $(this).text();
+    let type = $(this).parent().next().text();
+    console.log(type);
+    
+    
+    console.log(demandeId+"   "+type);
+    
+    
+    
+    $.ajax({
+        type: "POST",
+        url: "getDemandeHandler.php",
+        data: {
+            id: demandeId,
+            action: "accepted",
+            type: type,
+            prix: 0,
+            fileExist: false
+        },
+        success: function (data) {
+            
+            $('#demandeInfo').empty();
+            $('#demandeInfo').append(data);
+            $("#demandeInfoBtn").trigger("click");
+            
+        }
+    });
+
+});
 
 
 $(document).on("click", "#validerFinalTr" , function() {

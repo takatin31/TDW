@@ -93,7 +93,7 @@
                     <a class="nav-link" href="traducteurs.html">Traducteurs</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="blog.html">Blog</a>
+                    <a class="nav-link" href="blog.php">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="recrutement.php">Recrutement</a>
@@ -197,7 +197,7 @@
                 echo '<div class="card card-container pt-3 pr-4 pl-2">
                             <div class="d-flex align-items-center">
                                 <div class="col-6">
-                                    <img class="card-img-top" src="./assests/images/2.jpg" alt="Card image cap"/>
+                                    <img class="card-img-top" src="uploads/Articles/'.$lg["Image"].'" alt="Card image cap"/>
                                 </div>
                                 <p class="card-title text-center">'.$lg["Titre"].'</p>
                             </div>
@@ -336,7 +336,7 @@
             foreach($r as $lg){
                 echo ' <div class="col-4 ">
                             <div class="card card-container mb-2">
-                                <img class="card-img-top" src="./assests/images/4.jpg" alt="Card image cap"/>
+                                <img class="card-img-top" src="uploads/Articles/'.$lg["Image"].'" alt="Card image cap"/>
                                 <div class="card-body bottom-body">
                                 <p class="card-text">'.$lg["body"].'</p>
                                 </div>
@@ -369,7 +369,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="button" class="btn btn-primary">Voir l'article</button>
             </div>
           </div>
         </div>
@@ -552,7 +552,7 @@
                 <a class="nav-link" href="traducteurs.html">Traducteurs</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog</a>
+                <a class="nav-link" href="blog.php">Blog</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="recrutement.php">Recrutement</a>

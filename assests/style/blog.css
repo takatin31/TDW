@@ -16,6 +16,11 @@ body {
     margin-left: 5px;
 } 
 
+.body-article {
+    overflow: hidden;
+    max-height: 20ch;
+}
+
             
 .navbar .navbar-nav .nav-item.active > a, .navbar .navbar-nav .nav-item:hover > a {
     border-top: 1px solid #fff; 

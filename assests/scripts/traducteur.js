@@ -5,18 +5,24 @@ $(document).on('click', ".btn-search", function () {
     let langue = $("#langue").val();
 
 
+    if (type_traducteur == "Assermente"){
+        type_traducteur = "true";
+    }else{
+        type_traducteur = "false";
+    }
+
     $.ajax({
         type: "POST",
         url: "MainRechercheHandler.php",
         data: {
             nom: nom,
             type_traduction: type_traduction,
-            target: target,
             type_traducteur: type_traducteur,
             langue: langue
         },
         success: function (data) {
-            console.log(data);
+            $(".search-results").empty();
+            $(".search-results").append(data);
             
         }
     });

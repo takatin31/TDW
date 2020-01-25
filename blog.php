@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="./assests/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="./assests/style/font-awesome.min.css"/>
     <link rel="stylesheet" href="./assests/style/LineIcons.css">
-    <link rel="stylesheet" href="./assests/style/public_traducteur.css"/>
+    <link rel="stylesheet" href="./assests/style/blog.css"/>
 
     <script type="text/javascript" src="./assests/scripts/jquery.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="./assests/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="assests/scripts/recrutement.js"></script>
+    <script type="text/javascript" src="assests/scripts/blog.js"></script>
     <title>DocTranslator</title>
 
 
@@ -38,10 +38,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="traducteurs.html">Traducteurs</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="blog.html">Blog</a>
-                </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="blog.php">Blog</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="recrutement.php">Recrutement</a>
                 </li>
                 <li class="nav-item">
@@ -73,54 +73,45 @@
         </div>
     </nav>
 
-    
-
-    <div class=" row translator_bloc my-5 mx-5 pl-3 py-5">
-        <div class="col-md-5 col-sm-12">
-            <img src="./assests/images/personal.jpg" alt="" class="img-fluid mt-3">
-        </div>
-        <div class="col-md-7 col-sm-12">
-            <div>
-                <div class="btn btn-default general-tag my-3">Général</div>
-                <div class="btn btn-default scientifique-tag my-3">Scientifique</div>
-                <div class="btn btn-default web-tag my-3">Site Web</div>
-                <div class="btn btn-default assermente-tag my-3 float-right">Assermenté</div>
-            </div>
-            <div class="d-flex flex-row justify-content-between">
-                <div>
-                    <span style="color: blue;">10</span> Traductions
+    <div class="container-fluid text-center page blog-post-list">
+        <div class="clean-block clean-blog-list">
+            <div class="container">
+                <div class="block-heading">
+                    <h2 class="text-info">Blog</h2>
+                    <h4>Vous trouverez ici tous les archives des articles les plus importants.</h4>
+                    <input type="hidden" value="0"></input>
                 </div>
-                <div class="float-right">
-                    <i class="fa fa-star active-star"></i>
-                    <i class="fa fa-star active-star"></i>
-                    <i class="fa fa-star active-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                <div class="block-content">
+                    <?php
+                        require_once("controller.php");
+                        $ac = new ArticleController();
+                        $r = $ac->getArticles(0, 3);
+                        foreach($r as $lg){
+                            echo ' <div class="clean-blog-post">
+                                    <div class="row">
+                                        <div class="col-lg-5"><img class="rounded img-fluid" src="uploads/Articles/'.$lg["Image"].'"></div>
+                                        <div class="col-lg-7">
+                                            <h3>'.$lg["Titre"].'</h3>
+                                            <div class="info"><span class="text-muted">'.$lg["Date"].' by&nbsp;<a href="#">'.$lg["auteur"].'</a></span></div>
+                                            <p class="body-article">'.$lg["body"].'</p>
+                                            <button class="btn btn-outline-primary btn-sm" type="button">Read More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>';
+                        }
+                    ?>
+                    
                 </div>
             </div>
-            
-            <div class="personal_text">
-                <h6>Hello Everybody, i am</h6>
-                <h3>Donald McKinney</h3>
-                <h4>Junior UI/UX Developer</h4>
-                <p>You will begin to realise why this exercise is called the Dickens Pattern (with reference to the ghost showing Scrooge some different futures)</p>
-                <ul class="list basic_info">
-                    <li><a href="#"><i class="fa fa-calendar mr-2"></i> 31st December, 1992</a></li>
-                    <li><a href="#"><i class="fa fa-phone mr-2"></i> 44 (012) 6954 783</a></li>
-                    <li><a href="#"><i class="fa fa-envelope mr-2"></i> businessplan@donald</a></li>
-                    <li><a href="#"><i class="fa fa-home mr-2"></i> Santa monica bullevard</a></li>
-                </ul>
-                <ul class="list personal_social row">
-                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                    <li class="ml-3"><a href="#"><i class="fa fa-twitter"></i></a></li>
-                    <li class="ml-3"><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-                
-            </div>
-            <div class="btn btn-danger mt-3 float-right">Signaler</div>
         </div>
-
     </div>
+
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" id="prev" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" id="next" href="#">Next</a></li>
+      </ul>
+
     <div class="navbar navbar-expand-lg nav-footer">
         <ul class="navbar-nav col-lg-8 col-md-6 col-sm-4 pt-2">
             <li class="nav-item">
@@ -133,7 +124,7 @@
                 <a class="nav-link" href="traducteurs.html">Traducteurs</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="blog.html">Blog</a>
+                <a class="nav-link" href="blog.php">Blog</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="recrutement.php">Recrutement</a>

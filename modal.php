@@ -129,7 +129,7 @@ class projet_modal{
                 from utilisateur U
                 JOIN maitrisetype MT
                 ON U.Id = MT.TraducteurId
-                    where mt.Type in ('Generale')
+                where mt.Type in ('".$type."')
                 ) as t2
                 on t1.userid = t2.userid
                 JOIN
@@ -170,6 +170,98 @@ class projet_modal{
         $result = $conn->query($rq);     
         $this->deconnexion($conn);
         return $result;
+    }
+
+    public function getTraductor_Nom_Asserm_Type_Lang($nom, $asserm, $langue, $type){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $connditionName = "";
+        if (strcmp($nom, "") != 0){
+            $connditionName = "WHERE U.Nom LIKE '%".$nom."%' OR U.prenom LIKE '%".$nom."%'";
+        }
+
+        $conditionAsserm = "";
+        if (strcmp($asserm, "") != 0){
+            if (strcmp($asserm, 'true') == 0){
+                $asser_doc = 'NOT NULL';
+            }else{
+                $asser_doc = 'NULL';
+            }
+            
+            if (strcmp($nom, "") != 0)
+                $conditionAsserm ="AND TD.Assermetation_doc is ".$asser_doc;
+            else
+                $conditionAsserm ="WHERE TD.Assermetation_doc is ".$asser_doc;
+        }
+
+        $conditionLng = "";
+        if (strcmp($langue, "") != 0){
+            $conditionLng = "HAVING GROUP_CONCAT(L.Nom SEPARATOR ' ') like '%".$langue."%'";
+        }
+
+        $conditionType= "";
+        if (strcmp($type, "") != 0){
+            $conditionType = "WHERE mt.Type in ('".$type."')";
+        }
+        
+        
+
+        $rq = "SELECT t3.*, t4.note
+                FROM
+                (
+                select U.id userid, GROUP_CONCAT(L.Nom SEPARATOR ' ') langues
+                from utilisateur U
+                JOIN maitriselangue ML
+                ON U.Id = ML.TraducteurId
+                JOIN langue L
+                ON L.Id = ML.LangueId
+                group by U.id
+                ".$conditionLng."
+                ) as t1
+                JOIN
+                (
+                select U.id userid, MT.Type
+                from utilisateur U
+                JOIN maitrisetype MT
+                ON U.Id = MT.TraducteurId
+                ".$conditionType."
+                ) as t2
+                on t1.userid = t2.userid
+                JOIN
+                (
+                    select U.Id userid, U.Image Image, U.Nom Nom, U.Prenom Prenom
+                from utilisateur U
+                JOIN traducteurdata TD
+                ON U.Id = TD.TraducteurId
+                ".$connditionName."
+                ".$conditionAsserm."
+                    )as t3 
+                    on t3.userid = t2.userid
+                JOIN (
+                    select U.id userid, 
+                    CASE
+                    when AVG(N.valeur) is NULL then 0
+                    when AVG(N.valeur) is NOT NULL then AVG(N.valeur)
+                    END as note
+                    from utilisateur U
+                    LEfT Join note N
+                    On U.Id = N.TraducteurId
+                    group by u.Id
+                    ) as t4
+                    on t3.userid = t4.userid
+                    group by t4.userid";
+
+                
+        $result = $conn->query($rq);   
+        $this->deconnexion($conn);
+        return $result;
+    }
+
+    public function getTypes($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT Type FROM MaitriseType WHERE TraducteurId = ".$idUser;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
     }
 
     public function insertTraductionDemande($Userid, $nom, $prenom, $email, $adresse, $wilaya, $commune, $phone, $langueO, $langueD, $type, $comment, $assermente, $file, $typeDemande){
@@ -324,7 +416,84 @@ class projet_modal{
 
     public function getArticles($start, $nbr){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT * FROM Articles LIMIT ".$start.", ".$nbr.";";
+        $rq = "SELECT * FROM Articles ORDER By Date DESC LIMIT ".$start.", ".$nbr.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getNbrArticles(){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT COUNT(*) nbr FROM Articles ;";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getHistoryClient($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DA.*,U.Nom, 'Traduction' Type
+                FROM demandet_accepte DA
+                JOIN utilisateur U
+                ON U.Id = DA.TraducteurId
+                JOIN demande_traduction DT
+                ON DT.Id = DA.DemandeId
+                WHERE DT.UtilisateurId = ".$userID."
+                UNION 
+                SELECT DA.*,U.Nom, 'Devi' Type
+                FROM demanded_accepte DA
+                JOIN utilisateur U
+                ON U.Id = DA.TraducteurId
+                JOIN demande_devis DD
+                ON DD.Id = DA.DemandeId
+                WHERE DD.UtilisateurId = ".$userID;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+    
+
+    public function getTraductorData($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT U.Nom, U.Prenom, U.Email, U.Phone, U.Image, W.Nom wilaya, C.Nom commune,N.note,
+                CASE
+                WHEN TD.Assermetation_doc IS NULL THEN FALSE
+                ELSE TRUE
+                END Assermente,
+                CASE 
+                WHEN T.nbr IS NULL THEN 0
+                ELSE T.nbr
+                END nbr,
+                CASE
+                WHEN N.note IS NULL THEN 0
+                ELSE N.note
+                END note
+                FROM Utilisateur U
+                JOIN traducteurdata TD
+                ON U.Id = TD.TraducteurId
+                JOIN wilaya W
+                ON W.Id = U.WilayaId
+                JOIN Commune C
+                ON C.Id = U.Commune
+                LEFT JOIN (
+                    SELECT traducteurId, COUNT(*) nbr
+                    FROM(
+                        SELECT traducteurId 
+                        from demandet_accepte
+                        UNION ALL
+                        SELECT traducteurId
+                        from demanded_accepte
+                        )AS Tab
+                        GROUP BY traducteurId
+                )AS T
+                ON T.traducteurId = U.Id
+                LEFT JOIN (
+                    SELECT traducteurId ,AVG(N.valeur) note
+                    FROM note N
+                    GROUP BY traducteurId
+                    ) AS N
+                    ON N.traducteurId = U.Id
+                WHERE U.Id = ".$idUser;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -364,6 +533,19 @@ class projet_modal{
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
+    }
+
+    public function signaler($userId, $traductorId, $cause){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "INSERT INTO Signalement (UtilisateurId, TraducteurId, Cause) 
+        VALUES (
+            ".$userId.",
+            ".$traductorId.",
+            '".$cause."'
+        )";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
     }
 
     public function getDemandeInfoFromStarted($idDemande, $type){

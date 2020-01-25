@@ -52,7 +52,9 @@ body {
     border-radius: 5px;
 }
 
-
+#demandeInfo, #profile {
+    min-height: 35vw;
+}
 
 .good_request {
     background-color: rgb(95, 253, 166);
