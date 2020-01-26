@@ -800,7 +800,12 @@ class projet_modal{
                 ON DP.DemandeId = DA.Id
                 JOIN Demande_traduction DT
                 ON DA.DemandeId = DT.Id
-                WHERE TraducteurId = ".$userID.";";
+                WHERE TD.Id NOT IN 
+                (SELECT traductionid 
+                 FROM traduction_finie
+                 WHERE Etat = 1
+                )
+                AND TraducteurId = ".$userID.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -817,7 +822,11 @@ class projet_modal{
                 ON DP.DemandeId = DA.Id
                 JOIN Demande_devis DD
                 ON DA.DemandeId = DD.Id
-                WHERE TraducteurId = ".$userID.";";
+                WHERE DB.Id NOT IN 
+                (SELECT deviid 
+                 FROM devis_finie
+                )
+                AND TraducteurId = ".$userID.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;

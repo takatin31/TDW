@@ -24,6 +24,7 @@ CREATE TABLE Utilisateur(
     Commune INTEGER,
     Adresse VARCHAR(100),
     Phone INTEGER,
+    DateInscription DATE DEFAULT CURRENT_TIMESTAMP,
     Image VARCHAR(30) NOT NULL DEFAULT "default",,
     FOREIGN KEY (WilayaId) REFERENCES Wilaya (Id)
 );
@@ -98,7 +99,7 @@ CREATE TABLE Demande_traduction(
     Comment VARCHAR(500),
     Assermente BOOLEAN,
     Document VARCHAR(30),
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
     FOREIGN KEY (LangueO) REFERENCES Langue (Id),
     FOREIGN KEY (LangueD) REFERENCES Langue (Id),
@@ -121,7 +122,7 @@ CREATE TABLE DemandeT_Accepte(
     DemandeId INTEGER,
     TraducteurId INTEGER,
     Prix INTEGER,
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES Demande_traduction (Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
@@ -140,7 +141,7 @@ CREATE TABLE DemandeT_paiement(
 CREATE TABLE Traduction_debutee(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeT_paiement (Id)
 );
@@ -148,7 +149,7 @@ CREATE TABLE Traduction_debutee(
 CREATE TABLE Traduction_finie(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     TraductionId INTEGER,
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     Document VARCHAR(30),
     Etat INTEGER NOT NULL DEFAULT 0,
     VuClient BOOLEAN NOT NULL DEFAULT FALSE,
@@ -173,7 +174,7 @@ CREATE TABLE Demande_devis(
     Comment VARCHAR(500),
     Assermente BOOLEAN,
     Document VARCHAR(30),
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur(Id),
     FOREIGN KEY (LangueO) REFERENCES Langue (Id),
     FOREIGN KEY (LangueD) REFERENCES Langue (Id),
@@ -195,7 +196,7 @@ CREATE TABLE DemandeD_Accepte(
     DemandeId INTEGER,
     TraducteurId INTEGER,
     Prix INTEGER,
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES Demande_devis (Id),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id)
@@ -214,7 +215,7 @@ CREATE TABLE DemandeD_paiement(
 CREATE TABLE Devis_debutee(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DemandeId INTEGER,
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     Vu BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DemandeId) REFERENCES DemandeD_paiement (Id)
 );
@@ -222,7 +223,7 @@ CREATE TABLE Devis_debutee(
 CREATE TABLE Devis_finie(
     Id INTEGER PRIMARY KEY AUTO_INCREMENT,
     DeviId INTEGER,
-    Date DATE,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     Document VARCHAR(30),
     VuClient BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (DeviId) REFERENCES Devis_debutee (Id)

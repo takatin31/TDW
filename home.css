@@ -111,3 +111,8 @@ hr {
     overflow: hidden;
     max-height: 35ch;
 }
+
+.disabledform {
+    pointer-events: none;
+    opacity: 0.4;
+}

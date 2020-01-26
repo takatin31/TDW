@@ -246,22 +246,7 @@
                     </div>
 
                     <div class="tab-pane ml-5" id="demandeInfo">
-                        <div class="row">
-                            <div>
-                                <label class="titre">Nom du client</label>
-                            </div>
-                            <div>
-                                <label class="valeur"></label>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div>
-                                <label class="titre">Nom du client</label>
-                            </div>
-                            <div>
-                                <label class="valeur"></label>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
