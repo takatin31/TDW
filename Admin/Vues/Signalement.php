@@ -119,31 +119,31 @@
           </div>
         </div>
       </nav>
-            <div class="content">
+      <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Tableau des clients</h4>
-                  <p class="card-category">Vous pouvez ici rechercher et filtrer les clients</p>
+                  <h4 class="card-title ">Tableau des traducteurs</h4>
+                  <p class="card-category">Vous pouvez ici rechercher et filtrer les traducteurs</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table my-table mdl-data-table">
                       <thead class=" text-primary">
                         <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Email</th>
-                        <th>Wilaya</th>
+                        <th>Client</th>
+                        <th>Traducteur</th>
+                        <th>Date</th>
+                        <th>Cause</th>
                       </thead>
                       <tbody>
                         
                         <?php
                           require_once("../ControllerAdmin.php");
-                          $tc = new ClientController();
-                          $r = $tc->getClients();
+                          $tc = new TraducteurController();
+                          $r = $tc->getTraducteurs();
                           foreach($r as $lg){
                             echo '<tr>';
                             echo '<td>'.$lg["Id"].'</td>';
@@ -157,10 +157,7 @@
                                       Action
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item" href="#">Voir Détails</a>
-                                      <a class="dropdown-item" href="#">Modifier</a>
                                       <a class="dropdown-item" href="#">Supprimer</a>
-                                      <a class="dropdown-item" href="#">Bloquer</a>
                                     </div>
                                   </div>
                                   </td>';
@@ -176,212 +173,7 @@
           </div>
         </div>
       </div>
-      <div class="container-fluid row justify-content-center d-flex">
-        <div class="col-md-10 ">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Edit Profile</h4>
-              <p class="card-category">Complete your profile</p>
-            </div>
-            <div class="card-body row d-flex">
-              <div class="col-md-2 mt-2 text-center">
-                <img src="../../assests/images/2.jpg" class="img-fluid"/>
-                <a href="#">Uploader une image</a>
-              </div>
-              <div class="col-md-10">
-              <form>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Nom</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Prenom</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Email</label>
-                      <input type="email" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Numero de telephone</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary pull-right">Modifier Profile</button>
-                <div class="clearfix"></div>
-              </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container-fluid row justify-content-center d-flex">
-        <div class="col-md-10">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Edit Profile</h4>
-              <p class="card-category">Complete your profile</p>
-            </div>
-            <div class="card-body">
-              <form>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Nom</label>
-                      <input type="text" class="form-control" disabled>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Prenom</label>
-                      <input type="text" class="form-control" disabled>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Email</label>
-                      <input type="email" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Wilaya</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Commune</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Adresse</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Numero de telephone</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Fax</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
 
-
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-              <div class="card-header card-header-warning">
-                <h4 class="card-title">Demandes de traduction faites</h4>
-                <p class="card-category">Vous pouvez ici visualisez toutes les demandes faites par </p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>ID</th>
-                    <th>Client</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                  </thead>
-                  <tbody>
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-              <div class="card-header card-header-danger">
-                <h4 class="card-title">Demandes de devis faites</h4>
-                <p class="card-category">Vous pouvez ici visualisez toutes les demandes faites par</p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>ID</th>
-                    <th>Client</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                  </thead>
-                  <tbody>
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-              <div class="card-header card-header-info">
-                <h4 class="card-title">Historique des notes</h4>
-                <p class="card-category">Il s'agit de toutes les notes attribuées par </p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>Client</th>
-                    <th>Note</th>
-                    <th>Date</th>
-                    <th>DemandeId</th>
-                  </thead>
-                  <tbody>
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h4 class="card-title">Historique signalement</h4>
-                <p class="card-category">Vous allez retrouvez touts les signalement faits par </p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>Client</th>
-                    <th>Date</th>
-                    <th>Cause</th>
-                  </thead>
-                  <tbody>
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-      </div>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">
@@ -453,8 +245,7 @@
         btn_reset: true,
         status_bar: true,
         msg_filter: 'Recherche...',
-        col_5: 'select',
-        col_6: "null",
+        col_5: 'null',
         col_types: [
         'string',
         'string',

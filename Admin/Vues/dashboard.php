@@ -58,19 +58,19 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./icons.html">
+            <a class="nav-link" href="TraducteurValidation.php">
               <i class="material-icons">supervised_user_circle</i>
               <p>Validation des traducteurs</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./map.html">
+            <a class="nav-link" href="PaiementValidation.php">
               <i class="material-icons">euro</i>
               <p>Validation des paiements</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./map.html">
+            <a class="nav-link" href="Signalement.php">
               <i class="material-icons">report</i>
               <p>Gestion des signalements</p>
             </a>
