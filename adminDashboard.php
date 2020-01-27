@@ -18,6 +18,7 @@
     <script type="text/javascript" src="./assests/scripts/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="./assests/scripts/dataTables.semanticui.min.js"></script>
     <script type="text/javascript" src="./assests/scripts/semantic.min.js"></script>
+    <script type="text/javascript" src="./assests/tablefilter/tablefilter.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#example').DataTable();
@@ -27,7 +28,7 @@
 </head>
 <body>
     <div class="col-7 py-2 my-2">
-        <table id="example" class="ui celled table" style="width:100%">
+        <table id="example" class="ui celled table my-table" style="width:100%">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -499,4 +500,21 @@
         </table>
     </div>
 </body>
+<script>
+    var tf = new TableFilter(document.querySelector('.my-table'), {
+        base_path: 'assests/tablefilter/',
+        no_results_message: true,
+        auto_filter: {
+            delay: 1100 //milliseconds
+        },
+        filters_row_index: 1,
+        state: true,
+        alternate_rows: true,
+        rows_counter: true,
+        btn_reset: true,
+        status_bar: true,
+        msg_filter: 'Filtering...'
+    });
+    tf.init();
+    </script>
 </html>

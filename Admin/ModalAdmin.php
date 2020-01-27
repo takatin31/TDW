@@ -46,7 +46,7 @@ class AdminModal{
                 FROM Utilisateur U
                 JOIN TraducteurData D
                 ON U.Id = D.traducteurId
-                WHERE Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                WHERE Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -54,10 +54,12 @@ class AdminModal{
 
     public function getTraducteurs(){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT *
+        $rq = "SELECT U.*, D.*, W.Nom wilaya
                 FROM Utilisateur U
                 JOIN TraducteurData D
-                ON U.Id = D.traducteurId";
+                ON U.Id = D.traducteurId
+                JOIN Wilaya W
+                ON W.id = U.wilayaId";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -108,7 +110,7 @@ class AdminModal{
                 WHERE Id NOT IN (
                                     SELECT TraducteurId 
                                     FROM TraducteurData)
-                AND Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                AND Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -116,9 +118,11 @@ class AdminModal{
 
     public function getClients(){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT *
-                FROM Utilisateur
-                WHERE Id NOT IN (
+        $rq = "SELECT U.*, W.nom wilaya
+                FROM Utilisateur U
+                JOIN Wilaya W
+                ON W.Id = U.wilayaId
+                WHERE U.Id NOT IN (
                                     SELECT TraducteurId 
                                     FROM TraducteurData)";
         $r = $conn->query($rq);
@@ -174,7 +178,7 @@ class AdminModal{
 
     public function updateInfoUser($idUser, $nom, $prenom, $email, $image){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "UPDATE Utilisateur SET Nom = '"$nom."', Prenom = '".$prenom."', Email = '".$email."', Image = '".$image."' WHERE Id = ".$idUser;
+        $rq = "UPDATE Utilisateur SET Nom = '".$nom."', Prenom = '".$prenom."', Email = '".$email."', Image = '".$image."' WHERE Id = ".$idUser;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -228,17 +232,17 @@ class AdminModal{
         return $r;
     }
 
-    public function NombreTraduction($dateDebut, $dateFin){
+    public function getNombreTraduction($dateDebut, $dateFin){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT COUNT(*) nbr
                 FROM Traduction_finie
-                WHERE Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                WHERE Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
     }
 
-    public function NombreTraductionForTraductor($idTraducteur, $dateDebut, $dateFin){
+    public function getNombreTraductionForTraductor($idTraducteur, $dateDebut, $dateFin){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT COUNT(*) nbr
                 FROM Traduction_finie TF
@@ -249,13 +253,13 @@ class AdminModal{
                 JOIN DemandeT_Accepte DA
                 ON DA.Id = DP.DemandeId
                 WHERE DA.TraducteurId = ".$idTraducteur."
-                AND TF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                AND TF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
     }
 
-    public function NombreTraductionByClient($idClient, $dateDebut, $dateFin){
+    public function getNombreTraductionByClient($idClient, $dateDebut, $dateFin){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT COUNT(*) nbr
                 FROM Traduction_finie TF
@@ -268,23 +272,23 @@ class AdminModal{
                 JOIN Demande_Traduction DT
                 ON DT.Id = DA.DemandeId
                 WHERE DT.UtilisateurId = ".$idClient."
-                AND TF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                AND TF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
     }
 
-    public function NombreDevis($dateDebut, $dateFin){
+    public function getNombreDevis($dateDebut, $dateFin){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie
-                WHERE Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                WHERE Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
     }
 
-    public function NombreDevisForTraductor($idTraducteur, $dateDebut, $dateFin){
+    public function getNombreDevisForTraductor($idTraducteur, $dateDebut, $dateFin){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie DF
@@ -295,13 +299,13 @@ class AdminModal{
                 JOIN DemandeD_Accepte DA
                 ON DA.Id = DP.DemandeId
                 WHERE DA.TraducteurId = ".$idTraducteur."
-                AND DF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                AND DF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
     }
 
-    public function NombreDevisByClient($idClient, $dateDebut, $dateFin){
+    public function getNombreDevisByClient($idClient, $dateDebut, $dateFin){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie DF
@@ -314,7 +318,7 @@ class AdminModal{
                 JOIN Demande_Devis DD
                 ON DD.Id = DA.DemandeId
                 WHERE DD.UtilisateurId = ".$idClient."
-                AND DF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateDebut."' AS DATE)";
+                AND DF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -375,7 +379,7 @@ class AdminModal{
 
     public function seeSignalement($idSignalement){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "UPDATE Signalement SET Vu = 1 WHERE Id = ".$idSignalement";
+        $rq = "UPDATE Signalement SET Vu = 1 WHERE Id = ".$idSignalement;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;

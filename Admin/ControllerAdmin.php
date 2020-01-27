@@ -25,14 +25,10 @@ class TraducteurController {
     public function getNombreTraducteur($dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreTraducteur($dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
-    public function getNombreTraducteur($dateDebut, $dateFin){
-        $am = new AdminModal();
-        $r = $am->getNombreTraducteur($dateDebut, $dateFin);
-        return $r;
-    }
 
     public function getTraducteurs(){
         $am = new AdminModal();
@@ -81,7 +77,8 @@ class ClientController {
     public function getNombreClient($dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreClient($dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
     public function getClients(){
@@ -134,7 +131,8 @@ class DocumentController {
     public function getNombreDocuments(){
         $am = new AdminModal();
         $r = $am->getNombreDocuments();
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
     public function getDocuments(){
@@ -206,19 +204,22 @@ class DemandeTraductionController {
     public function getNombreTraduction($dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreTraduction($dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
     public function getNombreTraductionForTraductor($idTraducteur, $dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreTraductionForTraductor($idTraducteur, $dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
     public function getNombreTraductionByClient($idClient, $dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreTraductionByClient($idClient, $dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 }
 
@@ -226,19 +227,22 @@ class DemandeDevisController {
     public function getNombreDevis($dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreDevis($dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
     public function getNombreDevisForTraductor($idTraducteur, $dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreDevisForTraductor($idTraducteur, $dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
     public function getNombreDevisByClient($idClient, $dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreDevisByClient($idClient, $dateDebut, $dateFin);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 }
 

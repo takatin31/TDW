@@ -28,7 +28,7 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="nav-item active  ">
-            <a class="nav-link" href="./dashboard.html">
+            <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
@@ -40,13 +40,13 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="tablesTraducteurs.html">
+            <a class="nav-link" href="tablesTraducteurs.php">
               <i class="material-icons">table_chart</i>
               <p>Table des traducteurs</p>
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="tablesClients.html">
+            <a class="nav-link" href="tablesClients.php">
               <i class="material-icons">table_chart</i>
               <p>Table des clients</p>
             </a>
@@ -151,7 +151,14 @@
                     <i class="material-icons">people_outline</i>
                   </div>
                   <p class="card-category">Nombre de clients</p>
-                  <h3 class="card-title">49
+                  <h3 class="card-title">
+                    <?php
+                      require_once("../ControllerAdmin.php");
+                      $cc = new ClientController();
+                      $now = date('Y/m/d', time());
+                      $before = date('Y/m/d', strtotime("-1 months"));
+                      echo $cc->getNombreClient($before, $now);
+                    ?>
                     <small>clients</small>
                   </h3>
                 </div>
@@ -169,8 +176,15 @@
                     <i class="material-icons">people_alt</i>
                   </div>
                   <p class="card-category">Nombre de traducteurs</p>
-                  <h3 class="card-title">34
-                    <small>clients</small>
+                  <h3 class="card-title">
+                  <?php
+                      require_once("../ControllerAdmin.php");
+                      $cc = new TraducteurController();
+                      $now = date('Y/m/d', time());
+                      $before = date('Y/m/d', strtotime("-1 months"));
+                      echo $cc->getNombreTraducteur($before, $now);
+                    ?>
+                    <small>Traducteurs</small>
                   </h3>
                 </div>
                 <div class="card-footer">
@@ -187,7 +201,14 @@
                     <i class="material-icons">scatter_plot</i>
                   </div>
                   <p class="card-category">Nombre de traductions</p>
-                  <h3 class="card-title">34
+                  <h3 class="card-title">
+                  <?php
+                      require_once("../ControllerAdmin.php");
+                      $cc = new DemandeTraductionController();
+                      $now = date('Y/m/d', time());
+                      $before = date('Y/m/d', strtotime("-1 months"));
+                      echo $cc->getNombreTraduction($before, $now);
+                    ?>
                     <small>demandes</small>
                   </h3>
                 </div>
@@ -205,7 +226,14 @@
                     <i class="material-icons">bubble_chart</i>
                   </div>
                   <p class="card-category">Nombre de Devis</p>
-                  <h3 class="card-title">34
+                  <h3 class="card-title">
+                  <?php
+                      require_once("../ControllerAdmin.php");
+                      $cc = new DemandeDevisController();
+                      $now = date('Y/m/d', time());
+                      $before = date('Y/m/d', strtotime("-1 months"));
+                      echo $cc->getNombreDevis($before, $now);
+                    ?>
                     <small>demandes</small>
                   </h3>
                 </div>
