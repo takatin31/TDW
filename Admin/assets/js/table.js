@@ -67,6 +67,32 @@ $(document).on("click", ".showInfo", function(){
             $("#devisHistory").append(data);
         }
     });
+
+    $.ajax({
+        type: "POST",
+        url: "../Handlers/NoteHandler.php",
+        data: {
+            typeUser: "traducteur",
+            idUser: 33,
+        },
+        success: function (data) {
+            $("#noteHistory").empty();
+            $("#noteHistory").append(data);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "../Handlers/SignalementHandler.php",
+        data: {
+            typeUser: "traducteur",
+            idUser: 36,
+        },
+        success: function (data) {
+            $("#signalementHistory").empty();
+            $("#signalementHistory").append(data);
+        }
+    });
 })
 
 $(document).on("click", ".showInfo", function(){

@@ -823,7 +823,7 @@ class projet_modal{
                 JOIN Demande_devis DD
                 ON DA.DemandeId = DD.Id
                 WHERE DB.Id NOT IN 
-                (SELECT deviid 
+                (SELECT devisid 
                  FROM devis_finie
                 )
                 AND TraducteurId = ".$userID.";";
@@ -898,7 +898,7 @@ class projet_modal{
         $rq = "SELECT DF.Id DemandeId, DF.Document
                 FROM Devis_finie DF
                 JOIN Devis_debutee DB
-                ON DF.DeviId = DB.Id
+                ON DF.DevisId = DB.Id
                 JOIN DemandeD_paiement DP
                 ON DP.Id = DB.DemandeId
                 JOIN DemandeD_Accepte DA

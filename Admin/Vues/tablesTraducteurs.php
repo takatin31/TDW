@@ -313,9 +313,8 @@
                     <th>Client</th>
                     <th>Note</th>
                     <th>Date</th>
-                    <th>DemandeId</th>
                   </thead>
-                  <tbody>
+                  <tbody id="noteHistory">
                     
                   </tbody>
                 </table>
@@ -336,7 +335,7 @@
                     <th>Date</th>
                     <th>Cause</th>
                   </thead>
-                  <tbody>
+                  <tbody id="signalementHistory">
                     
                   </tbody>
                 </table>

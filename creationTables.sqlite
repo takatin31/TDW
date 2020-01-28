@@ -234,6 +234,7 @@ CREATE TABLE Note (
     TraducteurId INTEGER,
     UtilisateurId INTEGER,
     Valeur INTEGER,
+    Date DATE DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (TraducteurId, UtilisateurId),
     FOREIGN KEY (TraducteurId) REFERENCES Utilisateur (Id),
     FOREIGN KEY (UtilisateurId) REFERENCES Utilisateur (Id)

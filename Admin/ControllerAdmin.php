@@ -43,9 +43,9 @@ class TraducteurController {
         return $result;
     }
 
-    public function getHistoryTraducteurTraduction($idTraducteur, $type){
+    public function getHistoryTraducteur($idTraducteur, $type){
         $am = new AdminModal();
-        $r = $am->getHistoryTraducteurTraduction($idTraducteur, $type);
+        $r = $am->getHistoryTraducteur($idTraducteur, $type);
         return $r;
     }
 
@@ -88,6 +88,18 @@ class TraducteurController {
     public function declineTraducteur($idTraducteur){
         $am = new AdminModal();
         $r = $am->declineTraducteur($idTraducteur);
+        return $r;
+    }
+
+    public function getNoteHistoryTraducteur($idTraducteur){
+        $am = new AdminModal();
+        $r = $am->getNoteHistoryTraducteur($idTraducteur);
+        return $r;
+    }
+
+    public function getSignalementHistoryTraducteur($idTraducteur){
+        $am = new AdminModal();
+        $r = $am->getSignalementHistoryTraducteur($idTraducteur);
         return $r;
     }
 }

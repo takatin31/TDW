@@ -127,7 +127,7 @@ class AdminModal{
         return $r;
     }
 
-    public function getHistoryTraducteurTraduction($idTraducteur, $type){
+    public function getHistoryTraducteur($idTraducteur, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT TF.Date, TF.Id , DT.Type, U.Email
         FROM ".$type."_finie TF
@@ -141,14 +141,38 @@ class AdminModal{
         ON DA.DemandeId = DT.Id
         JOIN utilisateur U
         ON DT.UtilisateurId = U.Id
-        WHERE DA.TraducteurId = ".$idTraducteur;
+        WHERE DA.TraducteurId = ".$idTraducteur."
+        ORDER BY TF.DATE DESC";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
-        echo $rq;
         return $r;
     }
 
+    public function getNoteHistoryTraducteur($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT N.*, U.Email
+                FROM NOTE N
+                JOIN Utilisateur U
+                ON N.UtilisateurId = U.Id
+                WHERE N.TraducteurId = ".$idUser."
+                ORDER BY N.Date DESC";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
 
+    public function getSignalementHistoryTraducteur($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT S.*, U.Email
+                FROM Signalement S
+                JOIN Utilisateur U
+                ON S.UtilisateurId = U.Id
+                WHERE S.TraducteurId = ".$idUser."
+                ORDER BY S.Date DESC";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
 
     public function filterTraducteurs($nom, $assermente, $type, $langue, $wilaya, $note){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
@@ -363,7 +387,7 @@ class AdminModal{
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie DF
                 JOIN Devis_debutee DB
-                ON TF.DeviId = TD.Id
+                ON TF.DevisId = TD.Id
                 JOIN DemandeD_Paiement DP
                 ON DP.Id = TD.DemandeId
                 JOIN DemandeD_Accepte DA
@@ -380,7 +404,7 @@ class AdminModal{
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie DF
                 JOIN Devis_debutee DB
-                ON TF.DeviId = TD.Id
+                ON TF.DevisId = TD.Id
                 JOIN DemandeD_Paiement DP
                 ON DP.Id = TD.DemandeId
                 JOIN DemandeD_Accepte DA
