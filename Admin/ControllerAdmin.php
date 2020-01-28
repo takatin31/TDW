@@ -131,26 +131,26 @@ class ClientController {
         return $r;
     }
 
-    public function getHistoryClient($idClient){
+    public function getHistoryClient($idClient, $type){
         $am = new AdminModal();
-        $r = $am->getHistoryClient($idClient);
+        $r = $am->getHistoryClient($idClient, $type);
+        return $r;
+    }
+
+    public function getNoteHistoryClient($idTraducteur){
+        $am = new AdminModal();
+        $r = $am->getNoteHistoryClient($idTraducteur);
+        return $r;
+    }
+
+    public function getSignalementHistoryClient($idTraducteur){
+        $am = new AdminModal();
+        $r = $am->getSignalementHistoryClient($idTraducteur);
         return $r;
     }
 }
 
 class UserController {
-    public function bloquerUser($idUser, $date){
-        $am = new AdminModal();
-        $r = $am->bloquerUser($idUser, $date);
-        return $r;
-    }
-
-    public function supprimerUser($idUser){
-        $am = new AdminModal();
-        $r = $am->supprimerUser($idUser);
-        return $r;
-    }
-
     public function updateInfoUser($idUser, $nom, $prenom, $email, $image){
         $am = new AdminModal();
         $r = $am->updateInfoUser($idUser, $nom, $prenom, $email, $image);
@@ -160,6 +160,24 @@ class UserController {
     public function getUserFaxes($idUser){
         $am = new AdminModal();
         $r = $am->getUserFaxes($idUser);
+        return $r;
+    }
+
+    public function bloquerUser($idUser){
+        $am = new AdminModal();
+        $r = $am->bloquerUser($idUser);
+        return $r;
+    }
+
+    public function deBloquerUser($idUser){
+        $am = new AdminModal();
+        $r = $am->deBloquerUser($idUser);
+        return $r;
+    }
+
+    public function supprimerUser($idUser){
+        $am = new AdminModal();
+        $r = $am->supprimerUser($idUser);
         return $r;
     }
 

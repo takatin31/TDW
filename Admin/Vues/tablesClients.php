@@ -137,6 +137,7 @@
                         <th>Prenom</th>
                         <th>Email</th>
                         <th>Wilaya</th>
+                        <th>Etat</th>
                       </thead>
                       <tbody>
                         
@@ -146,22 +147,27 @@
                           $r = $tc->getClients();
                           foreach($r as $lg){
                             echo '<tr>';
-                            echo '<td>'.$lg["Id"].'</td>';
+                            echo '<td class="userId">'.$lg["Id"].'</td>';
                             echo '<td>'.$lg["Nom"].'</td>';
                             echo '<td>'.$lg["Prenom"].'</td>';
                             echo '<td>'.$lg["Email"].'</td>';
                             echo '<td>'.$lg["wilaya"].'</td>';
+                            echo '<td>'.$lg["state"].'</td>';
                             echo '<td>
                                     <div class="dropdown">
                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Action
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item showInfo" href="#">Voir Détails</a>
-                                      <a class="dropdown-item modify" href="#">Modifier</a>
-                                      <a class="dropdown-item" href="#">Supprimer</a>
-                                      <a class="dropdown-item" href="#">Bloquer</a>
-                                    </div>
+                                      <a class="dropdown-item showInfoClient" href="#">Voir Détails</a>
+                                      <a class="dropdown-item modifyInfoClient" href="#">Modifier</a>
+                                      <a class="dropdown-item deleteUser" href="#">Supprimer</a>';
+                                      if (strcmp($lg["Etat"], "0") == 0)
+                                        echo '<a class="dropdown-item blockUser" href="#">Bloquer</a>';
+                                      if (strcmp($lg["Etat"], "1") == 0)
+                                        echo '<a class="dropdown-item deblockUser" href="#">Debloquer</a>';
+                                        
+                            echo '</div>
                                   </div>
                                   </td>';
                             echo '</tr>';
@@ -183,45 +189,8 @@
               <h4 class="card-title">Edit Profile</h4>
               <p class="card-category">Complete your profile</p>
             </div>
-            <div class="card-body row d-flex">
-              <div class="col-md-2 mt-2 text-center">
-                <img src="../../assests/images/2.jpg" class="img-fluid"/>
-                <a href="#">Uploader une image</a>
-              </div>
-              <div class="col-md-10">
-              <form>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Nom</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Prenom</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Email</label>
-                      <input type="email" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Numero de telephone</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-primary pull-right">Modifier Profile</button>
-                <div class="clearfix"></div>
-              </form>
-              </div>
+            <div class="card-body row d-flex" id = "modifyContainerBody">
+              
             </div>
           </div>
         </div>
@@ -256,7 +225,7 @@
                     <th>Type</th>
                     <th>Date</th>
                   </thead>
-                  <tbody>
+                  <tbody id="traductionHistory">
                     
                   </tbody>
                 </table>
@@ -278,7 +247,7 @@
                     <th>Type</th>
                     <th>Date</th>
                   </thead>
-                  <tbody>
+                  <tbody  id="devisHistory">
                     
                   </tbody>
                 </table>
@@ -298,9 +267,8 @@
                     <th>Client</th>
                     <th>Note</th>
                     <th>Date</th>
-                    <th>DemandeId</th>
                   </thead>
-                  <tbody>
+                  <tbody id="noteHistory">
                     
                   </tbody>
                 </table>
@@ -321,7 +289,7 @@
                     <th>Date</th>
                     <th>Cause</th>
                   </thead>
-                  <tbody>
+                  <tbody id="signalementHistory">
                     
                   </tbody>
                 </table>
@@ -388,7 +356,7 @@
     var tf = new TableFilter(document.querySelector('.my-table'), {
         base_path: '../../assests/tablefilter/',
         paging: {
-          results_per_page: ['Records: ', [10, 25, 50, 100]]
+          results_per_page: ['Records: ', [5, 10, 15, 20]]
         },
         no_results_message: true,
         auto_filter: {

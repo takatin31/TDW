@@ -5,7 +5,14 @@ $idUser = $_POST["idUser"];
 
 if (strcmp($typeUser, "client") == 0){
     $cc = new ClientController();
-
+    $r = $cc->getNoteHistoryClient($idUser);
+    foreach($r as $lg){
+        echo '<tr>
+                <td>'.$lg["Email"].'</td>
+                <td>'.$lg["Valeur"].'</td>
+                <td>'.$lg["Date"].'</td>
+            </tr>';
+    }
 }else{
     $tc = new TraducteurController();
     $r = $tc->getNoteHistoryTraducteur($idUser);

@@ -54,7 +54,12 @@ class AdminModal{
 
     public function getTraducteurs(){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT U.*, D.*, W.Nom wilaya
+        $rq = "SELECT U.*, D.Cv, D.Assermetation_doc, W.Nom wilaya,
+                CASE 
+                WHEN U.Etat = 0 THEN 'Normal'
+                WHEN U.Etat = 1 THEN 'Bloque'
+                ELSE 'Supprime'
+                END AS state
                 FROM Utilisateur U
                 JOIN TraducteurData D
                 ON U.Id = D.traducteurId
@@ -174,6 +179,32 @@ class AdminModal{
         return $r;
     }
 
+    public function getNoteHistoryClient($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT N.*, U.Email
+                FROM NOTE N
+                JOIN Utilisateur U
+                ON N.TraducteurId = U.Id
+                WHERE N.UtilisateurId = ".$idUser."
+                ORDER BY N.Date DESC";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getSignalementHistoryClient($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT S.*, U.Email
+                FROM Signalement S
+                JOIN Utilisateur U
+                ON S.TraducteurId = U.Id
+                WHERE S.UtilisateurId = ".$idUser."
+                ORDER BY S.Date DESC";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
     public function filterTraducteurs($nom, $assermente, $type, $langue, $wilaya, $note){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "";
@@ -207,7 +238,12 @@ class AdminModal{
 
     public function getClients(){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT U.*, W.nom wilaya
+        $rq = "SELECT U.*, W.nom wilaya,
+                CASE 
+                WHEN U.Etat = 0 THEN 'Normal'
+                WHEN U.Etat = 1 THEN 'Bloque'
+                ELSE 'Supprime'
+                END AS state
                 FROM Utilisateur U
                 JOIN Wilaya W
                 ON W.Id = U.wilayaId
@@ -221,7 +257,12 @@ class AdminModal{
 
     public function getClientInfo($idClient){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT U.*, W.nom wilaya, C.nom commune
+        $rq = "SELECT U.*, W.nom wilaya, C.nom commune,
+                CASE 
+                WHEN U.Etat = 0 THEN 'Normal'
+                WHEN U.Etat = 1 THEN 'Bloque'
+                ELSE 'Supprime'
+                END AS state
                 FROM Utilisateur U
                 JOIN Wilaya W
                 ON W.Id = U.wilayaId
@@ -231,6 +272,30 @@ class AdminModal{
                                     SELECT TraducteurId 
                                     FROM TraducteurData)
                 AND U.id = ".$idClient;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function bloquerUser($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Utilisateur SET Etat = 1 WHERE Id = ".$idUser;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function deBloquerUser($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Utilisateur SET Etat = 0 WHERE Id = ".$idUser;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function supprimerUser($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Utilisateur SET Etat = -1 WHERE Id = ".$idUser;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -254,22 +319,6 @@ class AdminModal{
         return $r;
     }
 
-    public function bloquerUser($idUser, $date){
-        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "";
-        $r = $conn->query($rq);
-        $this->deconnexion($conn);
-        return $r;
-    }
-
-    public function supprimerUser($idUser){
-        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "UPDATE Utilisateur SET Etat = -1 WHERE Id = ".$idUser;
-        $r = $conn->query($rq);
-        $this->deconnexion($conn);
-        return $r;
-    }
-
     public function updateInfoUser($idUser, $nom, $prenom, $email, $image){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "UPDATE Utilisateur SET Nom = '".$nom."', Prenom = '".$prenom."', Email = '".$email."', Image = '".$image."' WHERE Id = ".$idUser;
@@ -278,9 +327,22 @@ class AdminModal{
         return $r;
     }
 
-    public function getHistoryClient($idClient){
+    public function getHistoryClient($idClient, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "";
+        $rq = "SELECT TF.Date, TF.Id , DT.Type, U.Email
+        FROM ".$type."_finie TF
+        JOIN ".$type."_debutee TD
+        ON TF.".$type."Id = TD.Id
+        JOIN demande".$type[0]."_paiement DP
+        ON TD.DemandeId = DP.Id
+        JOIN demande".$type[0]."_accepte DA
+        ON DP.DemandeId = DA.Id
+        JOIN demande_".$type." DT
+        ON DA.DemandeId = DT.Id
+        JOIN utilisateur U
+        ON DA.TraducteurId = U.Id
+        WHERE DT.UtilisateurId = ".$idClient."
+        ORDER BY TF.DATE DESC";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
