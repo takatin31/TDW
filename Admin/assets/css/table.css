@@ -1,3 +1,11 @@
 .table>thead>tr>th {
     border-width: 0px;
 }
+
+#modifyContainer {
+    display: none;
+}
+
+.InfoContainer {
+    display: none;
+}

@@ -23,7 +23,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
+          <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -53,7 +53,7 @@
               <p>Table des documents</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active  ">
             <a class="nav-link" href="TraducteurValidation.php">
               <i class="material-icons">supervised_user_circle</i>
               <p>Validation des traducteurs</p>

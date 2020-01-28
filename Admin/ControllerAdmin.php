@@ -39,12 +39,31 @@ class TraducteurController {
     public function getTraducteurInfo($idTraducteur){
         $am = new AdminModal();
         $r = $am->getTraducteurInfo($idTraducteur);
+        $result = $r->fetch_assoc();
+        return $result;
+    }
+
+    public function getHistoryTraducteurTraduction($idTraducteur, $type){
+        $am = new AdminModal();
+        $r = $am->getHistoryTraducteurTraduction($idTraducteur, $type);
         return $r;
     }
 
-    public function getHistoryTraducteur($idTraducteur){
+    public function getTraducteurReferences($idTraducteur){
         $am = new AdminModal();
-        $r = $am->getHistoryTraducteur($idTraducteur);
+        $r = $am->getTraducteurReferences($idTraducteur);
+        return $r;
+    }
+
+    public function getTraducteurLangues($idTraducteur){
+        $am = new AdminModal();
+        $r = $am->getTraducteurLangues($idTraducteur);
+        return $r;
+    }
+
+    public function getTraducteurTypes($idTraducteur){
+        $am = new AdminModal();
+        $r = $am->getTraducteurTypes($idTraducteur);
         return $r;
     }
 
@@ -90,7 +109,8 @@ class ClientController {
     public function getClientInfo($idClient){
         $am = new AdminModal();
         $r = $am->getClientInfo($idClient);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result;
     }
 
     public function filterClients($nom, $wilaya){
@@ -122,6 +142,12 @@ class UserController {
     public function updateInfoUser($idUser, $nom, $prenom, $email, $image){
         $am = new AdminModal();
         $r = $am->updateInfoUser($idUser, $nom, $prenom, $email, $image);
+        return $r;
+    }
+
+    public function getUserFaxes($idUser){
+        $am = new AdminModal();
+        $r = $am->getUserFaxes($idUser);
         return $r;
     }
 

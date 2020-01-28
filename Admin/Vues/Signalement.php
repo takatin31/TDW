@@ -23,7 +23,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
+          <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -65,7 +65,7 @@
               <p>Validation des paiements</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item  active">
             <a class="nav-link" href="Signalement.php">
               <i class="material-icons">report</i>
               <p>Gestion des signalements</p>

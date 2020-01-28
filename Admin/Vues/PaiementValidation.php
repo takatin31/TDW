@@ -23,7 +23,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
+          <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -59,7 +59,7 @@
               <p>Validation des traducteurs</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active">
             <a class="nav-link" href="PaiementValidation.php">
               <i class="material-icons">euro</i>
               <p>Validation des paiements</p>

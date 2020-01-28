@@ -67,23 +67,88 @@ class AdminModal{
 
     public function getTraducteurInfo($idTraducteur){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT *
+        $rq = "SELECT U.*, D.Cv, W.nom wilaya, C.nom commune,
+                CASE
+                WHEN D.Assermetation_doc IS NULL THEN 'Non Assermente'
+                ELSE 'Assermente'
+                END AS AssermenteEtat
                 FROM Utilisateur U
                 JOIN TraducteurData D
                 ON U.Id = D.traducteurId
+                JOIN Wilaya W
+                ON W.id = U.wilayaId
+                JOIN Commune C
+                ON C.id = U.commune
                 WHERE U.id = ".$idTraducteur;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
     }
 
-    public function getHistoryTraducteur($idTraducteur){
+    public function getTraducteurReferences($idTraducteur){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "";
+        $rq = "SELECT Document
+                FROM Reference
+                WHERE TraducteurId = ".$idTraducteur;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
     }
+
+    public function getTraducteurLangues($idTraducteur){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT L.Nom
+                FROM Langue L
+                JOIN MaitriseLangue ML
+                ON L.Id = ML.LangueId
+                WHERE ML.TraducteurId = ".$idTraducteur;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getTraducteurTypes($idTraducteur){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT Type
+                FROM Maitrisetype MT
+                WHERE TraducteurId = ".$idTraducteur;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getUserFaxes($idUser){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT fax
+                FROM Faxes
+                WHERE UtilisateurId = ".$idUser;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getHistoryTraducteurTraduction($idTraducteur, $type){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT TF.Date, TF.Id , DT.Type, U.Email
+        FROM ".$type."_finie TF
+        JOIN ".$type."_debutee TD
+        ON TF.".$type."Id = TD.Id
+        JOIN demande".$type[0]."_paiement DP
+        ON TD.DemandeId = DP.Id
+        JOIN demande".$type[0]."_accepte DA
+        ON DP.DemandeId = DA.Id
+        JOIN demande_".$type." DT
+        ON DA.DemandeId = DT.Id
+        JOIN utilisateur U
+        ON DT.UtilisateurId = U.Id
+        WHERE DA.TraducteurId = ".$idTraducteur;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        echo $rq;
+        return $r;
+    }
+
+
 
     public function filterTraducteurs($nom, $assermente, $type, $langue, $wilaya, $note){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
@@ -132,11 +197,16 @@ class AdminModal{
 
     public function getClientInfo($idClient){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT *
+        $rq = "SELECT U.*, W.nom wilaya, C.nom commune
                 FROM Utilisateur U
-                JOIN TraducteurData D
-                ON U.Id = D.traducteurId
-                WHERE U.id = ".$idTraducteur;
+                JOIN Wilaya W
+                ON W.Id = U.wilayaId
+                JOIN Commune C
+                ON C.id = U.commune
+                WHERE U.Id NOT IN (
+                                    SELECT TraducteurId 
+                                    FROM TraducteurData)
+                AND U.id = ".$idClient;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;

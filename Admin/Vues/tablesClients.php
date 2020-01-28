@@ -23,7 +23,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
+          <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -41,7 +41,7 @@
               <p>Table des traducteurs</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active ">
             <a class="nav-link" href="tablesClients.php">
               <i class="material-icons">table_chart</i>
               <p>Table des clients</p>
@@ -157,8 +157,8 @@
                                       Action
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item" href="#">Voir Détails</a>
-                                      <a class="dropdown-item" href="#">Modifier</a>
+                                      <a class="dropdown-item showInfo" href="#">Voir Détails</a>
+                                      <a class="dropdown-item modify" href="#">Modifier</a>
                                       <a class="dropdown-item" href="#">Supprimer</a>
                                       <a class="dropdown-item" href="#">Bloquer</a>
                                     </div>
@@ -177,7 +177,7 @@
         </div>
       </div>
       <div class="container-fluid row justify-content-center d-flex">
-        <div class="col-md-10 ">
+        <div class="col-md-10" id="modifyContainer">
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title">Edit Profile</h4>
@@ -227,75 +227,22 @@
         </div>
       </div>
       <div class="container-fluid row justify-content-center d-flex">
-        <div class="col-md-10">
+        <div class="col-md-10 InfoContainer">
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title">Edit Profile</h4>
               <p class="card-category">Complete your profile</p>
             </div>
             <div class="card-body">
-              <form>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Nom</label>
-                      <input type="text" class="form-control" disabled>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Prenom</label>
-                      <input type="text" class="form-control" disabled>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Email</label>
-                      <input type="email" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Wilaya</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Commune</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Adresse</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Numero de telephone</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Fax</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
+              <form id="formDataClient">
+                
               </form>
             </div>
           </div>
         </div>
 
 
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 InfoContainer">
             <div class="card">
               <div class="card-header card-header-warning">
                 <h4 class="card-title">Demandes de traduction faites</h4>
@@ -317,7 +264,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 InfoContainer">
             <div class="card">
               <div class="card-header card-header-danger">
                 <h4 class="card-title">Demandes de devis faites</h4>
@@ -339,7 +286,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 InfoContainer">
             <div class="card">
               <div class="card-header card-header-info">
                 <h4 class="card-title">Historique des notes</h4>
@@ -361,7 +308,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6 col-md-12">
+        <div class="col-lg-6 col-md-12 InfoContainer">
             <div class="card">
               <div class="card-header card-header-success">
                 <h4 class="card-title">Historique signalement</h4>
