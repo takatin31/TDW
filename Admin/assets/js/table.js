@@ -246,18 +246,91 @@ $(document).on("click", ".blockUser", function(){
 });
 
 
-$(document).on("click", ".deblockUser", function(){
+$(document).on("click", ".acceptTraducteur", function(){
 
     let userId = $(this).parent().parent().parent().parent().find(".userId").text();
-
+    console.log(userId);
     $.ajax({
         type: "POST",
-        url: "../Handlers/UserStateHandler.php",
+        url: "../Handlers/TraducteurStateHandler.php",
         data: {
             idUser: userId,
-            action: "deblock"
+            action: "accept"
+        },
+        success: function (data) {
+            console.log(data);
+            
+        }
+    });
+});
+
+$(document).on("click", ".declineTraducteur", function(){
+
+    let userId = $(this).parent().parent().parent().parent().find(".userId").text();
+    console.log(userId);
+    
+    $.ajax({
+        type: "POST",
+        url: "../Handlers/TraducteurStateHandler.php",
+        data: {
+            idUser: userId,
+            action: "decline"
         },
         success: function (data) {
         }
     });
 });
+
+$(document).on("click", ".acceptDemandePaiement", function(){
+
+    let idDemande = $(this).parent().parent().parent().parent().find(".demandeId").text();
+    let type = $(this).parent().parent().parent().parent().find(".type").text();
+    console.log(idDemande);
+    $.ajax({
+        type: "POST",
+        url: "../Handlers/PaiementStateHandler.php",
+        data: {
+            idDemande: idDemande,
+            action: "accept",
+            type: type
+        },
+        success: function (data) {
+            console.log(data);
+            
+        }
+    });
+});
+
+$(document).on("click", ".declineDemandePaiement", function(){
+
+    let idDemande = $(this).parent().parent().parent().parent().find(".demandeId").text();
+    let type = $(this).parent().parent().parent().parent().find(".type").text();
+    
+    $.ajax({
+        type: "POST",
+        url: "../Handlers/PaiementStateHandler.php",
+        data: {
+            idDemande: idDemande,
+            action: "decline",
+            type: type
+        },
+        success: function (data) {
+        }
+    });
+});
+
+$(document).on("change", "#profileImage", function(){
+    readURL(this);
+});
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      
+      reader.onload = function(e) {
+        $('#profilePic').attr('src', e.target.result);
+      }
+      
+      reader.readAsDataURL(input.files[0]);
+    }
+  }

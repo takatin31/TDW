@@ -52,7 +52,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="tablesDocuments.html">
+            <a class="nav-link" href="tablesDocuments.php">
               <i class="material-icons">table_chart</i>
               <p>Table des documents</p>
             </a>
@@ -76,7 +76,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./map.html">
+            <a class="nav-link" href="./Statistiques.php">
               <i class="material-icons">pie_chart</i>
               <p>Graphes</p>
             </a>
@@ -303,22 +303,22 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
+                <a href="../../main.php">
                   Page d'accueil
                 </a>
               </li>
               <li>
-                <a href="https://creative-tim.com/presentation">
+                <a href="../../blog.php">
                   Blog
                 </a>
               </li>
               <li>
-                <a href="http://blog.creative-tim.com">
+                <a href="../../traducteurs.html.php">
                   Traducteurs
                 </a>
               </li>
               <li>
-                <a href="https://www.creative-tim.com/license">
+                <a href="../../about.html">
                   A propos
                 </a>
               </li>

@@ -5,9 +5,14 @@ $idUser = $_POST["idUser"];
 $action = $_POST["action"];
 
 if (strcmp($action, "view") == 0){
+    
     if (strcmp($typeUser, "client") == 0){
         $cc = new ClientController();
         $r = $cc->getClientInfo($idUser);
+        echo '<div class="col-md-2">
+                    <img class="img-fluid" src="../../uploads/profile_pics/'.$r["Image"].'"/>
+                </div>';
+        echo '<div class="col-md-10">';
         echo '<div class="row">
                 <div class="col-md-3">
                 <div class="form-group">
@@ -68,11 +73,16 @@ if (strcmp($action, "view") == 0){
           echo '</select>
                 </div>
                 </div>
+                </div>
             </div>';
         
     }else{
         $cc = new TraducteurController();
         $r = $cc->getTraducteurInfo($idUser);
+        echo '<div class="col-md-2">
+                    <img class="img-fluid" src="../../uploads/profile_pics/'.$r["Image"].'"/>
+                </div>';
+        echo '<div class="col-md-10">';
         echo '<div class="row">
                 <div class="col-md-3">
                 <div class="form-group">
@@ -187,35 +197,40 @@ if (strcmp($action, "view") == 0){
                 </div>';
         }
               
-        echo '</div>';
+        echo '</div>
+            </div>';
     }
 }else{
     if (strcmp($typeUser, "client") == 0){
         $cc = new ClientController();
         $r = $cc->getClientInfo($idUser);
-        echo '<div class="col-md-2 mt-2 text-center">
-                    <img src="../../uploads/profile_pics/'.$r["Image"].'" class="img-fluid"/>
-                    <a href="#">Uploader une image</a>
+        echo '<input type="hidden" name="userId" value="'.$idUser.'" >
+                <div class="col-md-2 mt-2 text-center">
+                    <img id="profilePic" src="../../uploads/profile_pics/'.$r["Image"].'" class="img-fluid"/>
+                    <label class="custom-file">
+                        <input type="file" id="profileImage" name="profilePicInput" class="custom-file-input">
+                        <span class="custom-file-control">Uploader Image</span>
+                    </label>
+                    
                 </div>
                 <div class="col-md-10">
-                <form>
                     <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                         <label class="bmd-label-floating">Nom</label>
-                        <input type="text" class="form-control" value="'.$r["Nom"].'">
+                        <input type="text" name="Nom" class="form-control" value="'.$r["Nom"].'">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                         <label class="bmd-label-floating">Prenom</label>
-                        <input type="text" class="form-control" value="'.$r["Prenom"].'">
+                        <input type="text" name="Prenom" class="form-control" value="'.$r["Prenom"].'">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                         <label class="bmd-label-floating">Email</label>
-                        <input type="email" class="form-control" value="'.$r["Email"].'">
+                        <input type="email" name="Email" class="form-control" value="'.$r["Email"].'">
                         </div>
                     </div>
                     </div>
@@ -223,40 +238,43 @@ if (strcmp($action, "view") == 0){
                     <div class="col-md-6">
                         <div class="form-group">
                         <label class="bmd-label-floating">Numero de telephone</label>
-                        <input type="text" class="form-control" value="'.$r["Phone"].'">
+                        <input type="text" name="Phone" class="form-control" value="'.$r["Phone"].'">
                         </div>
                     </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Modifier Profile</button>
                     <div class="clearfix"></div>
-                </form>
+                
                 </div>';
     }else{
         $cc = new TraducteurController();
         $r = $cc->getTraducteurInfo($idUser);
-        echo '<div class="col-md-2 mt-2 text-center">
-                    <img src="../../uploads/profile_pics/'.$r["Image"].'" class="img-fluid"/>
-                    <a href="#">Uploader une image</a>
+        echo '  <input type="hidden" name="userId" value="'.$idUser.'" >
+                <div class="col-md-2 mt-2 text-center">
+                    <img id="profilePic" src="../../uploads/profile_pics/'.$r["Image"].'" class="img-fluid"/>
+                    <label class="custom-file">
+                        <input type="file" id="profileImage" name="profilePicInput" class="custom-file-input">
+                        <span class="custom-file-control">Uploader Image</span>
+                    </label>
                 </div>
                 <div class="col-md-10">
-                <form>
                     <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
                         <label class="bmd-label-floating">Nom</label>
-                        <input type="text" class="form-control" value="'.$r["Nom"].'">
+                        <input type="text" name="Nom" class="form-control" value="'.$r["Nom"].'">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
                         <label class="bmd-label-floating">Prenom</label>
-                        <input type="text" class="form-control" value="'.$r["Prenom"].'">
+                        <input type="text" name="Prenom" class="form-control" value="'.$r["Prenom"].'">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                         <label class="bmd-label-floating">Email</label>
-                        <input type="email" class="form-control" value="'.$r["Email"].'">
+                        <input type="email" name="Email" class="form-control" value="'.$r["Email"].'">
                         </div>
                     </div>
                     </div>
@@ -264,19 +282,13 @@ if (strcmp($action, "view") == 0){
                     <div class="col-md-6">
                         <div class="form-group">
                         <label class="bmd-label-floating">Numero de telephone</label>
-                        <input type="text" class="form-control" value="'.$r["Phone"].'">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                        <label class="bmd-label-floating">Assermenté</label>
-                        <input type="text" class="form-control" value="'.$r["AssermenteEtat"].'">
+                        <input type="text" name="Phone" class="form-control" value="'.$r["Phone"].'">
                         </div>
                     </div>
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Modifier Profile</button>
                     <div class="clearfix"></div>
-                </form>
+                
                 </div>';
     }
 }

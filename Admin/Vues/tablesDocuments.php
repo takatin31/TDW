@@ -23,7 +23,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -35,7 +35,7 @@
               <p>Profile Administrateur</p>
             </a>
           </li>
-          <li class="nav-item active  ">
+          <li class="nav-item ">
             <a class="nav-link" href="tablesTraducteurs.php">
               <i class="material-icons">table_chart</i>
               <p>Table des traducteurs</p>
@@ -47,7 +47,7 @@
               <p>Table des clients</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item  active">
             <a class="nav-link" href="tablesDocuments.php">
               <i class="material-icons">table_chart</i>
               <p>Table des documents</p>
@@ -132,50 +132,33 @@
                   <div class="table-responsive">
                     <table class="table my-table mdl-data-table">
                       <thead class=" text-primary">
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prenom</th>
-                        <th>Email</th>
-                        <th>Wilaya</th>
+                        <th>Document</th>
+                        <th>Client</th>
+                        <th>Traducteur</th>
+                        <th>Date</th>
                         <th>Type</th>
-                        <th>Etat</th>
                       </thead>
                       <tbody>
                         
                         <?php
                           require_once("../ControllerAdmin.php");
-                          $tc = new TraducteurController();
-                          $r = $tc->getTraducteurs();
+                          $tc = new DocumentController();
+                          $r = $tc->getDocuments();
                           foreach($r as $lg){
                             echo '<tr>';
-                            echo '<td class="userId">'.$lg["Id"].'</td>';
-                            echo '<td>'.$lg["Nom"].'</td>';
-                            echo '<td>'.$lg["Prenom"].'</td>';
-                            echo '<td>'.$lg["Email"].'</td>';
-                            echo '<td>'.$lg["wilaya"].'</td>';
-                            if (strcmp($lg["Assermetation_doc"], "") == 0){
-                              echo '<td>Non Assermenté</td>';
-                            }else{
-                              echo '<td>Assermenté</td>';
+                            if (strcmp($lg["Type"], "Demande Paiement") == 0){
+                              echo '<td><a href="../../uploads/Paiement/'.$lg["Document"].'">Document</a></td>';
                             }
-                            echo '<td>'.$lg["state"].'</td>';
-                            echo '<td>
-                                    <div class="dropdown">
-                                    <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      Action
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item showInfoTraducteur" href="#">Voir Détails</a>
-                                      <a class="dropdown-item modifyInfoTraducteur" href="#">Modifier</a>
-                                      <a class="dropdown-item deleteUser" href="#">Supprimer</a>';
-                                      if (strcmp($lg["Etat"], "0") == 0)
-                                        echo '<a class="dropdown-item blockUser" href="#">Bloquer</a>';
-                                      if (strcmp($lg["Etat"], "1") == 0)
-                                        echo '<a class="dropdown-item deblockUser" href="#">Debloquer</a>';
-                                        
-                            echo '</div>
-                                  </div>
-                                  </td>';
+                            if (strcmp($lg["Type"], "Demande de Traduction") == 0){
+                              echo '<td><a href="../../uploads/DemandeDocs/'.$lg["Document"].'">Document</a></td>';
+                            }
+                            if (strcmp($lg["Type"], "Demande de Devis") == 0){
+                              echo '<td><a href="../../uploads/DemandeDocs/'.$lg["Document"].'">Document</a></td>';
+                            }
+                            echo '<td>'.$lg["EmailClient"].'</td>';
+                            echo '<td>'.$lg["EmailTraducteur"].'</td>';
+                            echo '<td>'.$lg["Date"].'</td>';
+                            echo '<td>'.$lg["Type"].'</td>';
                             echo '</tr>';
                           }
                         ?>
@@ -189,126 +172,6 @@
         </div>
       </div>
 
-      <div class="container-fluid row justify-content-center d-flex">
-        <div class="col-md-10" id="modifyContainer">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Edit Profile</h4>
-              <p class="card-category">Complete your profile</p>
-            </div>
-            <form method="POST" action="../Handlers/UpdateInfoHandler.php" enctype = "multipart/form-data" class="card-body row d-flex" id="modifyContainerBody">
-              
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="container-fluid row justify-content-center">
-       
-        <div class="col-md-12 InfoContainer">
-          <div class="card">
-            <div class="card-header card-header-primary">
-              <h4 class="card-title">Edit Profile</h4>
-              <p class="card-category">Complete your profile</p>
-            </div>
-            <div class="card-body">
-              
-              
-              <form id="formDataTraducteur" class="row">
-                
-              </form>
-              
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col-lg-6 col-md-12 InfoContainer">
-            <div class="card">
-              <div class="card-header card-header-warning">
-                <h4 class="card-title">Demandes de traduction traitées</h4>
-                <p class="card-category">Vous pouvez ici visualisez toutes les demandes traitées par </p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>ID</th>
-                    <th>Client</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                  </thead>
-                  <tbody id="traductionHistory">
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-12 InfoContainer">
-            <div class="card">
-              <div class="card-header card-header-danger">
-                <h4 class="card-title">Demandes de devis traitées</h4>
-                <p class="card-category">Vous pouvez ici visualisez toutes les demandes traitées par</p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>ID</th>
-                    <th>Client</th>
-                    <th>Type</th>
-                    <th>Date</th>
-                  </thead>
-                  <tbody  id="devisHistory">
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-12 InfoContainer">
-            <div class="card">
-              <div class="card-header card-header-info">
-                <h4 class="card-title">Historique des notes</h4>
-                <p class="card-category">Il s'agit de toutes les notes attribuées a </p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>Client</th>
-                    <th>Note</th>
-                    <th>Date</th>
-                  </thead>
-                  <tbody id="noteHistory">
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-12 InfoContainer">
-            <div class="card">
-              <div class="card-header card-header-success">
-                <h4 class="card-title">Historique signalement</h4>
-                <p class="card-category">Vous allez retrouvez touts les signalement faits contre </p>
-              </div>
-              <div class="card-body table-responsive">
-                <table class="table table-hover">
-                  <thead class="text-warning">
-                    <th>Client</th>
-                    <th>Date</th>
-                    <th>Cause</th>
-                  </thead>
-                  <tbody id="signalementHistory">
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-        </div>
-      </div>
-      
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">
@@ -368,7 +231,7 @@
     var tf = new TableFilter(document.querySelector('.my-table'), {
         base_path: '../../assests/tablefilter/',
         paging: {
-          results_per_page: ['Records: ', [5, 10, 15, 20]]
+          results_per_page: ['Records: ', [10, 25, 50, 100]]
         },
         no_results_message: true,
         auto_filter: {
@@ -380,9 +243,7 @@
         btn_reset: true,
         status_bar: true,
         msg_filter: 'Recherche...',
-        col_5: 'select',
-        col_6: 'select',
-        col_7: "null",
+        col_4: "select",
         col_types: [
         'string',
         'string',

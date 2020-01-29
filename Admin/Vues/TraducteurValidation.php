@@ -23,7 +23,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item">
+          <li class="nav-item ">
             <a class="nav-link" href="./dashboard.php">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -35,7 +35,7 @@
               <p>Profile Administrateur</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="tablesTraducteurs.php">
               <i class="material-icons">table_chart</i>
               <p>Table des traducteurs</p>
@@ -48,12 +48,12 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="tablesDocuments.html">
+            <a class="nav-link" href="tablesDocuments.php">
               <i class="material-icons">table_chart</i>
               <p>Table des documents</p>
             </a>
           </li>
-          <li class="nav-item active  ">
+          <li class="nav-item  active  ">
             <a class="nav-link" href="TraducteurValidation.php">
               <i class="material-icons">supervised_user_circle</i>
               <p>Validation des traducteurs</p>
@@ -72,7 +72,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./map.html">
+            <a class="nav-link" href="./Statistiques.php">
               <i class="material-icons">pie_chart</i>
               <p>Graphes</p>
             </a>
@@ -144,10 +144,10 @@
                         <?php
                           require_once("../ControllerAdmin.php");
                           $tc = new TraducteurController();
-                          $r = $tc->getTraducteurs();
+                          $r = $tc->getTraducteurs_before();
                           foreach($r as $lg){
                             echo '<tr>';
-                            echo '<td>'.$lg["Id"].'</td>';
+                            echo '<td class="userId">'.$lg["Id"].'</td>';
                             echo '<td>'.$lg["Nom"].'</td>';
                             echo '<td>'.$lg["Prenom"].'</td>';
                             echo '<td>'.$lg["Email"].'</td>';
@@ -163,13 +163,14 @@
                                       Action
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item" href="#">Voir Détails</a>
-                                      <a class="dropdown-item" href="#">Accepter</a>
-                                      <a class="dropdown-item" href="#">Refuser</a>
+                                      <a class="dropdown-item showInfoTraducteur" href="#">Voir Détails</a>
+                                      <a class="dropdown-item acceptTraducteur" href="#">Accepter</a>
+                                      <a class="dropdown-item declineTraducteur" href="#">Refuser</a>
                                     </div>
-                                  </div>
-                                  </td>';
-                            echo '</tr>';
+                                    </div>
+                                    </td>
+                                    </tr>';
+                         
                           }
                         ?>
                       </tbody>
@@ -182,116 +183,16 @@
         </div>
       </div>
 
-      
-      <div class="container-fluid row justify-content-center d-flex">
-        <div class="col-md-10">
+      <div class="container-fluid row justify-content-center">
+        <div class="col-md-10 InfoContainer">
           <div class="card">
             <div class="card-header card-header-primary">
               <h4 class="card-title">Edit Profile</h4>
               <p class="card-category">Complete your profile</p>
             </div>
             <div class="card-body">
-              <form>
-                <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Nom</label>
-                      <input type="text" class="form-control" disabled>
-                    </div>
-                  </div>
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Prenom</label>
-                      <input type="text" class="form-control" disabled>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Email</label>
-                      <input type="email" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Wilaya</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Commune</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-8">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Adresse</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Lanuges</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Type de traduction</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Assermenté</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Numero de telephone</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Fax</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Cv</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Ref1</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-2">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Ref2</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                  <div class="col-md-22">
-                    <div class="form-group">
-                      <label class="bmd-label-floating">Ref3</label>
-                      <input type="text" class="form-control">
-                    </div>
-                  </div>
-                </div>
+              <form id="formDataTraducteur">
+                
               </form>
             </div>
           </div>
@@ -303,22 +204,22 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
+                <a href="../../main.php">
                   Page d'accueil
                 </a>
               </li>
               <li>
-                <a href="https://creative-tim.com/presentation">
+                <a href="../../blog.php">
                   Blog
                 </a>
               </li>
               <li>
-                <a href="http://blog.creative-tim.com">
+                <a href="../../traducteurs.html.php">
                   Traducteurs
                 </a>
               </li>
               <li>
-                <a href="https://www.creative-tim.com/license">
+                <a href="../../about.html">
                   A propos
                 </a>
               </li>
@@ -357,7 +258,7 @@
     var tf = new TableFilter(document.querySelector('.my-table'), {
         base_path: '../../assests/tablefilter/',
         paging: {
-          results_per_page: ['Records: ', [10, 25, 50, 100]]
+          results_per_page: ['Records: ', [5, 10, 15, 20]]
         },
         no_results_message: true,
         auto_filter: {
@@ -370,7 +271,7 @@
         status_bar: true,
         msg_filter: 'Recherche...',
         col_5: 'select',
-        col_6: "null",
+        col_6: 'null',
         col_types: [
         'string',
         'string',

@@ -36,6 +36,12 @@ class TraducteurController {
         return $r;
     }
 
+    public function getTraducteurs_before(){
+        $am = new AdminModal();
+        $r = $am->getTraducteurs_before();
+        return $r;
+    }
+
     public function getTraducteurInfo($idTraducteur){
         $am = new AdminModal();
         $r = $am->getTraducteurInfo($idTraducteur);
@@ -151,9 +157,9 @@ class ClientController {
 }
 
 class UserController {
-    public function updateInfoUser($idUser, $nom, $prenom, $email, $image){
+    public function updateInfoUser($idUser, $nom, $prenom, $email, $phone, $image){
         $am = new AdminModal();
-        $r = $am->updateInfoUser($idUser, $nom, $prenom, $email, $image);
+        $r = $am->updateInfoUser($idUser, $nom, $prenom, $email, $phone, $image);
         return $r;
     }
 
@@ -234,6 +240,13 @@ class SignalementController {
         $r = $am->seeSignalement($idSignalement);
         return $r;
     }
+
+    public function getSignalements(){
+        $am = new AdminModal();
+        $r = $am->getSignalements();
+        return $r;
+    }
+
 }
 
 class PaiementController {
@@ -243,15 +256,15 @@ class PaiementController {
         return $r;
     }
 
-    public function acceptDemandePaiement($idDemande){
+    public function acceptDemandePaiement($idDemande, $type){
         $am = new AdminModal();
-        $r = $am->acceptDemandePaiement($idDemande);
+        $r = $am->acceptDemandePaiement($idDemande, $type);
         return $r;
     }
 
-    public function declineDemandePaiement($idDemande){
+    public function declineDemandePaiement($idDemande, $type){
         $am = new AdminModal();
-        $r = $am->declineDemandePaiement($idDemande);
+        $r = $am->declineDemandePaiement($idDemande, $type);
         return $r;
     }
 }

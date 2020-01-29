@@ -48,7 +48,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="tablesDocuments.html">
+            <a class="nav-link" href="tablesDocuments.php">
               <i class="material-icons">table_chart</i>
               <p>Table des documents</p>
             </a>
@@ -72,7 +72,7 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./map.html">
+            <a class="nav-link" href="./Statistiques.php">
               <i class="material-icons">pie_chart</i>
               <p>Graphes</p>
             </a>
@@ -135,32 +135,32 @@
                         <th>ID</th>
                         <th>Client</th>
                         <th>Traducteur</th>
-                        <th>Date</th>
                         <th>Prix</th>
+                        <th>Type</th>
                         <th>Fichier</th>
                       </thead>
                       <tbody>
                         
                         <?php
                           require_once("../ControllerAdmin.php");
-                          $tc = new TraducteurController();
-                          $r = $tc->getTraducteurs();
+                          $tc = new PaiementController();
+                          $r = $tc->getDemandePaiement();
                           foreach($r as $lg){
                             echo '<tr>';
-                            echo '<td>'.$lg["Id"].'</td>';
-                            echo '<td>'.$lg["Nom"].'</td>';
-                            echo '<td>'.$lg["Prenom"].'</td>';
-                            echo '<td>'.$lg["Email"].'</td>';
-                            echo '<td>0</td>';
-                            echo '<td>0</td>';
+                            echo '<td class="demandeId">'.$lg["Id"].'</td>';
+                            echo '<td>'.$lg["EmailClient"].'</td>';
+                            echo '<td>'.$lg["EmailTraducteur"].'</td>';
+                            echo '<td>'.$lg["Prix"].'</td>';
+                            echo '<td class="type">'.$lg["Type"].'</td>';
+                            echo '<td><a href="../../uploads/Paiement/'.$lg["Document"].'">Voir Document</a></td>';
                             echo '<td>
                                     <div class="dropdown">
                                     <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                       Action
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      <a class="dropdown-item" href="#">Accepter</a>
-                                      <a class="dropdown-item" href="#">Refuser</a>
+                                      <a class="dropdown-item acceptDemandePaiement" href="#">Accepter</a>
+                                      <a class="dropdown-item declineDemandePaiement" href="#">Refuser</a>
                                     </div>
                                   </div>
                                   </td>';
@@ -181,22 +181,22 @@
           <nav class="float-left">
             <ul>
               <li>
-                <a href="https://www.creative-tim.com">
+                <a href="../../main.php">
                   Page d'accueil
                 </a>
               </li>
               <li>
-                <a href="https://creative-tim.com/presentation">
+                <a href="../../blog.php">
                   Blog
                 </a>
               </li>
               <li>
-                <a href="http://blog.creative-tim.com">
+                <a href="../../traducteurs.html.php">
                   Traducteurs
                 </a>
               </li>
               <li>
-                <a href="https://www.creative-tim.com/license">
+                <a href="../../about.html">
                   A propos
                 </a>
               </li>
@@ -247,6 +247,7 @@
         btn_reset: true,
         status_bar: true,
         msg_filter: 'Recherche...',
+        col_5: "null",
         col_6: "null",
         col_types: [
         'string',

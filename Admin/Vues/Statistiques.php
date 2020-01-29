@@ -65,14 +65,14 @@
               <p>Validation des paiements</p>
             </a>
           </li>
-          <li class="nav-item  active">
+          <li class="nav-item">
             <a class="nav-link" href="Signalement.php">
               <i class="material-icons">report</i>
               <p>Gestion des signalements</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./Statistiques.php">
+          <li class="nav-item active">
+            <a class="nav-link" href="Statistiques.php">
               <i class="material-icons">pie_chart</i>
               <p>Graphes</p>
             </a>
@@ -120,49 +120,7 @@
         </div>
       </nav>
       <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Tableau des traducteurs</h4>
-                  <p class="card-category">Vous pouvez ici rechercher et filtrer les traducteurs</p>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <table class="table my-table mdl-data-table">
-                      <thead class=" text-primary">
-                        <th>ID</th>
-                        <th>Client</th>
-                        <th>Traducteur</th>
-                        <th>Date</th>
-                        <th>Cause</th>
-                      </thead>
-                      <tbody>
-                        
-                        <?php
-                          require_once("../ControllerAdmin.php");
-                          $tc = new SignalementController();
-                          $r = $tc->getSignalements();
-                          foreach($r as $lg){
-                            echo '<tr>';
-                            echo '<td>'.$lg["Id"].'</td>';
-                            echo '<td>'.$lg["EmailClient"].'</td>';
-                            echo '<td>'.$lg["EmailTraducteur"].'</td>';
-                            echo '<td>'.$lg["Date"].'</td>';
-                            
-                            echo '<td><textarea class="form-control" rows="3">'.$lg["Cause"].'</textarea></td>';
-                            echo '</tr>';
-                          }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
 
       <footer class="footer">
@@ -218,44 +176,7 @@
   <script src="../assets/js/plugins/chartist.min.js"></script>
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
-  <script src="../../assests/tablefilter/tablefilter.js" type="text/javascript"></script>
-  <script src="../assets/js/table.js" type="text/javascript"></script>
-  <script>
-    var tf = new TableFilter(document.querySelector('.my-table'), {
-        base_path: '../../assests/tablefilter/',
-        paging: {
-          results_per_page: ['Records: ', [10, 25, 50, 100]]
-        },
-        no_results_message: true,
-        auto_filter: {
-            delay: 1100 //milliseconds
-        },
-        filters_row_index: 1,
-        state: true,
-        rows_counter: true,
-        btn_reset: true,
-        status_bar: true,
-        msg_filter: 'Recherche...',
-        col_types: [
-        'string',
-        'string',
-        'string',
-        'string',
-        'string',
-        'string'
-        ],
-        extensions: [{ name: 'sort' }],
-        themes: [{
-            name: 'transparent'
-        }],
-    });
-    tf.init();
-    </script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-          $('#data').DataTable();
-      } );
-  </script>
+  
   
   <script>
     $(document).ready(function() {

@@ -70,6 +70,20 @@ class AdminModal{
         return $r;
     }
 
+    public function getTraducteurs_before(){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT U.*, D.Cv, D.Assermetation_doc, W.Nom wilaya
+                FROM Utilisateur U
+                JOIN TraducteurData D
+                ON U.Id = D.traducteurId
+                JOIN Wilaya W
+                ON W.id = U.wilayaId
+                WHERE D.Etat = 0";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
     public function getTraducteurInfo($idTraducteur){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT U.*, D.Cv, W.nom wilaya, C.nom commune,
@@ -319,9 +333,10 @@ class AdminModal{
         return $r;
     }
 
-    public function updateInfoUser($idUser, $nom, $prenom, $email, $image){
+    public function updateInfoUser($idUser, $nom, $prenom, $email, $phone, $image){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "UPDATE Utilisateur SET Nom = '".$nom."', Prenom = '".$prenom."', Email = '".$email."', Image = '".$image."' WHERE Id = ".$idUser;
+        $nameDoc = $this->addImagePic($image);
+        $rq = "UPDATE Utilisateur SET Nom = '".$nom."', Prenom = '".$prenom."', Email = '".$email."', Phone = ".$phone.", Image = '".$nameDoc."' WHERE Id = ".$idUser;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -349,14 +364,6 @@ class AdminModal{
     }
 
     public function getNombreDocuments(){
-        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "";
-        $r = $conn->query($rq);
-        $this->deconnexion($conn);
-        return $r;
-    }
-
-    public function getDocuments(){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "";
         $r = $conn->query($rq);
@@ -480,10 +487,31 @@ class AdminModal{
         return $r;
     }
 
-    public function getDemandePaiement($type){
+    public function getDemandePaiement(){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT *
-                FROM Demande".$type[0]."_Paiement";
+        $rq = "SELECT DP.*, DA.Prix, DA.TraducteurId, U.Email EmailClient, U2.Email EmailTraducteur, 'Traduction' Type
+                FROM demandet_paiement DP
+                JOIN demandet_accepte DA
+                ON DA.Id = DP.DemandeId
+                JOIN demande_traduction DT
+                ON DT.Id = DA.DemandeId
+                JOIN utilisateur U
+                ON U.Id = DT.UtilisateurId
+                JOIN utilisateur U2
+                ON U2.Id = DA.TraducteurId
+                WHERE DP.Etat = 0
+                UNION ALL
+                SELECT DP.*, DA.Prix, DA.TraducteurId, U.Email EmailClient, U2.Email EmailTraducteur, 'Devis' Type
+                FROM demanded_paiement DP
+                JOIN demanded_accepte DA
+                ON DA.Id = DP.DemandeId
+                JOIN demande_devis DT
+                ON DT.Id = DA.DemandeId
+                JOIN utilisateur U
+                ON U.Id = DT.UtilisateurId
+                JOIN utilisateur U2
+                ON U2.Id = DA.TraducteurId
+                WHERE DP.Etat = 0";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -522,13 +550,22 @@ class AdminModal{
         $rq = "UPDATE TraducteurData SET Etat = 1 WHERE traducteurId = ".$idTraducteur;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
+        echo $rq;
         return $r;
     }
 
     public function declineTraducteur($idTraducteur){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "UPDATE TraducteurData SET Etat = -1 WHERE traducteurId = ".$idTraducteur;
+        $rq = "DELETE FROM TraducteurData WHERE traducteurId = ".$idTraducteur;
         $r = $conn->query($rq);
+        $rq = "DELETE FROM Faxes WHERE UtilisateurId = ".$idTraducteur;
+        $r = $conn->query($rq);
+        $rq = "DELETE FROM MaitriseType WHERE traducteurId = ".$idTraducteur;
+        $r = $conn->query($rq);
+        $rq = "DELETE FROM MaitriseLangue WHERE traducteurId = ".$idTraducteur;
+        $r = $conn->query($rq);
+        $r = $conn->query($rq);
+        $rq = "DELETE FROM Utilisateur WHERE Id = ".$idTraducteur;
         $this->deconnexion($conn);
         return $r;
     }
@@ -539,6 +576,86 @@ class AdminModal{
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
+    }
+
+    public function getSignalements(){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT S.*, U1.Email EmailClient, U2.Email EmailTraducteur
+                FROM signalement S
+                JOIN utilisateur U1
+                ON S.UtilisateurId = U1.Id
+                JOIN utilisateur U2
+                ON U2.Id = S.TraducteurId
+                ORDER BY DATE DESC";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getDocuments(){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DP.Document, DP.Date, U1.Email EmailClient, U2.Email EmailTraducteur, 'Demande Paiement' Type
+                FROM demandet_paiement DP
+                JOIN demandet_accepte DA
+                ON DP.DemandeId = DA.Id
+                JOIN demande_traduction DT
+                ON DA.DemandeId = DT.Id
+                JOIN utilisateur U1
+                ON DT.UtilisateurId = U1.Id
+                JOIN utilisateur U2
+                ON DA.TraducteurId = U2.Id
+                UNION ALL
+                SELECT DP.Document, DP.Date, U1.Email EmailClient, U2.Email EmailTraducteur, 'Demande Paiement' Type
+                FROM demanded_paiement DP
+                JOIN demanded_accepte DA
+                ON DP.DemandeId = DA.Id
+                JOIN demande_devis DT
+                ON DA.DemandeId = DT.Id
+                JOIN utilisateur U1
+                ON DT.UtilisateurId = U1.Id
+                JOIN utilisateur U2
+                ON DA.TraducteurId = U2.Id
+                UNION ALL
+                SELECT DT.Document, DT.Date, U1.Email EmailClient, U2.Email EmailTraducteur, 'Demande de Traduction' Type
+                FROM demande_traduction DT
+                JOIN utilisateur U1
+                ON DT.UtilisateurId = U1.Id
+                JOIN demandet_accepte DA
+                ON DT.Id = DA.DemandeId
+                JOIN utilisateur U2
+                ON DA.TraducteurId = U2.Id
+                UNION ALL
+                SELECT DT.Document, DT.Date, U1.Email EmailClient, U2.Email EmailTraducteur, 'Demande de Devis' Type
+                FROM demande_devis DT
+                JOIN utilisateur U1
+                ON DT.UtilisateurId = U1.Id
+                JOIN demanded_accepte DA
+                ON DT.Id = DA.DemandeId
+                JOIN utilisateur U2
+                ON DA.TraducteurId = U2.Id";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function addImagePic($image){
+        $targetDir = "../../uploads/profile_pics/";
+        $fileName = basename($image["name"]);
+        $targetFilePath = $targetDir . $fileName;
+        $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+
+        $allowTypes = array('jpg','png','jpeg','gif');
+        if(in_array($fileType, $allowTypes)){
+            // Upload file to server
+            if(move_uploaded_file($image["tmp_name"], $targetFilePath)){
+                return $fileName;
+            }else{
+                $statusMsg = "Sorry, there was an error uploading your file.";
+            }
+        }else{
+            $statusMsg = 'Sorry, only JPG, JPEG, PNG, GIF, & PDF files are allowed to upload.';
+        }
+        return $statusMsg;
     }
 
 }
