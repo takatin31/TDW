@@ -34,12 +34,6 @@
             </a>
           </li>
           <li class="nav-item ">
-            <a class="nav-link" href="./adminProfile.html">
-              <i class="material-icons">person</i>
-              <p>Profile Administrateur</p>
-            </a>
-          </li>
-          <li class="nav-item ">
             <a class="nav-link" href="tablesTraducteurs.php">
               <i class="material-icons">table_chart</i>
               <p>Table des traducteurs</p>
@@ -106,22 +100,6 @@
                     Stats
                   </p>
                 </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="material-icons">notifications</i>
-                  <span class="notification">5</span>
-                  <p class="d-lg-none d-md-block">
-                    Some Actions
-                  </p>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                  <a class="dropdown-item" href="#">You have 5 new tasks</a>
-                  <a class="dropdown-item" href="#">You're now friend with Andrew</a>
-                  <a class="dropdown-item" href="#">Another Notification</a>
-                  <a class="dropdown-item" href="#">Another One</a>
-                </div>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -252,13 +230,11 @@
                   <div class="ct-chart" id="dailySalesChart"></div>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Nouveaux utilisateurs</h4>
-                  <p class="card-category">
-                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
+                  <h4 class="card-title">Données des traducteurs</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">access_time</i> updated 4 minutes ago
+                    <a href="tablesTraducteurs.php">Visiter</a>
                   </div>
                 </div>
               </div>
@@ -269,12 +245,11 @@
                   <div class="ct-chart" id="websiteViewsChart"></div>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Demandes</h4>
-                  <p class="card-category">Last Campaign Performance</p>
+                  <h4 class="card-title">Données des clients</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
+                    <a href="tablesClients.php">Visiter</a>
                   </div>
                 </div>
               </div>
@@ -285,12 +260,11 @@
                   <div class="ct-chart" id="completedTasksChart"></div>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Completed Tasks</h4>
-                  <p class="card-category">Last Campaign Performance</p>
+                  <h4 class="card-title">Données des documents</h4>
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                    <i class="material-icons">access_time</i> campaign sent 2 days ago
+                    <a href="tablesDocuments.php">Visiter</a>
                   </div>
                 </div>
               </div>

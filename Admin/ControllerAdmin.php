@@ -166,7 +166,7 @@ class ClientController {
 
     public function getClientId($clientEmail){
         $am = new AdminModal();
-        $r = $am->getClientId($traducteurEmail);
+        $r = $am->getClientId($clientEmail);
         $result = $r->fetch_assoc();
         return $result["Id"];
     }

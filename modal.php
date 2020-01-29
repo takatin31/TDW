@@ -963,7 +963,7 @@ class projet_modal{
     public function addFinalFile($idDemande, $type, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $docName = $this->addFinalDocument($file);
-        $rq = "INSERT INTO ".$type."_finie (TraductionId, Document)
+        $rq = "INSERT INTO ".$type."_finie (".$type."Id, Document)
                 VALUES
                 (".$idDemande.",
                 '".$docName."');";
@@ -990,7 +990,7 @@ class projet_modal{
 
     public function TraductorValideFinal($idDemande, $type, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = $rq = "UPDATE Traduction_finie SET VuTraductor = 1, Etat = 1 WHERE Id= ".$idDemande.";";
+        $rq = $rq = "UPDATE ".$type."_finie SET VuTraductor = 1, Etat = 1 WHERE Id= ".$idDemande.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $rq;
@@ -1089,7 +1089,7 @@ class projet_modal{
 
     public function findUser($email, $pass){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT Id FROM Utilisateur WHERE Email = '".$email."' AND Password = '".$pass."'";
+        $rq = "SELECT Id FROM Utilisateur WHERE Etat = 0 AND Email = '".$email."' AND Password = '".$pass."'";
         $r = $conn->query($rq);
         $result = $r->fetch_assoc(); // fetch it first
         $this->deconnexion($conn);

@@ -29,12 +29,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./adminProfile.html">
-              <i class="material-icons">person</i>
-              <p>Profile Administrateur</p>
-            </a>
-          </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="tablesTraducteurs.php">
               <i class="material-icons">table_chart</i>

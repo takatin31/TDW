@@ -454,7 +454,7 @@ class AdminModal{
                 JOIN Demande_Traduction DT
                 ON DT.Id = DA.DemandeId
                 WHERE DT.UtilisateurId = ".$idClient."
-                AND DA.TraducteurId = = ".$idTraducteur."
+                AND DA.TraducteurId = ".$idTraducteur."
                 AND TF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -465,7 +465,7 @@ class AdminModal{
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT Id
                 FROM Utilisateur
-                WHERE Email = ".$clientEmail;
+                WHERE Email = '".$clientEmail."'";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -475,9 +475,10 @@ class AdminModal{
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT Id
                 FROM Utilisateur
-                WHERE Email = ".$clientEmail;
+                WHERE Email = '".$traducteurEmail."'";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
+        
         return $r;
     }
 
@@ -488,6 +489,7 @@ class AdminModal{
                 WHERE Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
+        
         return $r;
     }
 
@@ -496,9 +498,9 @@ class AdminModal{
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie DF
                 JOIN Devis_debutee DB
-                ON TF.DevisId = TD.Id
+                ON DF.DevisId = DB.Id
                 JOIN DemandeD_Paiement DP
-                ON DP.Id = TD.DemandeId
+                ON DP.Id = DB.DemandeId
                 JOIN DemandeD_Accepte DA
                 ON DA.Id = DP.DemandeId
                 WHERE DA.TraducteurId = ".$idTraducteur."
@@ -513,9 +515,9 @@ class AdminModal{
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie DF
                 JOIN Devis_debutee DB
-                ON TF.DevisId = TD.Id
+                ON DF.DevisId = DB.Id
                 JOIN DemandeD_Paiement DP
-                ON DP.Id = TD.DemandeId
+                ON DP.Id = DB.DemandeId
                 JOIN DemandeD_Accepte DA
                 ON DA.Id = DP.DemandeId
                 JOIN Demande_Devis DD
@@ -532,15 +534,15 @@ class AdminModal{
         $rq = "SELECT COUNT(*) nbr
                 FROM Devis_finie DF
                 JOIN Devis_debutee DB
-                ON TF.DevisId = TD.Id
+                ON DF.DevisId = DB.Id
                 JOIN DemandeD_Paiement DP
-                ON DP.Id = TD.DemandeId
+                ON DP.Id = DB.DemandeId
                 JOIN DemandeD_Accepte DA
                 ON DA.Id = DP.DemandeId
                 JOIN Demande_Devis DD
                 ON DD.Id = DA.DemandeId
                 WHERE DD.UtilisateurId = ".$idClient."
-                AND DA.TraducteurId = = ".$idTraducteur."
+                AND DA.TraducteurId = ".$idTraducteur."
                 AND DF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -610,7 +612,6 @@ class AdminModal{
         $rq = "UPDATE TraducteurData SET Etat = 1 WHERE traducteurId = ".$idTraducteur;
         $r = $conn->query($rq);
         $this->deconnexion($conn);
-        echo $rq;
         return $r;
     }
 

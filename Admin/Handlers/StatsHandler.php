@@ -13,7 +13,7 @@ if (isset($_POST["traducteur"])){
     $tc = new TraducteurController();
     $traducteur = $_POST["traducteur"];
     $cas = $cas + 10;
-    $idClient = $cc->getTraducteurId($traducteur);
+    $idTraducteur = $tc->getTraducteurId($traducteur);
 }
 
 $dateDebut = $_POST["dateD"]; 
@@ -24,24 +24,26 @@ $dv = new DemandeDevisController();
 
  if ($cas == 0){
     $nbr1 = $tc->getNombreTraduction($dateDebut, $dateFin);
-    $nbr2 = $tc->getNombreDevis($dateDebut, $dateFin);
+    $nbr2 = $dv->getNombreDevis($dateDebut, $dateFin);
  }
 
  if ($cas == 1){
     $nbr1 = $tc->getNombreTraductionByClient($idClient, $dateDebut, $dateFin);
-    $nbr2 = $tc->getNombreDevisByClient($idClient, $dateDebut, $dateFin);
+    $nbr2 = $dv->getNombreDevisByClient($idClient, $dateDebut, $dateFin);
  }
 
  if ($cas == 10){
     $nbr1 = $tc->getNombreTraductionForTraductor($idTraducteur, $dateDebut, $dateFin);
-    $nbr2 = $tc->getNombreDevisForTraductor($idTraducteur, $dateDebut, $dateFin);
+    $nbr2 = $dv->getNombreDevisForTraductor($idTraducteur, $dateDebut, $dateFin);
  }
 
  if ($cas == 11){
     $nbr1 = $tc->getNombreTraductionByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin);
-    $nbr2 = $tc->getNombreDevisByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin);
+    $nbr2 = $dv->getNombreDevisByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin);
  }
 
+echo $nbr1;
+echo "|".$nbr2;
 
 
 ?>

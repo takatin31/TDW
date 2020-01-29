@@ -29,12 +29,7 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./adminProfile.html">
-              <i class="material-icons">person</i>
-              <p>Profile Administrateur</p>
-            </a>
-          </li>
+          
           <li class="nav-item ">
             <a class="nav-link" href="tablesTraducteurs.php">
               <i class="material-icons">table_chart</i>
@@ -141,23 +136,30 @@
                     </div>
                     <div class="form-group">
                       <div class='input-group date' id='datetimepicker1'>
-                      <input class="form-control" type="text" id="date-time1" placeholder="Dete Debut">
+                      <input class="form-control" type="text" id="date-time1" placeholder="Dete Debut" required>
                       <i class="material-icons">calendar_today</i>
                       </div>
                     </div>
                     
                     <div class="form-group">
                       <div class='input-group date' id='datetimepicker2'>
-                      <input class="form-control" type="text" id="date-time2" placeholder="Date Fin">
+                      <input class="form-control" type="text" id="date-time2" placeholder="Date Fin" required>
                       <i class="material-icons">calendar_today</i>
                       </div>
                     </div>
 
-                    <button class="btn btn-primary">Lancer</button> 
+                    <button class="btn btn-primary" id="recherche">Lancer</button> 
                   </div>
 
-                  <div class="row d-flex justify-content-center" id="statsBody">
-
+                  <div class="row d-flex justify-content-center align-items-center" id="statsBody">
+                  <div class="col-md-6">
+                    <canvas id="myChart1">
+                    </canvas>
+                  </div>
+                  <div class="col-md-5">
+                    <canvas id="myChart2">
+                    </canvas>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -218,6 +220,7 @@
   <script src="../assets/js/plugins/chartist.min.js"></script>
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+  <script src="../assets/js/char.js" type="text/javascript"></script>
   <script src="../assets/js/stats.js"></script>
   
   <script>
@@ -230,11 +233,11 @@
 <script>
     $(function () {
         $('#date-time1').datetimepicker({
-          format : 'DD MMMM YYYY'
+          format : 'YYYY-MM-DD'
         });
 
         $('#date-time2').datetimepicker({
-          format : 'DD MMMM YYYY'
+          format : 'YYYY-MM-DD'
         });
     });
 </script>
