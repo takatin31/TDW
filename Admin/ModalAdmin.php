@@ -15,9 +15,9 @@ class AdminModal{
         mysqli_close($conn);
     }
 
-    public function adminInscription($user, $email, $pass){
+    public function adminInscription($email, $pass){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "INSERT INTO Admin (username, email, password) VALUES ('".$user."', '".$email."', MD5('".$pass."'))";
+        $rq = "INSERT INTO Admin (email, password) VALUES ('".$email."', MD5('".$pass."'))";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -33,7 +33,7 @@ class AdminModal{
 
     public function getNbrAdminList(){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT COUNT(*) FROM Admin";
+        $rq = "SELECT COUNT(*) nbr FROM Admin";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -441,6 +441,46 @@ class AdminModal{
         return $r;
     }
 
+    public function getNombreTraductionByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT COUNT(*) nbr
+                FROM Traduction_finie TF
+                JOIN Traduction_debutee TD
+                ON TF.TraductionId = TD.Id
+                JOIN DemandeT_Paiement DP
+                ON DP.Id = TD.DemandeId
+                JOIN DemandeT_Accepte DA
+                ON DA.Id = DP.DemandeId
+                JOIN Demande_Traduction DT
+                ON DT.Id = DA.DemandeId
+                WHERE DT.UtilisateurId = ".$idClient."
+                AND DA.TraducteurId = = ".$idTraducteur."
+                AND TF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getClientId($clientEmail){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT Id
+                FROM Utilisateur
+                WHERE Email = ".$clientEmail;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getTraducteurId($traducteurEmail){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT Id
+                FROM Utilisateur
+                WHERE Email = ".$clientEmail;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
     public function getNombreDevis($dateDebut, $dateFin){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT COUNT(*) nbr
@@ -481,6 +521,26 @@ class AdminModal{
                 JOIN Demande_Devis DD
                 ON DD.Id = DA.DemandeId
                 WHERE DD.UtilisateurId = ".$idClient."
+                AND DF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getNombreDevisByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT COUNT(*) nbr
+                FROM Devis_finie DF
+                JOIN Devis_debutee DB
+                ON TF.DevisId = TD.Id
+                JOIN DemandeD_Paiement DP
+                ON DP.Id = TD.DemandeId
+                JOIN DemandeD_Accepte DA
+                ON DA.Id = DP.DemandeId
+                JOIN Demande_Devis DD
+                ON DD.Id = DA.DemandeId
+                WHERE DD.UtilisateurId = ".$idClient."
+                AND DA.TraducteurId = = ".$idTraducteur."
                 AND DF.Date BETWEEN CAST('".$dateDebut."' AS DATE) AND CAST('".$dateFin."' AS DATE)";
         $r = $conn->query($rq);
         $this->deconnexion($conn);

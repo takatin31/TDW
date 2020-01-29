@@ -333,4 +333,24 @@ function readURL(input) {
       
       reader.readAsDataURL(input.files[0]);
     }
-  }
+}
+
+$(document).on("click", "#logout", function(){
+    $.ajax({
+        type: "POST",
+        url: "../Handlers/SignHandler.php",
+        data: {
+            email: "",
+            pass: "",
+            action: "deconnexion"
+        },
+        success: function (data) {
+            if (data == "ok"){
+                console.log("yeee");
+                
+                window.location = "AdminSign.php";
+            }
+            
+        }
+    });
+});

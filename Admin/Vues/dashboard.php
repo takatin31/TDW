@@ -133,7 +133,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="adminProfile.html">Profile</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  <a class="dropdown-item" id="logout"  href="#">Log out</a>
                 </div>
               </li>
             </ul>
@@ -352,7 +352,7 @@
   <script src="../assets/js/plugins/chartist.min.js"></script>
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
-  
+  <script src="../assets/js/table.js" type="text/javascript"></script>
   
   <script>
     $(document).ready(function() {

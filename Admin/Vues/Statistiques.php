@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
     <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
     <link href="../assets/css/table.css" rel="stylesheet" />
-
+    <link href="../assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -59,20 +59,20 @@
               <p>Validation des traducteurs</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item">
             <a class="nav-link" href="PaiementValidation.php">
               <i class="material-icons">euro</i>
               <p>Validation des paiements</p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item ">
             <a class="nav-link" href="Signalement.php">
               <i class="material-icons">report</i>
               <p>Gestion des signalements</p>
             </a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="Statistiques.php">
+          <li class="nav-item  active">
+            <a class="nav-link" href="./Statistiques.php">
               <i class="material-icons">pie_chart</i>
               <p>Graphes</p>
             </a>
@@ -112,7 +112,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="adminProfile.html">Profile</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  <a class="dropdown-item" id="logout"  href="#">Log out</a>
                 </div>
               </li>
             </ul>
@@ -120,9 +120,51 @@
         </div>
       </nav>
       <div class="content">
-        
-      </div>
+        <div class="container-fluid">
+          <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                <div class="card-header card-header-info">
+                  <h4 class="card-title ">Statistique</h4>
+                  <p class="card-category">Vous pouvez ici faire quelques statistiques</p>
+                </div>
+                <div class="card-body">
+                  <div class="row d-flex justify-content-around">
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Client</label>
+                        <input type="text" id="client" class="form-control">
+                    </div>
 
+                    <div class="form-group">
+                        <label class="bmd-label-floating">Traducteur</label>
+                        <input type="text" id="traductor" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <div class='input-group date' id='datetimepicker1'>
+                      <input class="form-control" type="text" id="date-time1" placeholder="Dete Debut">
+                      <i class="material-icons">calendar_today</i>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <div class='input-group date' id='datetimepicker2'>
+                      <input class="form-control" type="text" id="date-time2" placeholder="Date Fin">
+                      <i class="material-icons">calendar_today</i>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary">Lancer</button> 
+                  </div>
+
+                  <div class="row d-flex justify-content-center" id="statsBody">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <footer class="footer">
         <div class="container-fluid">
           <nav class="float-left">
@@ -176,7 +218,7 @@
   <script src="../assets/js/plugins/chartist.min.js"></script>
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
-  
+  <script src="../assets/js/stats.js"></script>
   
   <script>
     $(document).ready(function() {
@@ -184,6 +226,18 @@
 
     });
   </script>
+
+<script>
+    $(function () {
+        $('#date-time1').datetimepicker({
+          format : 'DD MMMM YYYY'
+        });
+
+        $('#date-time2').datetimepicker({
+          format : 'DD MMMM YYYY'
+        });
+    });
+</script>
   
 </body>
 

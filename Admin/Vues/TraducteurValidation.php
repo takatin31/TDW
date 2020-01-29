@@ -112,7 +112,7 @@
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                   <a class="dropdown-item" href="adminProfile.html">Profile</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Log out</a>
+                  <a class="dropdown-item" id="logout"  href="#">Log out</a>
                 </div>
               </li>
             </ul>
@@ -191,7 +191,7 @@
               <p class="card-category">Complete your profile</p>
             </div>
             <div class="card-body">
-              <form id="formDataTraducteur">
+              <form id="formDataTraducteur" class="row">
                 
               </form>
             </div>

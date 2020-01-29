@@ -2,22 +2,24 @@
 require_once("ModalAdmin.php");
 
 class AdminController {
-    public function adminInscription($username, $email, $password){
+    public function adminInscription($email, $password){
         $am = new AdminModal();
-        $r = $am->adminInscription($username, $email, $password);
+        $r = $am->adminInscription($email, $password);
         return $r;
     }
 
     public function isAdmin($email, $password){
         $am = new AdminModal();
         $r = $am->isAdmin($email, $password);
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 
     public function getNbrAdminList(){
         $am = new AdminModal();
         $r = $am->getNbrAdminList();
-        return $r;
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
     }
 }
 
@@ -108,6 +110,13 @@ class TraducteurController {
         $r = $am->getSignalementHistoryTraducteur($idTraducteur);
         return $r;
     }
+
+    public function getTraducteurId($traducteurEmail){
+        $am = new AdminModal();
+        $r = $am->getTraducteurId($traducteurEmail);
+        $result = $r->fetch_assoc();
+        return $result["Id"];
+    }
 }
 
 class ClientController {
@@ -153,6 +162,13 @@ class ClientController {
         $am = new AdminModal();
         $r = $am->getSignalementHistoryClient($idTraducteur);
         return $r;
+    }
+
+    public function getClientId($clientEmail){
+        $am = new AdminModal();
+        $r = $am->getClientId($traducteurEmail);
+        $result = $r->fetch_assoc();
+        return $result["Id"];
     }
 }
 
@@ -290,6 +306,13 @@ class DemandeTraductionController {
         $result = $r->fetch_assoc();
         return $result["nbr"];
     }
+
+    public function getNombreTraductionByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin){
+        $am = new AdminModal();
+        $r = $am->getNombreTraductionByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin);
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
+    }
 }
 
 class DemandeDevisController {
@@ -310,6 +333,13 @@ class DemandeDevisController {
     public function getNombreDevisByClient($idClient, $dateDebut, $dateFin){
         $am = new AdminModal();
         $r = $am->getNombreDevisByClient($idClient, $dateDebut, $dateFin);
+        $result = $r->fetch_assoc();
+        return $result["nbr"];
+    }
+
+    public function getNombreDevisByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin){
+        $am = new AdminModal();
+        $r = $am->getNombreDevisByClientForTraductor($idClient, $idTraducteur, $dateDebut, $dateFin);
         $result = $r->fetch_assoc();
         return $result["nbr"];
     }

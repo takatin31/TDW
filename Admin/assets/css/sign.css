@@ -1,0 +1,11 @@
+body {
+    background-image: url('../img/back.jpg');
+}
+
+.main-container {
+    min-height: 40vw;
+}
+
+.card-body {
+    min-height: 15vw;
+}

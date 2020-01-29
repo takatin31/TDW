@@ -163,7 +163,8 @@ class projet_modal{
                 from utilisateur U
                 JOIN traducteurdata TD
                 ON U.Id = TD.TraducteurId
-                WHERE TD.Assermetation_doc is ".$asser_doc."
+                WHERE TD.Etat = 1
+                AND TD.Assermetation_doc is ".$asser_doc."
                     )as t3
                     on t3.userid = t2.userid
                 JOIN (
@@ -352,7 +353,7 @@ class projet_modal{
     public function seeDemandeTraduction($idDemande, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $docName = $this->addPaymentDocument($file);
-        $rq1 = "INSERT INTO DemandeT_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 1, '".$docName."');";
+        $rq1 = "INSERT INTO DemandeT_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
         $r = $conn->query($rq1);
         $rq = "UPDATE DemandeT_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
         $r = $conn->query($rq);
@@ -363,7 +364,7 @@ class projet_modal{
     public function seeDemandeDevis($idDemande, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $docName = $this->addPaymentDocument($file);
-        $rq = "INSERT INTO DemandeD_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 1, '".$docName."');";
+        $rq = "INSERT INTO DemandeD_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
         $r = $conn->query($rq);
         $rq = "UPDATE DemandeD_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
         $r = $conn->query($rq);

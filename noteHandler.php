@@ -6,7 +6,7 @@ $type= $_POST["type"];
 $userId = $_COOKIE["userid"];
 $nc = new NoteController();
 
-if (isset($note)){
+if (isset($_POST["note"])){
     $note = $_POST["note"];
     $r = $nc->noter($idDemande, $userId, $note, $type);
 }else{
