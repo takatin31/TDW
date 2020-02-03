@@ -435,24 +435,24 @@
         public function getDemandeDFNotifications($userID){
             $mp = new projet_modal();
             //lorsque le traducteur fini le devis:client
-            $r = $mp->getDemandeDFNotifications($userID);
+            $r = $mp->getDemandeDFCNotifications($userID);
 
             foreach($r as $lg){
                 echo '<tr class="good_request finishedDevis" id="finishedDevis'.$lg["DemandeId"].'">
                             <td>
                                 <div>
                                     <div class="float-right">
-                                        <button class="btn btn-secondary">Valider</button>
+                                        <button class="btn btn-secondary" data-toggle="modal" data-target="#modal_note">Valider</button>
                                     </div>
                                     Votre Devis a finie suite a <a href="#" class="link_demande">cette demande</a> 
                                 </div>
-                                <button class="btn btn-info mt-2">Telecharger le document de reponse</button>
+                                <a class="btn btn-info mt-2" href="./uploads/Output/'.$lg['Document'].'">Telecharger le document traduit</a>
                             </td>
                         </tr>';
             }
 
             //lors de la reception du paiement:traducteur
-            $r = $mp->getDemandeDFNotifications($userID);
+            $r = $mp->getDemandeDFTNotifications($userID);
             foreach($r as $lg){
                 echo '<tr class="good_request paimentRecievedDevis" id="paimentRecievedDevis'.$lg["DemandeId"].'">
                             <td>

@@ -8,8 +8,8 @@ $fileExist = $_POST["fileExist"];
 $userId = $_COOKIE["userid"];
 
 $file = "";
-
-if ($fileExist){
+echo ($fileExist == false);
+if (strcmp($fileExist, "true")==0){
     $file = $_FILES["customFile"];
 }
 
@@ -21,6 +21,7 @@ if (strcmp($action, "accept") == 0){
 }
 
 if (strcmp($action, "vu") == 0){
+    echo $file;
     $r = $notification_Controller->seeDemande($idDemande, $target, $file);
     echo $r;
 }

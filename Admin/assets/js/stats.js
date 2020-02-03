@@ -14,12 +14,13 @@ $(document).on("click", "#recherche", function(){
         formData.append("traducteur", traducteur);
     }
 
-    if (date1 = "" || date2 == ""){
+    if (date1 == "" || date2 == ""){
         alert("Veuillez specifier les dates");
     }else{
 
         formData.append("dateD", date1);
         formData.append("dateF", date2);
+
     
         $.ajax({
             type: "POST",
@@ -28,6 +29,9 @@ $(document).on("click", "#recherche", function(){
             processData: false,
             contentType : false,
             success: function (data) {
+
+              
+              
                 $("#myChart1").empty();
                 $("#myChart2").empty();
 

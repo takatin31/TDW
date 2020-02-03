@@ -46,6 +46,20 @@ $(document).on("click", ".acceptedDevis .btn-secondary", function(){
     $("#modal_complete_paiementDv input[type='hidden']").attr("value", demandeId);
 })
 
+$(document).on("click", ".deniedPaiementTr .btn-secondary", function(){
+    let parent = $(this).parent().parent().parent().attr('id');
+    let demandeId = parent.replace("deniedPaiementTr", "");
+
+    $("#modal_complete_paiementTr input[type='hidden']").attr("value", demandeId);
+})
+
+$(document).on("click", ".deniedPaiementDev .btn-secondary", function(){
+    let parent = $(this).parent().parent().parent().attr('id');
+    let demandeId = parent.replace("deniedPaiementDv", "");
+
+    $("#modal_complete_paiementDv input[type='hidden']").attr("value", demandeId);
+})
+
 
 
 
@@ -118,6 +132,9 @@ $(document).on("click", "#validerPayerTr" , function() {
 
     let demandeId = parent.replace("acceptedDemandeTraduction", "");
 
+    
+    demandeId = demandeId.replace("deniedPaiementTr", "");
+
     let target = "traduction";
     let action = "vu";
 
@@ -152,6 +169,8 @@ $(document).on("click", "#validerPayerDv" , function() {
     let parent = $("#modal_complete_paiementDv input[type='hidden']").attr("value");
 
     let demandeId = parent.replace("acceptedDemandeDevis", "");
+    
+    demandeId = demandeId.replace("deniedPaiementDv", "");
 
     let target = "devis";
     let action = "vu";
@@ -182,9 +201,8 @@ $(document).on("click", "#validerPayerDv" , function() {
 
 $(document).on("click", ".acceptedPaiementTr .btn-secondary" , function() {
     let parent = $(this).parent().parent().parent().attr('id');
-
+    
     let demandeId = parent.replace("acceptedPaiementTr", "");
-
     let target = "traduction";
     let action = "vuPaiementClient";
     
@@ -211,7 +229,6 @@ $(document).on("click", ".acceptedPaiementDev .btn-secondary" , function() {
     let parent = $(this).parent().parent().parent().attr('id');
 
     let demandeId = parent.replace("acceptedPaiementDev", "");
-
     let target = "devis";
     let action = "vuPaiementClient";
     
@@ -409,6 +426,7 @@ $(document).on("click", ".paimentRecievedDevis .btn-warning" , function() {
     let action = "finishedVu";
     
     
+    
     $.ajax({
         type: "POST",
         url: "Notification_NoFile_Handler.php",
@@ -420,6 +438,8 @@ $(document).on("click", ".paimentRecievedDevis .btn-warning" , function() {
             fileExist: false
         },
         success: function (data) {
+            console.log(data);
+            
             update();
             
         }
@@ -585,23 +605,38 @@ $(document).on("click", ".finishedTraduction .btn-warning", function(){
     let parent = $(this).parent().parent().parent().parent().attr('id');
     let type = "Traduction";
 
-    if (parent.includes("Devis")){
-        type = "Devis";
-    }
 
     let demandeId;
 
-    if (type == "Traduction"){
-        demandeId = parent.replace("finishedTraduction", "");
-    }else{
-        demandeId = parent.replace("finishedDevis", "");
-    }
+    console.log("tr");
+    
+    demandeId = parent.replace("finishedTraduction", "");
+    
 
    
 
     $("#modal_note #idInputHidden").attr("value", demandeId);
     $("#modal_note #typeInputHidden").attr("value", type);
 })
+
+$(document).on("click", ".finishedDevis .btn-secondary", function(){
+    let parent = $(this).parent().parent().parent().parent().attr('id');
+    let type = "Devis";
+    
+
+    let demandeId;
+    console.log("dv");
+    
+    
+    demandeId = parent.replace("finishedDevis", "");
+    
+
+   
+
+    $("#modal_note #idInputHidden").attr("value", demandeId);
+    $("#modal_note #typeInputHidden").attr("value", type);
+})
+
 
 $(document).on("click", "#validerNote", function(){
     let demandeId = $("#modal_note #idInputHidden").attr("value");

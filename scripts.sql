@@ -1,28 +1,28 @@
-//select users depending on assermentation
+
 
 select U.Image Image, U.Nom Nom, U.Prenom Prenom
 from utilisateur U
 JOIN traducteurdata TD
 ON U.Id = TD.TraducteurId
-WHERE TD.Assermetation_doc is ?
+WHERE TD.Assermetation_doc is NULL;
 
-//selectionner users et leurs langues
+
 
 select U.id, L.Nom
 from utilisateur U
 JOIN maitriselangue ML
 ON U.Id = ML.TraducteurId
 JOIN langue L
-ON L.Id = ML.LangueId
+ON L.Id = ML.LangueId;
 
-//selectionner users et leurs types maitrisées
+
 
 select U.id, MT.Type
 from utilisateur U
 JOIN maitrisetype MT
-ON U.Id = MT.TraducteurId
+ON U.Id = MT.TraducteurId;
 
-//selectionner users et leurs notes
+
 
     select U.id, 
     CASE
@@ -32,9 +32,9 @@ ON U.Id = MT.TraducteurId
     from utilisateur U
     LEfT Join note N
     On U.Id = N.TraducteurId
-    group by u.Id
+    group by u.Id;
 
-//selectionner nombre de traduction par traducteur
+
 
 select u.id, COUNT(tf.Id) nbr
 from utilisateur u
@@ -44,5 +44,5 @@ left join traduction_debutee td
 on td.DemandeId = da.Id
 left join traduction_finie tf
 on tf.TraductionId = td.Id
-group by u.id
+group by u.id;
 

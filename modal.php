@@ -10,7 +10,7 @@ class projet_modal{
 
     private function connexion($servername, $username, $password, $dbname){
         $conn = new mysqli($servername, $username, $password, $dbname);
-    
+        
         return $conn;
     }
 
@@ -353,23 +353,40 @@ class projet_modal{
     public function seeDemandeTraduction($idDemande, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $docName = $this->addPaymentDocument($file);
-        $rq1 = "INSERT INTO DemandeT_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
-        $r = $conn->query($rq1);
-        $rq = "UPDATE DemandeT_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
+        $rq = "UPDATE DemandeT_paiement SET Etat = 0, Document = '".$docName."' WHERE DemandeId= ".$idDemande.";";
         $r = $conn->query($rq);
-        $this->deconnexion($conn);
-        return $rq1;
+        $rq = "SELECT * FROM DemandeT_paiement WHERE DemandeId= ".$idDemande.";";
+        $r = $conn->query($rq);
+        $row_cnt = mysqli_num_rows($r);
+        if ($row_cnt == 0){
+            $rq1 = "INSERT INTO DemandeT_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
+            $r = $conn->query($rq1);
+            echo $rq1;
+            $rq = "UPDATE DemandeT_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
+            $r = $conn->query($rq);
+            $this->deconnexion($conn);
+            return $rq1;
+        }
+       
     }
 
     public function seeDemandeDevis($idDemande, $file){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $docName = $this->addPaymentDocument($file);
-        $rq = "INSERT INTO DemandeD_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
+        $rq = "UPDATE DemandeD_paiement SET Etat = 0, Document = '".$docName."' WHERE DemandeId= ".$idDemande.";";
         $r = $conn->query($rq);
-        $rq = "UPDATE DemandeD_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
+        $rq = "SELECT * FROM DemandeD_paiement WHERE DemandeId= ".$idDemande.";";
         $r = $conn->query($rq);
-        $this->deconnexion($conn);
-        return $rq;
+        $row_cnt = mysqli_num_rows($r);
+        if ($row_cnt == 0){
+            $rq = "INSERT INTO DemandeD_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
+            echo $rq;
+            $r = $conn->query($rq);
+            $rq = "UPDATE DemandeD_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
+            $r = $conn->query($rq);
+            $this->deconnexion($conn);
+            return $rq;
+        }
     }
 
     public function seePaiementClientTraduction($idDemande){
@@ -691,7 +708,7 @@ class projet_modal{
     // notification demande de traduction paiement refusé
     public function getDemandeTPDNotifications($userID){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT DP.Id DemandeId
+        $rq = "SELECT DA.Id DemandeId
                 FROM DemandeT_paiement DP
                 JOIN DemandeT_Accepte DA
                 ON DP.DemandeId = DA.Id
@@ -708,7 +725,7 @@ class projet_modal{
     // notification demande de devis paiement refusé
     public function getDemandeDPDNotifications($userID){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT DP.Id DemandeId
+        $rq = "SELECT DA.Id DemandeId
                 FROM DemandeD_paiement DP
                 JOIN DemandeD_Accepte DA
                 ON DP.DemandeId = DA.Id
@@ -894,7 +911,7 @@ class projet_modal{
     }
 
     // notification de devis finie
-    public function getDemandeDFNotifications($userID){
+    public function getDemandeDFCNotifications($userID){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT DF.Id DemandeId, DF.Document
                 FROM Devis_finie DF
@@ -908,6 +925,25 @@ class projet_modal{
                 ON DA.DemandeId = DD.Id
                 WHERE DF.VuClient = 0
                 AND UtilisateurId = ".$userID.";";
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
+    public function getDemandeDFTNotifications($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DF.Id DemandeId, DF.Document
+                FROM Devis_finie DF
+                JOIN Devis_debutee DB
+                ON DF.DevisId = DB.Id
+                JOIN DemandeD_paiement DP
+                ON DP.Id = DB.DemandeId
+                JOIN DemandeD_Accepte DA
+                ON DP.DemandeId = DA.Id
+                JOIN Demande_devis DD
+                ON DA.DemandeId = DD.Id
+                WHERE DF.VuTraductor = 0
+                AND TraducteurId = ".$userID.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -937,14 +973,18 @@ class projet_modal{
                 VALUES
                 (".$traductorId.",
                 ".$userId.",
-                ".$note.");";
+                ".$note.")
+                ON DUPLICATE KEY UPDATE    
+                valeur = ".$note;
         $r = $conn->query($rq);
-        if (strcmp($type, "traduction") == 0)
-            $rq = "UPDATE ".$type."_finie SET VuClient = 1, VuTraductor = 1, Etat = 1 WHERE Id= ".$demandeId.";";
-        else
+        echo $rq;
+        if (strcmp($type, "Traduction") == 0)
             $rq = "UPDATE ".$type."_finie SET VuClient = 1, Etat = 1 WHERE Id= ".$demandeId.";";
+        else
+            $rq = "UPDATE ".$type."_finie SET VuClient = 1 WHERE Id= ".$demandeId.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
+        echo $rq;
         return $rq;
     }
 
@@ -952,9 +992,9 @@ class projet_modal{
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $traductorId = $this->getTraductorIdfromDemandeId($demandeId, $type);
         if (strcmp($type, "traduction") == 0)
-            $rq = "UPDATE ".$type."_finie SET VuClient = 1, VuTraductor = 1, Etat = 1 WHERE Id= ".$demandeId.";";
-        else
             $rq = "UPDATE ".$type."_finie SET VuClient = 1, Etat = 1 WHERE Id= ".$demandeId.";";
+        else
+            $rq = "UPDATE ".$type."_finie SET VuClient = 1 WHERE Id= ".$demandeId.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $rq;

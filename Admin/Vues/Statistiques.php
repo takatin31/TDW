@@ -136,7 +136,7 @@
                     </div>
                     <div class="form-group">
                       <div class='input-group date' id='datetimepicker1'>
-                      <input class="form-control" type="text" id="date-time1" placeholder="Dete Debut" required>
+                      <input class="form-control" type="text" id="date-time1" placeholder="Date Debut" required>
                       <i class="material-icons">calendar_today</i>
                       </div>
                     </div>
