@@ -120,19 +120,18 @@
                                 <table id="example" class="ui celled table" style="width:100%">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>ID</th>
+                                            <th>Type de demande</th>
+                                            <th>Traducteur</th>
+                                            <th>Date</th>
+                                            <th>Prix</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                             require_once("controller.php");
                                             $hc = new HistoryController();
-                                            $r = $hc->getHistoryClient($_COOKIE["userid"]);
+                                            $r = $hc->getHistoryTraductor($_COOKIE["userid"]);
                                             foreach($r as $lg){
                                                 echo '<tr>
                                                         <td><a class="link_demande_2" href="#">'.$lg["Id"].'</a></td>

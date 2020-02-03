@@ -361,7 +361,6 @@ class projet_modal{
         if ($row_cnt == 0){
             $rq1 = "INSERT INTO DemandeT_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
             $r = $conn->query($rq1);
-            echo $rq1;
             $rq = "UPDATE DemandeT_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
             $r = $conn->query($rq);
             $this->deconnexion($conn);
@@ -380,7 +379,6 @@ class projet_modal{
         $row_cnt = mysqli_num_rows($r);
         if ($row_cnt == 0){
             $rq = "INSERT INTO DemandeD_paiement (DemandeId, Etat, Document) VALUES (".$idDemande.", 0, '".$docName."');";
-            echo $rq;
             $r = $conn->query($rq);
             $rq = "UPDATE DemandeD_Accepte SET Vu = true WHERE Id= ".$idDemande.";";
             $r = $conn->query($rq);
@@ -494,6 +492,28 @@ class projet_modal{
         $this->deconnexion($conn);
         return $r;
     }
+
+    public function getHistoryTraductor($userID){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT DA.*,U.Nom, 'Traduction' Type
+                FROM demandet_accepte DA
+                JOIN demande_traduction DT
+                ON DT.Id = DA.DemandeId
+                JOIN utilisateur U
+                ON U.Id = DT.UtilisateurId
+                WHERE DA.TraducteurId = ".$userID."
+                UNION 
+                SELECT DA.*,U.Nom, 'Devi' Type
+                FROM demanded_accepte DA
+                JOIN demande_devis DD
+                ON DD.Id = DA.DemandeId
+                JOIN utilisateur U
+                ON U.Id = DD.UtilisateurId
+                WHERE DA.TraducteurId = ".$userID;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
     
 
     public function getTraductorData($idUser){
@@ -544,9 +564,13 @@ class projet_modal{
 
     public function getDemandeInfoFromRecieved($idDemande, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT Nom, Prenom, Email, Phone, LangueO, LangueD,Type, Comment
-                FROM demande_".$type."
-                WHERE Id = ".$idDemande.";";
+        $rq = "SELECT T1.Nom, Prenom, Email, Phone, L1.nom LangueO, L2.nom LangueD,Type, Comment
+                FROM demande_".$type." T1
+                JOIN Langue L1
+                ON L1.Id = T1.LangueO
+                JOIN Langue L2
+                ON L2.Id = T1.LangueD
+                WHERE T1.Id = ".$idDemande.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
@@ -554,10 +578,14 @@ class projet_modal{
 
     public function getDemandeInfoFromAccepted($idDemande, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT Nom, Prenom, Email, Phone, LangueO, LangueD,Type, Comment
+        $rq = "SELECT T1.Nom, Prenom, Email, Phone, L1.nom LangueO,L2.nom LangueD,Type, Comment
                 FROM demande_".$type." T1
                 JOIN Demande".$type[0]."_Accepte DA
                 ON T1.Id = DA.DemandeId
+                JOIN Langue L1
+                ON L1.Id = T1.LangueO
+                JOIN Langue L2
+                ON L2.Id = T1.LangueD
                 WHERE DA.Id = ".$idDemande.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -566,12 +594,16 @@ class projet_modal{
 
     public function getDemandeInfoFromPaiement($idDemande, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT Nom, Prenom, Email, Phone, LangueO, LangueD,Type, Comment
+        $rq = "SELECT T1.Nom, Prenom, Email, Phone, L1.nom LangueO,L2.nom LangueD,Type, Comment
                 FROM demande_".$type." T1
                 JOIN Demande".$type[0]."_Accepte DA
                 ON T1.Id = DA.DemandeId
                 JOIN Demande".$type[0]."_paiement DP
                 ON DA.Id = DP.DemandeId
+                JOIN Langue L1
+                ON L1.Id = T1.LangueO
+                JOIN Langue L2
+                ON L2.Id = T1.LangueD
                 WHERE DP.Id = ".$idDemande.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -593,7 +625,7 @@ class projet_modal{
 
     public function getDemandeInfoFromStarted($idDemande, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT Nom, Prenom, Email, Phone, LangueO, LangueD,Type, Comment
+        $rq = "SELECT T1.Nom, Prenom, Email, Phone,L1.nom LangueO,L2.nom LangueD,Type, Comment
                 FROM demande_".$type." T1
                 JOIN Demande".$type[0]."_Accepte DA
                 ON T1.Id = DA.DemandeId
@@ -601,6 +633,10 @@ class projet_modal{
                 ON DA.Id = DP.DemandeId
                 JOIN ".$type."_debutee DB
                 ON DP.Id = DB.DemandeId
+                JOIN Langue L1
+                ON L1.Id = T1.LangueO
+                JOIN Langue L2
+                ON L2.Id = T1.LangueD
                 WHERE DB.Id = ".$idDemande.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -609,7 +645,7 @@ class projet_modal{
 
     public function getDemandeInfoFromFinished($idDemande, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
-        $rq = "SELECT Nom, Prenom, Email, Phone, LangueO, LangueD,Type, Comment
+        $rq = "SELECT T1.Nom, Prenom, Email, Phone, L1.nom LangueO,L2.nom LangueD,Type, Comment
                 FROM demande_".$type." T1
                 JOIN Demande".$type[0]."_Accepte DA
                 ON T1.Id = DA.DemandeId
@@ -619,6 +655,10 @@ class projet_modal{
                 ON DP.Id = DB.DemandeId
                 JOIN ".$type."_finie DF
                 ON DB.Id = DF.DemandeId
+                JOIN Langue L1
+                ON L1.Id = T1.LangueO
+                JOIN Langue L2
+                ON L2.Id = T1.LangueD
                 WHERE DF.Id = ".$idDemande.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
@@ -977,14 +1017,12 @@ class projet_modal{
                 ON DUPLICATE KEY UPDATE    
                 valeur = ".$note;
         $r = $conn->query($rq);
-        echo $rq;
         if (strcmp($type, "Traduction") == 0)
             $rq = "UPDATE ".$type."_finie SET VuClient = 1, Etat = 1 WHERE Id= ".$demandeId.";";
         else
             $rq = "UPDATE ".$type."_finie SET VuClient = 1 WHERE Id= ".$demandeId.";";
         $r = $conn->query($rq);
         $this->deconnexion($conn);
-        echo $rq;
         return $rq;
     }
 

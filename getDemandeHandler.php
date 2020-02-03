@@ -34,10 +34,10 @@ foreach ($r as $lg){
     foreach($lg as $key => $value){
         echo '<div class="row">
                     <div>
-                        <label class="titre"> <b>'.$key.' </b>: </label>
+                        <label class="titre"> <h2> <b>'.$key.' </b>: </h2></label>
                     </div>
                     <div>
-                        <label class="valeur"> '.$value.'</label>
+                        <label class="valeur"> <h2> '.$value.' </h2> </label>
                     </div>
                 </div>';
     }
