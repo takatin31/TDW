@@ -47,6 +47,22 @@
             $r = $mp->addPhoto($userId, $image);
             return $r;
         }
+
+        public function updateInfo($userId, $nom, $prenom, $email, $pass, $phone, $wilaya, $commune, $adresse){
+            $mp = new projet_modal();
+            $ac = new adresse_controller();
+            $idWilaya = $ac->getWilayaID($wilaya);
+            $idCommune = $ac->getCommuneID($idWilaya, $commune);
+            $r = $mp->updateInfo($userId, $nom, $prenom, $email, $pass, $phone, $idWilaya, $idCommune, $adresse);
+            return $r;
+        }
+        
+        public function getUserData($userId){
+            $mp = new projet_modal();
+            $r = $mp->getUserData($userId);
+            $result = $r->fetch_assoc(); // fetch it first
+            return $result;
+        }
         
     }
 

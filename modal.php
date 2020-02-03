@@ -455,6 +455,16 @@ class projet_modal{
         return $rq;
     }
 
+    public function getUserData($userId){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "SELECT *
+                FROM Utilisateur
+                WHERE Id = ".$userId;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $r;
+    }
+
     public function getArticles($start, $nbr){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT * FROM Articles ORDER By Date DESC LIMIT ".$start.", ".$nbr.";";
@@ -562,6 +572,8 @@ class projet_modal{
         return $r;
     }
 
+
+
     public function getDemandeInfoFromRecieved($idDemande, $type){
         $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
         $rq = "SELECT T1.Nom, Prenom, Email, Phone, L1.nom LangueO, L2.nom LangueD,Type, Comment
@@ -608,6 +620,23 @@ class projet_modal{
         $r = $conn->query($rq);
         $this->deconnexion($conn);
         return $r;
+    }
+
+    public function updateInfo($userId, $nom, $prenom, $email, $pass, $phone, $wilaya, $commune, $adresse){
+        $conn = $this->connexion($this->servername, $this->username, $this->password, $this->dbname);
+        $rq = "UPDATE Utilisateur SET
+        Nom = '".$nom."',
+        Prenom = '".$prenom."',
+        Email = '".$email."',
+        Password = '".$pass."',
+        WilayaId = ".$wilaya.",
+        Commune = ".$commune.",
+        Adresse = '".$adresse."',
+        Phone = ".$phone."
+        WHERE Id = ".$userId;
+        $r = $conn->query($rq);
+        $this->deconnexion($conn);
+        return $rq;
     }
 
     public function signaler($userId, $traductorId, $cause){

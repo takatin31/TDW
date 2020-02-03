@@ -506,6 +506,25 @@ $(document).on("click", ".link_demande" , function() {
 
 });
 
+$(document).on("change", "#wilaya" , function() {
+    
+    $('#commune').empty();
+
+    $.ajax({
+        type: "POST",
+        data: {
+          wilaya:this.value
+        },
+        url: "communeHandler.php",
+
+        dataType: "html",
+        success : function(result){
+            
+            $("#commune").append(result);
+        }
+      }); 
+});
+
 
 $(document).on("click", ".link_demande_2" , function() {
     let demandeId = $(this).text();

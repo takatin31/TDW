@@ -169,93 +169,68 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="edit">
-                        <form role="form">
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">First name</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="Jane">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Last name</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="Bishop">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Email</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="email" value="email@gmail.com">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Company</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Website</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="url" value="">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Address</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="" placeholder="Street">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label"></label>
-                                <div class="col-lg-6">
-                                    <input class="form-control" type="text" value="" placeholder="City">
-                                </div>
-                                <div class="col-lg-3">
-                                    <input class="form-control" type="text" value="" placeholder="State">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Time Zone</label>
-                                <div class="col-lg-9">
-                                    <select id="user_time_zone" class="form-control" size="0">
-                                        <option value="Hawaii">(GMT-10:00) Hawaii</option>
-                                        <option value="Alaska">(GMT-09:00) Alaska</option>
-                                        <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
-                                        <option value="Arizona">(GMT-07:00) Arizona</option>
-                                        <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
-                                        <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
-                                        <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
-                                        <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Username</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="text" value="janeuser">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Password</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="password" value="11111122333">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
-                                <div class="col-lg-9">
-                                    <input class="form-control" type="password" value="11111122333">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-lg-3 col-form-label form-control-label"></label>
-                                <div class="col-lg-9">
-                                    <input type="reset" class="btn btn-secondary" value="Cancel">
-                                    <input type="button" class="btn btn-primary" value="Save Changes">
-                                </div>
-                            </div>
-                        </form>
+                    <form action="modificationProfile.php" method="POST">
+                            <?php
+                                require_once("controller.php");
+                                $uc = new users_controller();
+                                $r = $uc->getUserData($_COOKIE["userid"]);
+
+                            
+                                echo '<div class="form-group">
+                                        <label for="nom">Nom :</label>
+                                        <input type="text" class="form-control" placeholder="Entrez Nom" value="'.$r["Nom"].'" name="nom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prenom">Prenom:</label>
+                                        <input type="text" class="form-control" placeholder="Entez prenom" value="'.$r["Prenom"].'" name="prenom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" placeholder="Entez Email" value="'.$r["Email"].'" name="email" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Mot de passe">Mot de passe:</label>
+                                        <input type="password" class="form-control" placeholder="Mot de passe" value="'.$r["Password"].'" name="password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="numero de telephone">Numero de telephone:</label>
+                                        <input type="phone" class="form-control" placeholder="Numero de telephone" value="'.$r["Phone"].'" name="phone" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="wilaya">Wilaya:</label>
+                                        <select class="custom-select" name="wilaya" id="wilaya">';
+                                            
+                                            
+                                            $cf = new adresse_controller();
+                                            $qtf = $cf->get_wilayas();
+                                            foreach($qtf as $rs){
+                                                echo '<option>'.$rs['Nom'].'</option>';
+                                            }
+                                            
+                                    echo '</select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="commune">Commune:</label>
+                                        <select class="custom-select" name="commune" id="commune">';
+                                            
+                                            
+                                            $qtf = $cf->get_commune('Adrar');
+                                            foreach($qtf as $rs){
+                                                echo '<option>'.$rs['Nom'].'</option>';
+                                            }
+                                            
+                                    echo '</select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adresse">Adresse:</label>
+                                        <input type="text" class="form-control" placeholder="Entez l\'adresse" value="'.$r["Adresse"].'" name="adresse" required>
+                                    </div>';
+                        ?>
+                        <div class="col text-center">
+                            <button type="submit" class="btn btn-primary mb-2 mt-5">Submit</button>
+                        </div>
+                    </form>
                     </div>
 
                     <div class="tab-pane ml-5" id="demandeInfo">
